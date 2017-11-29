@@ -19,18 +19,171 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #}
-<div class="container-fluid inner">
-    <ul>
-        <li><a href="{{ url('help_about') }}">当サイトについて</a></li>
-        <li><a href="{{ url('help_privacy') }}">プライバシーポリシー</a></li>
-        <li><a href="{{ url('help_tradelaw') }}">特定商取引法に基づく表記</a></li>
-        <li><a href="{{ url('contact') }}">お問い合わせ</a></li>
-    </ul>
-    <div class="footer_logo_area">
-        <p class="logo"><a href="{{ url('homepage') }}">{{ BaseInfo.shop_name }}</a></p>
-        <p class="copyright">
-            <small>copyright (c) {{ BaseInfo.shop_name }} all rights reserved.</small>
-        </p>
+<div id="footerTop">
+    <div class="inner">
+        <div class="siteFeatures clearfix">
+            <div class="featuresItem">
+                {%- if BaseInfo.delivery_free_amount -%}
+                    <p class="featuresTitle hlg01"><span class="fs01">{{ BaseInfo.delivery_free_amount|price }}円以上</span>送料無料！</p>
+                {%- elseif BaseInfo.delivery_free_quantity -%}
+                    <p class="featuresTitle hlg01"><span class="fs01">{{ BaseInfo.delivery_free_quantity|number_format }}以上の製品</span>送料無料！</p>
+                {%- else -%}
+                    <p class="featuresTitle hlg01"><span class="fs01">3,000円以上</span>送料無料！</p>
+                {%- endif -%}
+                <p class="featuresImg"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_features01.jpg" alt=""></p>
+                {%- if BaseInfo.delivery_free_amount -%}
+                    <p>ご購入金額の合計が<br>{{ BaseInfo.delivery_free_amount|price }}円（税込）以上で送料無料</p>
+                {%- elseif BaseInfo.delivery_free_quantity -%}
+                    <p>ご購入金額の合計が<br>{{ BaseInfo.delivery_free_quantity|number_format }}以上の製品で送料無料</p>
+                {%- else -%}
+                    <p>ご購入金額の合計が<br>3,000円（税込）以上で送料無料</p>
+                {%- endif -%}
+            </div>
+
+            <div class="featuresItem">
+                <p class="featuresTitle hlg01">会員限定セール<br>キャンペーン</p>
+                <p class="featuresImg"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_features02.jpg" alt=""></p>
+                <p>オンラインショップ限定の<br>キャンペーンやセールを実施中</p>
+            </div>
+            <div class="featuresItem">
+                <p class="featuresTitle hlg01"><span class="fs02">お好きな商品をまとめて</span>パック販売商品</p>
+                <p class="featuresImg"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_features03.jpg" alt=""></p>
+                <p>厳選商品におきまして、<br>パック販売を行っております。</p>
+            </div>
+            <div class="featuresItem">
+                <p class="featuresTitle hlg01">メーカー直販！</p>
+                <p class="featuresImg"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_features04.jpg" alt=""></p>
+                <p>エルモアを展開するカミ商事が<br>運営、販売するので安心！</p>
+            </div>
+        </div>
+        <div class="payDelivery clearfix">
+            <div class="payDeliveryItem">
+                <div class="payDeliveryBox hlg01">
+                    <h2 class="payDeliveryTitle"><span class="icoPay">お支払い</span></h2>
+                    <div class="payDeliveryInner">
+                        <h3 class="subTitle">カード決済</h3>
+                        <div class="subInner">
+                            <p class="mb10">以下のクレジットカードが利用可能です。</p>
+                            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_bank_cart.png" alt=""></p>
+                        </div>
+                        <h3 class="subTitle">代金引換</h3>
+                        <div class="subInner">
+                            <p>クロネコ宅急便コレクトにてお届けいたします。</p>
+                            <ul class="list01">
+                                <li>※送料・代引き手数料はお客様のご負担になります。<br>（家具を含むご注文の場合は、代金引換がご利用になれません）</li>
+                            </ul>
+                        </div>
+                        <h3 class="subTitle">コンビニ決済</h3>
+                        <div class="subInner">
+                            <p class="mb10">クロネコwebコレクトをご利用いただけます。<br>以下のコンビニでのお支払が可能です。</p>
+                            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_join_shop.png" alt=""></p>
+                        </div>
+                        <h3 class="subTitle">楽天バンク決済</h3>
+                        <div class="subInner">
+                            <p>ご注文から7日以内に、ご指定の金融機関にご入金いただきます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="payDeliveryItem">
+                <div class="payDeliveryBox hlg01">
+                    <h2 class="payDeliveryTitle"><span class="icoDelivery">配 送</span></h2>
+                    <div class="payDeliveryInner">
+                        <h3 class="subTitle">配送業者</h3>
+                        <div class="subInner">
+                            <p>クロネコヤマト　宅急便</p>
+                        </div>
+                        <h3 class="subTitle">送料</h3>
+                        <div class="subInner">
+                            <p>全国一律590円（税込）</p>
+                            <ul class="list01">
+                                <li>※北海道、沖縄、離島は1060円です。<br>（一部地域、追加送料がかかる場合もあります）メールで送料をお知らせいたします。</li>
+                                <li>※北海道、沖縄、離島は10000円以上のお買い上げでも送料1060円となります。
+                                    <ul class="list01">
+                                        <li>※上記本文中の商品代金・送料・代引き手数料は全て税込みのものです。</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <h3 class="subTitle">発送について</h3>
+                        <div class="subInner">
+                            <p>クレジット・代金引換でのご注文の場合当日もしくは翌日発送いたします。<br>ただし、銀行振込の場合は、ご入金確認後、当日もしくは翌日発送となります。<br>（日曜・その他当社指定日を除きます）</p>
+                        </div>
+                        <h3 class="subTitle">配送時間帯</h3>
+                        <div class="subInner">
+                            <p class="mb10">以下の時間帯からお選びいただけます。</p>
+                            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_delivery.png" alt=""></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footerBody">
+    <div class="inner">
+        <p class="homeLink"><a href="#">HOME</a></p>
+        <div class="footerInner clearfix">
+            <div class="naviItem01 hlg01 visiblePC">
+                <p><a href="#">商品カテゴリー</a></p>
+                <ul class="clearfix">
+                    <li><a href="#">新商品</a></li>
+                    <li><a href="#">ウエットティシュー</a></li>
+                    <li><a href="#">ティシューペーパー</a></li>
+                    <li><a href="#">キッチンタオル</a></li>
+                    <li><a href="#">トイレットロール</a></li>
+                    <li><a href="#">尿ケア商品</a></li>
+                    <li><a href="#">大人用紙おむつ</a></li>
+                    <li><a href="#">業務用品</a></li>
+                </ul>
+            </div>
+            <div class="naviItem02 hlg01 visiblePC">
+                <ul class="clearfix">
+                    <li><a href="#">商品一覧</a></li>
+                    <li><a href="#">ご利用ガイド</a></li>
+                    <li><a href="#">会員限定セール</a></li>
+                    <li><a href="#">メーカー工場直販</a></li>
+                </ul>
+            </div>
+            <div class="naviItem02 hlg01">
+                <ul class="clearfix">
+                    <li><a href="#">お知らせ</a></li>
+                    <li><a href="#">配送について</a></li>
+                    <li><a href="#">お支払について</a></li>
+                    <li><a href="#">メールマガジン登録</a></li>
+                </ul>
+            </div>
+            <div class="telItem hlg01">
+                <div class="telItemBox">
+                    <p>ご注文専用ダイヤル</p>
+                    <p class="mb10"><a href="tel:0120-976-702" class="noClick"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_tel.png" alt="0120-976-702" class="visiblePC"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_tel_sp.png" alt="0120-976-702" class="visibleTS"></a></p>
+                    <p class="fs01 fwN">受付時間 : 9:00〜12:00 / 13:00〜17:00<br>（土日・祝日を除く）</p>
+                </div>
+            </div>
+            <div class="naviItem03 visibleTS">
+                <ul class="clearfix">
+                    <li><a href="#">ご利用ガイド</a></li>
+                    <li><a href="#">ご利用規約</a></li>
+                    <li><a href="#">会員限定セール</a></li>
+                    <li><a href="#">特定商取引に基づく表記</a></li>
+                    <li><a href="#">メーカー工場直販</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+            <div class="addrItem hlg01">
+                <p>販売業者</p>
+                <p class="fs02">カミ商事株式会社</p>
+                <p class="fs01 fwN">〒799-0404<br>愛媛県四国中央市三島宮川1丁目2番27号<br>商品相談係 0896-24-5316</p>
+            </div>
+            <ul class="banner visibleTS clearfix">
+                <li><a href="#"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/bnr01.png" alt=""></a></li>
+                <li><a href="#"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/bnr02.png" alt=""></a></li>
+            </ul>
+        </div>
+        <div id="footerBtm">
+            <p class="footerLinks"><a href="#">ご利用規約</a>　｜　<a href="#">特定商取引に基づく表記</a>　｜　<a href="#">プライバシーポリシー</a></p>
+            <p id="copyright">Copyright(C) 2015 KAMI SHOJI CO.,LTD. All Rights Reserved.</p>
+        </div>
     </div>
 </div>
 

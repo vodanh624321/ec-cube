@@ -24,32 +24,64 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% set body_class = 'front_page' %}
 
 {% block javascript %}
-<script>
-$(function(){
-    $('.main_visual').slick({
-        dots: true,
-        arrows: false,
-        autoplay: true,
-        speed: 300
-    });
-});
-</script>
+    <script>
+        $(function() {
+            $('#mainVisual .sliderFor').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                autoplay: true,
+                asNavFor: '.sliderNav',
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            arrows: true,
+                            dots: true
+                        }
+                    }
+                ]
+            });
+            $('#mainVisual .sliderNav').slick({
+                slidesToShow: 6,
+                slidesToScroll: 1,
+                asNavFor: '.sliderFor',
+                arrows: true,
+                focusOnSelect: true
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block main %}
-    <div class="row">
-       <div class="col-sm-12">
-            <div class="main_visual">
-                <div class="item">
-                  <img src="{{ app.config.front_urlpath }}/img/top/mv01.jpg">
-                </div>
-                <div class="item">
-                  <img src="{{ app.config.front_urlpath }}/img/top/mv02.jpg">
-                </div>
-                <div class="item">
-                  <img src="{{ app.config.front_urlpath }}/img/top/mv03.jpg">
-                </div>
-            </div>
+    <input type="hidden" id="pageID" value="gNav01">
+    <div id="mainVisual">
+        <div class="slider sliderFor">
+            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual01.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual01_sp.jpg" class="visibleSP" alt=""></div>
+            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual02.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual02_sp.jpg" class="visibleSP" alt=""></div>
+            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03_sp.jpg" class="visibleSP" alt=""></div>
+            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual04.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual04_sp.jpg" class="visibleSP" alt=""></div>
+            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual05.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual05_sp.jpg" class="visibleSP" alt=""></div>
+            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual06.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual06_sp.jpg" class="visibleSP" alt=""></div>
+            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03_sp.jpg" class="visibleSP" alt=""></div>
+        </div>
+        <div class="slider sliderNav">
+            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual01.jpg" alt=""></div>
+            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual02.jpg" alt=""></div>
+            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual03.jpg" alt=""></div>
+            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual04.jpg" alt=""></div>
+            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual05.jpg" alt=""></div>
+            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual06.jpg" alt=""></div>
+            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual03.jpg" alt=""></div>
         </div>
     </div>
+
+    <ul class="homeBannerList clearfix">
+        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home01.jpg" alt=""></a></li>
+        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home02.jpg" alt=""></a></li>
+        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home03.jpg" alt=""></a></li>
+        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home04.jpg" alt=""></a></li>
+        <li class="wFull"><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home05.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home05_sp.jpg" class="visibleSP" alt=""></a></li>
+    </ul>
 {% endblock %}
