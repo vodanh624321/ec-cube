@@ -94,20 +94,7 @@ $(function(){
 {% endblock %}
 
 {% block main %}
-    {# todo ブロック化}
-    <div id="topicpath" class="row">
-        {% for ProductCategory in Product.ProductCategories %}
-        <ol>
-            <li><a href="{{ url('product_list') }}">全商品</a></li>
-            {% for Category in ProductCategory.Category.path %}
-                <li><a href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a></li>
-            {% endfor %}
-            <li>{{ Product.name }}</li>
-        </ol>
-        {% endfor %}
-    </div>
-    #}
-
+    <h2 class="hdL">{{ Product.name }}</h2>
     <!-- ▼item_detail▼ -->
     <div id="item_detail">
         <div id="detail_wrap" class="row">
@@ -125,9 +112,31 @@ $(function(){
             </div>
 
             <section id="item_detail_area" class="col-sm-6">
-
+                <div class="productDetailItem">
+                    <p class="productDetailID">{{ Product.id }}</p>
+                    <!-- ▼関連カテゴリ▼ -->
+                    <div id="relative_category_box" class="relative_cat">
+                        {% for ProductCategory in Product.ProductCategories %}
+                            <ol id="relative_category_box__relative_category--{{ ProductCategory.product_id }}_{{ loop.index }}">
+                                {% for Category in ProductCategory.Category.path %}
+                                    <li><a id="relative_category_box__relative_category--{{ ProductCategory.product_id }}_{{ loop.parent.loop.index }}_{{ Category.id }}" href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a></li>
+                                {% endfor %}
+                            </ol>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="productDetailItem">
+                    <ul class="list01">
+                        <li>■「見た目」にこだわった箱デザイン</li>
+                        <li>■ふんわり柔らかなティシュー</li>
+                        <li>■320枚（160組）</li>
+                        <li>■ピュアパルプ100%</li>
+                        <li>■送料・手数料無料</li>
+                    </ul>
+                </div>
+                <!-- ▲関連カテゴリ▲ -->
                 <!--★商品名★-->
-                <h3 id="detail_description_box__name" class="item_name">{{ Product.name }}</h3>
+                {#<h3 id="detail_description_box__name" class="item_name">{{ Product.name }}</h3>#}
                 <div id="detail_description_box__body" class="item_detail">
 
                     {% if Product.ProductTag is not empty %}
@@ -166,24 +175,11 @@ $(function(){
                     {% endif -%}
 
                     <!--▼商品コード-->
-                    <p id="detail_description_box__item_range_code" class="item_code">商品コード： <span id="item_code_default">
-                        {{ Product.code_min }}
-                        {% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}
-                        </span> </p>
+                    {#<p id="detail_description_box__item_range_code" class="item_code">商品コード： <span id="item_code_default">#}
+                        {#{{ Product.code_min }}#}
+                        {#{% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}#}
+                        {#</span> </p>#}
                     <!--▲商品コード-->
-
-                    <!-- ▼関連カテゴリ▼ -->
-                    <div id="relative_category_box" class="relative_cat">
-                        <p>関連カテゴリ</p>
-                          {% for ProductCategory in Product.ProductCategories %}
-                        <ol id="relative_category_box__relative_category--{{ ProductCategory.product_id }}_{{ loop.index }}">
-                            {% for Category in ProductCategory.Category.path %}
-                            <li><a id="relative_category_box__relative_category--{{ ProductCategory.product_id }}_{{ loop.parent.loop.index }}_{{ Category.id }}" href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a></li>
-                            {% endfor %}
-                        </ol>
-                        {% endfor %}
-                    </div>
-                    <!-- ▲関連カテゴリ▲ -->
 
                     <form action="?" method="post" id="form1" name="form1">
                         <!--▼買い物かご-->
@@ -227,16 +223,14 @@ $(function(){
 
                                 {# カートボタン #}
                                 <div id="detail_cart_box__button_area" class="btn_area">
-                                    <ul id="detail_cart_box__insert_button" class="row">
-                                        <li class="col-xs-12 col-sm-8"><button type="submit" id="add-cart" class="btn btn-primary btn-block prevention-btn prevention-mask">カートに入れる</button></li>
-                                    </ul>
+                                    <button type="submit" id="add-cart" class="btn btn-success addCartBtn01 prevention-mask" style="width: 100%; background-color: #0d9e00;">カートに入れる</button>
                                     {#Favorite product button#}
                                     {% if BaseInfo.option_favorite_product == 1 %}
                                         <ul id="detail_cart_box__favorite_button" class="row">
                                             {% if is_favorite == false %}
-                                                <li class="col-xs-12 col-sm-8"><button type="submit" id="favorite" class="btn btn-info btn-block prevention-btn prevention-mask">お気に入りに追加</button></li>
+                                                <li class="col-xs-12 col-sm-8"><button type="submit" id="favorite" class="addLikeBtn01 prevention-btn prevention-mask">お気に入りに追加する</button></li>
                                             {% else %}
-                                                <li class="col-xs-12 col-sm-8"><button type="submit" id="favorite" class="btn btn-info btn-block" disabled="disabled">お気に入りに追加済みです</button></li>
+                                                <li class="col-xs-12 col-sm-8"><button type="submit" id="favorite" class="addLikeBtn01 btn-block" disabled="disabled">お気に入りに追加済みです</button></li>
                                             {% endif %}
                                         </ul>
                                     {% endif %}
@@ -264,15 +258,14 @@ $(function(){
                         {{ form_rest(form) }}
                     </form>
 
-                    <!--★商品説明★-->
-                    <p id="detail_not_stock_box__description_detail" class="item_comment">{{ Product.description_detail|raw|nl2br }}</p>
-
                 </div>
                 <!-- /.item_detail -->
-
             </section>
             <!--詳細ここまで-->
         </div>
+        <!--★商品説明★-->
+        <h3 class="hdM">商品説明</h3>
+        <p id="detail_not_stock_box__description_detail" class="productIntrBox">{{ Product.description_detail|raw|nl2br }}</p>
 
         {# フリーエリア #}
         {% if Product.freearea %}

@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% extends 'default_frame.twig' %}
 
 {% set body_class = 'product_page' %}
+{% set subtitle = '商品一覧' %}
 
 {% block javascript %}
     <script>
@@ -53,19 +54,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         {{ form_widget(search_form) }}
     </form>
     <!-- ▼topicpath▼ -->
-    <div id="topicpath" class="row">
-        <ol id="list_header_menu">
-            <li><a href="{{ url('product_list') }}">全商品</a></li>
-            {% if Category is not null %}
-                {% for Path in Category.path %}
-                    <li><a href="{{ url('product_list') }}?category_id={{ Path.id }}">{{ Path.name }}</a></li>
-                {% endfor %}
-            {% endif %}
-            {% if search_form.vars.value.name %}
-            <li>「{{ search_form.vars.value.name }}」の検索結果</li>
-            {% endif %}
-        </ol>
-    </div>
+    {#<div id="topicpath" class="row">#}
+        {#<ol id="list_header_menu">#}
+            {#<li><a href="{{ url('product_list') }}">全商品</a></li>#}
+            {#{% if Category is not null %}#}
+                {#{% for Path in Category.path %}#}
+                    {#<li><a href="{{ url('product_list') }}?category_id={{ Path.id }}">{{ Path.name }}</a></li>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+            {#{% if search_form.vars.value.name %}#}
+            {#<li>「{{ search_form.vars.value.name }}」の検索結果</li>#}
+            {#{% endif %}#}
+        {#</ol>#}
+    {#</div>#}
     <!-- ▲topicpath▲ -->
         <h2 class="hdL txtColorBlack">商品一覧</h2>
     {#<div id="result_info_box" class="row">#}
@@ -75,14 +76,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 <p id="result_info_box__item_count" class="visiblePC">{{ pagination.totalItemCount }}件の商品が見つかりました。</p>
                 <p id="result_info_box__item_count_ts" class="visibleTS">{{ pagination.paginationData.firstItemNumber }} - {{ pagination.paginationData.lastItemNumber }}件 / {{ pagination.totalItemCount }}件</p>
                 <div id="result_info_box__menu_box" class="note">
-                    <ul id="result_info_box__menu" class="pagenumberarea clearfix">
-                        <li id="result_info_box__disp_menu">
-                            {{ form_widget(disp_number_form, {'id': '', 'attr': {'onchange': "javascript:fnChangeDispNumber(this.value);", 'class': 'showCount'}}) }}
-                        </li>
-                        <li id="result_info_box__order_menu">
-                            {{ form_widget(order_by_form, {'id': '', 'attr': {'onchange': "javascript:fnChangeOrderBy(this.value);", 'class':'showSort'}}) }}
-                        </li>
-                    </ul>
+                    <div id="result_info_box__menu" class="pagenumberarea clearfix">
+                        {#<li id="result_info_box__disp_menu">#}
+                            {{ form_widget(disp_number_form, {'id': '', 'attr': {'onchange': "javascript:fnChangeDispNumber(this.value);", 'class': 'showCount', 'style': 'height:25px; padding:0px;'}}) }}
+                        {#</li>#}
+                        {#<li id="result_info_box__order_menu">#}
+                            {{ form_widget(order_by_form, {'id': '', 'attr': {'onchange': "javascript:fnChangeOrderBy(this.value);", 'class':'showSort', 'style': 'height:25px; padding:0px;'}}) }}
+                        {#</li>#}
+                    </div>
                 </div>
 
                 {% for f in disp_number_form.getIterator %}

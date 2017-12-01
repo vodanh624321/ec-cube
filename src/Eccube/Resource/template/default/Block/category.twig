@@ -22,12 +22,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% macro tree(Category, key = null, requestId = null) %}
     {% set key = key|default('') %}
     {% set reqestId = reqestId|default('') %}
+
     {% set show = false %}
-    {% if requestId == Category.id %}
+    {% if Category.id == requestId %}
         {% set show = true %}
+    {% elseif Category.children|length > 0 %}
+        {% for ChildCategory in Category.children %}
+            {% if requestId == ChildCategory.id %}
+                {% set show = true %}
+            {% elseif ChildCategory.children|length > 0 %}
+                {% for ChildCategory2 in ChildCategory.children %}
+                    {% if requestId == ChildCategory2.id %}
+                        {% set show = true %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
     {% endif %}
+
     {% set isParent = false %}
-    {% if Category.children|length > 0 %}
+    {% if Category.children|length > 0 or Category.level == 2 %}
         {% set isParent = true %}
     {% endif %}
     <li>

@@ -103,38 +103,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     </header>
 
     <article>
-        <div class="searchSmart">
-            <div class="searchSmartBox">
-                <form method="get" id="searchform" action="{{ path('product_list') }}">
-                    <input type="text" class="inputSearch" placeholder="商品検索">
-                    <input type="hidden" name="s" value="">
-                    <input type="submit" class="inputSubmit" value="search">
-                </form>
-            </div>
+        <div id="contents_top">
+            {# ▼TOP COLUMN #}
+            {% if PageLayout.ContentsTop %}
+                {# ▼上ナビ #}
+                {{ include('block.twig', {'Blocks': PageLayout.ContentsTop}) }}
+                {# ▲上ナビ #}
+            {% endif %}
+            {# ▲TOP COLUMN #}
         </div>
-        <div id="contents" class="{{ PageLayout.theme }}">
 
-            <div id="contents_top">
-                {# ▼TOP COLUMN #}
-                {% if PageLayout.ContentsTop %}
-                    {# ▼上ナビ #}
-                    {{ include('block.twig', {'Blocks': PageLayout.ContentsTop}) }}
-                    {# ▲上ナビ #}
-                {% endif %}
-                {# ▲TOP COLUMN #}
-            </div>
-
-            <div class="container-fluid inner">
-                {# ▼LEFT COLUMN #}
-                {% if PageLayout.SideLeft %}
-                    <div id="side_left" class="side">
-                        {# ▼左ナビ #}
-                        {{ include('block.twig', {'Blocks': PageLayout.SideLeft}) }}
-                        {# ▲左ナビ #}
-                    </div>
-                {% endif %}
-                {# ▲LEFT COLUMN #}
-
+        {# class="{{ PageLayout.theme }}"#}
+        <div id="contents">
+            <div class="inner clearfix">
                 <div id="main">
                     {# ▼メイン上部 #}
                     {% if PageLayout.MainTop %}
@@ -144,7 +125,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     {% endif %}
                     {# ▲メイン上部 #}
 
-                    <div id="main_middle">
+                    <div id="main_middle" class="mainInner">
                         {% block main %}{% endblock %}
                     </div>
 
@@ -156,6 +137,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     {% endif %}
                     {# ▲メイン下部 #}
                 </div>
+
+                {# ▼LEFT COLUMN #}
+                {% if PageLayout.SideLeft %}
+                    <div id="side" class="side">
+                        {# ▼左ナビ #}
+                        {{ include('block.twig', {'Blocks': PageLayout.SideLeft}) }}
+                        {# ▲左ナビ #}
+                    </div>
+                {% endif %}
+                {# ▲LEFT COLUMN #}
+
 
                 {# ▼RIGHT COLUMN #}
                 {% if PageLayout.SideRight %}
