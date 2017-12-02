@@ -307,4 +307,21 @@ class ProductRepository extends EntityRepository
 
         return $qb;
     }
+
+    /**
+     * Get recommend product by tag
+     *
+     * @return array results
+     */
+    public function getRecommendProduct()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.ProductTag', 'pt')
+            ->where('pt.Tag = :tag')
+            ->setParameter('tag', 2);
+
+        $qb->addOrderBy('p.create_date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
 }

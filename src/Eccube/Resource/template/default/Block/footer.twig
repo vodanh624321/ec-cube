@@ -122,7 +122,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 </div>
 <div id="footerBody">
     <div class="inner">
-        <p class="homeLink"><a href="#">HOME</a></p>
+        <p class="homeLink"><a href="{{url('index')}}">HOME</a></p>
         <div class="footerInner clearfix">
             <div class="naviItem01 hlg01 visiblePC">
                 <p><a href="#">商品カテゴリー</a></p>
@@ -139,24 +139,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             </div>
             <div class="naviItem02 hlg01 visiblePC">
                 <ul class="clearfix">
-                    <li><a href="#">商品一覧</a></li>
-                    <li><a href="#">ご利用ガイド</a></li>
+                    <li><a href="{{url('product_list')}}">商品一覧</a></li>
+                    <li><a href="{{url('help_guide')}}">ご利用ガイド</a></li>
                     <li><a href="#">会員限定セール</a></li>
                     <li><a href="#">メーカー工場直販</a></li>
                 </ul>
             </div>
             <div class="naviItem02 hlg01">
                 <ul class="clearfix">
-                    <li><a href="#">お知らせ</a></li>
-                    <li><a href="#">配送について</a></li>
-                    <li><a href="#">お支払について</a></li>
-                    <li><a href="#">メールマガジン登録</a></li>
+                    <li><a href="{{url('index')}}#news_area">お知らせ</a></li>
+                    <li><a href="{{url('help_guide')}}#delivery">配送について</a></li>
+                    <li><a href="{{url('help_guide')}}#payment">お支払について</a></li>
+                    <li><a href="{{url('mypage_change')}}">メールマガジン登録</a></li>
                 </ul>
             </div>
             <div class="telItem hlg01">
                 <div class="telItemBox">
                     <p>ご注文専用ダイヤル</p>
-                    <p class="mb10"><a href="tel:0120-976-702" class="noClick"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_tel.png" alt="0120-976-702" class="visiblePC"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_tel_sp.png" alt="0120-976-702" class="visibleTS"></a></p>
+                    <p class="mb10"><a href="tel:{{Baseinfo.tel01|default('0120')}}-{{Baseinfo.tel02|default('976')}}-{{Baseinfo.tel03|default('702')}}" class="noClick"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_tel.png" alt="0120-976-702" class="visiblePC"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/img_tel_sp.png" alt="0120-976-702" class="visibleTS"></a></p>
                     <p class="fs01 fwN">受付時間 : 9:00〜12:00 / 13:00〜17:00<br>（土日・祝日を除く）</p>
                 </div>
             </div>
@@ -181,7 +181,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             </ul>
         </div>
         <div id="footerBtm">
-            <p class="footerLinks"><a href="#">ご利用規約</a>　｜　<a href="#">特定商取引に基づく表記</a>　｜　<a href="#">プライバシーポリシー</a></p>
+            <p class="footerLinks"><a href="{{url('help_agreement')}}">ご利用規約</a>　｜　<a href="{{url('help_tradelaw')}}">特定商取引に基づく表記</a>　｜　<a href="{{url('help_privacy')}}">プライバシーポリシー</a></p>
             <p id="copyright">Copyright(C) 2015 KAMI SHOJI CO.,LTD. All Rights Reserved.</p>
         </div>
     </div>

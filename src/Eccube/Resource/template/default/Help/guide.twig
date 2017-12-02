@@ -22,20 +22,228 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% extends 'default_frame.twig' %}
 
 {% block main %}
-    <div id="contents" class="main_only">
-        <div id="guide_wrap" class="container-fluid inner no-padding">
-            <div id="main">
-                <h1 class="page-heading">ご利用ガイド</h1>
-                <div id="guide_box__body"  class="container-fluid">
-                    <div id="guide_box__body_inner" class="row">
-                        <div id="guide_box__body_item" class="col-md-10 col-md-offset-1">
-
-
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-
-                </div>
-            </div>
+    <input type="hidden" id="pageID" value="gNav04">
+    <h2 class="hdL">会員特典とご利用方法</h2>
+    <div class="memberGuide">
+        <div class="memberGuideHead">
+            <p class="memberGuideTitle">エルモアいちばん宅配便へ<br class="visibleTS">ようこそ！</p>
+            <p><span class="titLine">当サイトはメーカーのインターネット直接販売です</span></p>
+        </div>
+        <div class="memberGuideBody">
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide01.png" alt="会員登録でご購入金額 5〜20% 引き" class="visiblePC"><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide01_sp.png" alt="会員登録でご購入金額 5〜20% 引き" class="visibleTS"></p>
+            <p>※割引はケース販売商品のみ適用となります。価格は、ログイン後に表示されます。</p>
+            <p class="memberGuideBtn"><a href="{{ url('entry') }}">新規会員登録(無料)はこちら</a></p>
+            <p class="memberGuideImg01"><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide02.png" alt=""></p>
+            <p class="memberGuideImg02"><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide03.png" alt=""></p>
         </div>
     </div>
+    <!-- /#memberGuide -->
+
+    <div id="delivery" class="txtWrap">
+        <h3 class="hdM">送料・配達について</h3>
+        <div class="importNote">
+            <p>ケース販売商品は、<br class="visibleTS">送料・手数料が無料！<br>パック販売商品は、{{ BaseInfo.delivery_free_amount|default('3000')|price }}以上で<br class="visibleTS">送料・手数料が無料！</p>
+        </div>
+        <!-- /.importNote -->
+
+        <h4 class="hdS">送料について</h4>
+        <div class="txtIndBox">
+            <p>ケース販売商品は、送料・決済時の手数料が無料です。<br>パック販売商品は、{{ BaseInfo.delivery_free_amount|default('3000')|price }}以上のご注文で送料・決済時の手数料が無料です。<br>一回のご注文金額が{{ BaseInfo.delivery_free_amount|default('3000')|price }}未満の場合、送料\ 700をいただきます。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">配送について</h4>
+        <div class="txtIndBox">
+            <p>商品のお届けは、当社にてご注文確認後、通常1週間以内となります。<br>ただし、配送事情によって前後する場合がございますので、ご了承ください。<br>配送日のご指定は、ご注文日から５営業日後（※）～１ヶ月後の期間において承ります。</p>
+            <ul class="list01">
+                <li>※最短でご指定いただける日にちにつきましては、ご注文の曜日・時間帯やお届けする地域により異なります。<br>実際にご指定いただける日にちについては、ご注文の際、お届け先住所を入力後の画面で、ご確認いただけます。<br>ご注文の曜日・お届け先によっては、最短の指定可能日が５日後以降となることもございます。<br>また、一部山間部・離島にお届けの場合、ご希望の日時の変更をお願いすることもございますので、<br>あらかじめご了承ください。</li>
+            </ul>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">配送会社について</h4>
+        <div class="txtIndBox">
+            <p>クロネコヤマトの宅急便での配送となります。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">配送可能地域について</h4>
+        <div class="txtIndBox">
+            <p>クロネコヤマトの宅急便の宅急便配送地域であれば、日本全国に配送可能です。<br>ただし、日本国外には配送できません。<br>宅急便の配送可能地域に関しては、クロネコヤマトの宅急便のホームページにてご確認ください。</p>
+            <ul class="list01">
+                <li>※東北地方の一部地域におきまして、配送できないエリアや<br>配達希望日時のご指定を承ることのできないエリアがございます。<br>詳しくは<a href="{{url('help_tradelaw')}}" class="txtLink01">こちら</a>をご覧ください。</li>
+            </ul>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">配送状況</h4>
+        <div class="txtIndBox">
+            <p><a href="#" class="txtLink01">クロネコヤマトの荷物お問い合わせシステム</a>にて確認することが出来ます。<br>納品日指定のお客様は離島等一部地域を除いて納品日の3日前の出荷となります。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">商品開封時の注意点</h4>
+        <div class="txtIndBox">
+            <p>商品開封時には段ボールケース等で手を傷つけるおそれがありますので、十分ご注意の上、開封して下さい。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">のし（短冊シール）添付サービスについて</h4>
+        <div class="txtIndBox">
+            <p>「御中元」「御歳暮」「内祝」など、７種類よりご選択いただけます。<br>くわしくは<a href="{{url('help_tradelaw')}}" class="txtLink01">こちら</a></p>
+        </div>
+        <!-- /.txtIndBox -->
+
+    </div>
+    <!-- /.txtWrap -->
+
+    <div id="payment" class="txtWrap">
+        <h3 class="hdM">お支払い方法について</h3>
+        <p class="mb25">「エルモアいちばん宅配便」では下記のお支払方法をご利用いただけます。<br>お支払方法は、購入手続きの途中でご指定いただけます。</p>
+        <h4 class="hdS">クレジットカード払い</h4>
+        <div class="txtIndBox">
+            <p class="mb20">ご注文時に以下のクレジットカードをご利用いただけます。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_bank_cart01.jpg" alt="クレジットカード払い" class="visiblePC"><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_bank_cart01_sp.png" alt="クレジットカード払い" class="visibleTS"></p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">宅配便コレクト（代金引換サービス）</h4>
+        <div class="txtIndBox">
+            <p class="mb20">商品お届け時に、現金・クレジットカード・デビットカード・電子マネーから自由にお支払いをすることができます。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_bank_cart02.jpg" alt="宅配便コレクト（代金引換サービス）" class="visiblePC"><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_bank_cart02_sp.png" alt="宅配便コレクト（代金引換サービス）" class="visibleTS"></p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">クロネコWebコレクト</h4>
+        <div class="txtIndBox">
+            <p class="fwB mb10">コンビニオンライン</p>
+            <p class="mb15">クロネコWebコレクトをご利用いただけます。<br>ご購入時に表示される受付番号を利用し、セブン-イレブン・ローソン・ファミリーマート・サークルKサンクス・ミニストップ・セイコーマートのコンビニ端末等でお支払いいただけます。<br>ご注文から７日以内にお支払いください。７日を過ぎますと、キャンセルとさせていただきます。<br>弊社にて入金を確認後、発送いたします。そのため、配達日時のご指定はお受けできません。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_join_shop.jpg" alt="クロネコWebコレクト" class="visiblePC"><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_join_shop_sp.png" alt="クロネコWebコレクト" class="visibleTS"></p>
+        </div>
+        <!-- /.txtIndBox -->
+        <div class="txtIndBox">
+            <p class="fwB mb10">ネットバンク</p>
+            <p>楽天銀行口座をお持ちの場合、お客様の口座から直接お支払いいただけます。<br>詳しくは<a href="#" class="txtLink01">こちら</a></p>
+            <ul class="list01">
+                <li>※クロネコWebコレクト（電子マネー）はご利用いただけません。<br>電子マネーでのお支払いは、宅急便コレクトをご利用ください。</li>
+            </ul>
+        </div>
+        <!-- /.txtIndBox -->
+    </div>
+    <!-- /.txtWrap -->
+
+    <div class="txtWrap">
+        <h3 class="hdM">領収書・納品明細書について</h3>
+        <h4 class="hdS">宅急便コレクト（代金引換・お届け時カード払い・お届け時電子マネー払い）でお支払いの場合</h4>
+        <div class="txtIndBox">
+            <p>ヤマト運輸のドライバーがお届け時に、代金と引き換えにお渡しする名刺サイズのものが正規の領収書となります。<br>弊社名での発行はできません。<br>領収書の宛名は、お届け先のお名前となり、商品名の記載はありません。<br>「納品明細書」を商品と同梱しておりますので、ドライバーからお受け取りになる領収書とあわせてご利用ください。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">注文時クレジットカード払いの場合</h4>
+        <div class="txtIndBox">
+            <p class="fwB">【ご注文者さまとお届け先が同じ場合】</p>
+            <p class="mb20">「納品明細書 兼 領収書」を商品と同梱いたします。</p>
+            <p class="fwB">【ご注文者さまとお届け先が異なる場合】</p>
+            <p>「納品明細書 兼 領収書」や「納品明細書」は同梱いたしません。<br>領収書が必要な方は、ご注文時のコメント欄に「領収書必要」とご入力ください。<br>ご注文者さまへ別途郵送いたします。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">クロネコWebコレクト（コンビニオンライン）でお支払いの場合</h4>
+        <div class="txtIndBox">
+            <p class="mb15">コンビニエンスストアでお支払いの際に、お受け取りいただいたものが正規の領収書となり、<br>弊社名での発行はできません。</p>
+            <p class="fwB">【ご注文者さまとお届け先が同じ場合】</p>
+            <p class="mb20">「納品明細書」を商品と同梱しておりますので、コンビニでお受け取りになる領収書とあわせてご利用ください。</p>
+            <p class="fwB">【ご注文者さまとお届け先が異なる場合】</p>
+            <p>「納品明細書」は同梱いたしません。また、コンビニでの領収書には、商品名の記載はありません。<br>医療費控除にご利用される場合、おむつの使用者さまのお名前でご注文ください。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+        <h4 class="hdS">クロネコWebコレクト（楽天銀行）でお支払いの場合</h4>
+        <div class="txtIndBox">
+            <p class="fwB">【ご注文者さまとお届け先が同じ場合】</p>
+            <p class="mb20">「納品明細書 兼 領収書」を商品と同梱いたします。</p>
+            <p class="fwB">【ご注文者さまとお届け先が異なる場合】</p>
+            <p class="mb30">「納品明細書 兼 領収書」や「納品明細書」は同梱いたしません。<br>領収書が必要な方は、ご注文時のコメント欄に「領収書必要」とご入力ください。<br>ご注文者さまへ別途郵送いたします。</p>
+            <p>領収書を医療費控除にご利用される場合、ご使用者さまのお名前と、<br>おむつの購入代金であるとの記載が必要です。<br>お届け先とおむつの使用者さまのお名前が異なる場合、<br>注文時のコメント欄に「おむつ使用者名：○○○○」とおむつをご使用になる方のお名前をご入力ください。<br>「納品明細書」に記載いたします。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+    </div>
+    <!-- /.txtWrap -->
+
+    <div class="txtWrap">
+        <h3 class="hdM">注文方法</h3>
+        <h4 class="hd01">1.商品をショッピングカートに入れる</h4>
+        <div class="txtBox">
+            <p class="mb20">各商品の詳細ページにある「カートにいれる」ボタンをクリックします。<br>カートに入れた商品はいつでも出し入れできます。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_buy01.jpg" alt=""></p>
+        </div>
+        <!-- /.txtBox -->
+        <h4 class="hd01">2.カートに入れた商品を確認する</h4>
+        <div class="txtBox">
+            <p class="mb20">ページ右上にある「カートの中身を見る」のアイコンをクリックして、<br>カートに入れた商品を確認し、購入する商品を選びます。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_buy02.jpg" alt=""></p>
+        </div>
+        <!-- /.txtBox -->
+        <h4 class="hd01">3.会計に進む</h4>
+        <div class="txtBox">
+            <p class="mb20">「会計」ボタンをクリックします。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_buy03.jpg" alt=""></p>
+        </div>
+        <!-- /.txtBox -->
+        <h4 class="hd01">4.必要事項を入力する</h4>
+        <div class="txtBox">
+            <p class="mb20">注文書にお届け先、支払い方法などを入力します。<br>お支払いには代金引換、クレジットカード・デビットカード・電子マネーがご利用いただけます。<br>詳しくは<a href="#" class="txtLink01">こちら</a>をご覧ください。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_buy04.jpg" alt=""></p>
+        </div>
+        <!-- /.txtBox -->
+        <h4 class="hd01">5.注文を確定する</h4>
+        <div class="txtBox">
+            <p class="mb20">「注文を確定する」ボタンをクリックします。これで注文手続きは完了です。<br>手続き終了後、エルモアいちばん宅配便からEメールで注文確認書が届きます。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_buy05.jpg" alt=""></p>
+        </div>
+        <!-- /.txtBox -->
+        <h4 class="hd01">6.決済手続きを行う（クロネコWebコレクトでお支払いいただく場合）</h4>
+        <div class="txtBox">
+            <p class="mb20">お支払い方法にクロネコWebコレクトを選択いただいた場合、<br>ヤマトフィナンシャルのクロネコWebコレクトのページが表示されますので、表示に従い、手続きを行います。</p>
+            <p><img src="{{ app.config.front_urlpath }}/ellemoi/img/guide/img_guide_buy06.jpg" alt=""></p>
+        </div>
+        <!-- /.txtBox -->
+
+    </div>
+    <!-- /.txtWrap -->
+
+    <div class="txtWrap">
+
+        <h3 class="hdM">返品・お取替えについて</h3>
+        <p class="mb25">返品・お取替えについては、<a href="#" class="txtLink01">特定商取引法に基づく表示をご覧ください</a>。</p>
+        <h4 class="hdS">ご注文のキャンセルまたは注文内容の変更について</h4>
+        <div class="txtIndBox">
+            <p class="mb15">ご注文時に選択されたお支払い方法により異なります。<br>いずれの場合も、<span class="txtColorRed">ご注文後最初の午前10:00までのみ</span>、キャンセル及び注文内容の変更が可能です。</p>
+            <div class="changeTime">
+                <dl class="clearfix">
+                    <dt>9月1日午前9:00にご注文の場合</dt>
+                    <dd><span class="mark">→</span><span class="cont">9月1日午前10:00まで</span></dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>9月1日午前10:10にご注文の場合</dt>
+                    <dd><span class="mark">→</span><span class="cont">9月2日午前10:00まで</span></dd>
+                </dl>
+            </div>
+            <p class="mb30">それ以降は、出荷手配を始めるため、キャンセル・変更をお受けできません。</p>
+            <p class="fwB">【注文時クレジットカード払いの場合】</p>
+            <p class="mb15">キャンセルの受付は可能です。商品や数量を変更される場合、一度キャンセル後、再度ご注文ください。</p>
+            <p class="fwB">【宅急便コレクト（代金引換）の場合】</p>
+            <p class="mb15">キャンセル・注文内容の変更とも可能です。</p>
+            <p class="fwB">【クロネコWebコレクト（コンビニオンライン）でご注文の場合】</p>
+            <p class="mb15">キャンセルの受付は可能です。商品や数量を変更される場合、一度キャンセル後、再度ご注文ください。<br>ただし、お支払い済みの場合、キャンセル・変更はお受けできません。</p>
+            <p class="fwB">【クロネコWebコレクト（楽天銀行）でご注文の場合】</p>
+            <p class="mb30">キャンセル・変更はお受けできません。</p>
+            <p>キャンセル・注文内容の変更をご希望される場合、ご注文後最初の午前10:00までに、<br>お客様相談係へのお電話または、<a href="mailto:{{ BaseInfo.email02|default('ichiban@ellemoi.co.jp') }}" class="txtLink01">{{ BaseInfo.email02|default('ichiban@ellemoi.co.jp') }}</a>へのメールにてご連絡ください。<br>その際、注文番号、お名前、ご連絡先をあわせてお知らせください。<br>メールでご連絡の場合でも、内容によってはお電話させていただく場合もございますので、あらかじめご了承ください。<br>また、弊社での出荷手配開始後のキャンセルは、お客様都合による返品として扱わせていただきます。</p>
+        </div>
+        <!-- /.txtIndBox -->
+
+    </div>
+    <!-- /.txtWrap -->
 {% endblock %}

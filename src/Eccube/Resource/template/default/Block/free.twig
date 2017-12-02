@@ -26,18 +26,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 <div class="sideLinks">
     <ul>
-        <li><a href="#">はじめての方へ</a></li>
-        <li><a href="#">配送について</a></li>
-        <li><a href="#">お支払について</a></li>
+        <li><a href="{{url('entry')}}">はじめての方へ</a></li>
+        <li><a href="{{url('help_guide')}}#delivery">配送について</a></li>
+        <li><a href="{{url('help_guide')}}#payment">お支払について</a></li>
     </ul>
 </div>
 
 <div class="sideLogin">
-    <p><a href="#">メールマガジン登録</a></p>
+    <p><a href="{{url('mypage_change')}}">メールマガジン登録</a></p>
     <p>エルモアいちばん宅急便の最新情報 &amp; お得な情報を毎週お届けします！</p>
 </div>
 
 <ul class="sideBanner clearfix">
-    <li><a href="#"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/bnr_side01.png" alt=""></a></li>
-    <li><a href="#"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/bnr_side02.png" alt=""></a></li>
+    <li><a href="{{url('index')}}"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/bnr_side01.png" alt=""></a></li>
+    <li><a href="{{url('index')}}"><img src="{{ app.config.front_urlpath }}/ellemoi/img/common/bnr_side02.png" alt=""></a></li>
 </ul>
