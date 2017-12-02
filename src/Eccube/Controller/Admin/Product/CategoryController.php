@@ -29,6 +29,8 @@ use Eccube\Controller\AbstractController;
 use Eccube\Entity\Master\CsvType;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -77,6 +79,10 @@ class CategoryController extends AbstractController
         $app['eccube.event.dispatcher']->dispatch(EccubeEvents::ADMIN_PRODUCT_CATEGORY_INDEX_INITIALIZE, $event);
 
         $form = $builder->getForm();
+        $image = $TargetCategory->getCategoryImage();
+        if ($image) {
+            $form['images']->setData(array($image));
+        }
 
         //
         if ($request->getMethod() === 'POST') {
@@ -86,6 +92,24 @@ class CategoryController extends AbstractController
                     throw new BadRequestHttpException('リクエストが不正です');
                 }
                 log_info('カテゴリ登録開始', array($id));
+
+                $add_images = $form->get('add_images')->getData();
+                if (count($add_images) > 0) {
+                    $TargetCategory->setCategoryImage($add_images[0]);
+                    $file = new File($app['config']['image_temp_realdir'].'/'.$add_images[0]);
+                    $file->move($app['config']['image_save_realdir']);
+                }
+                $delete_images = $form->get('delete_images')->getData();
+                foreach ($delete_images as $delete_image) {
+                    if (!empty($delete_image)) {
+                        if ($delete_image == $TargetCategory->getCategoryImage()) {
+                            $TargetCategory->setCategoryImage(null);
+                        }
+                        $fs = new Filesystem();
+                        $fs->remove($app['config']['image_save_realdir'].'/'.$delete_image);
+                    }
+                }
+                
                 $status = $app['eccube.repository.category']->save($TargetCategory);
 
                 if ($status) {
@@ -128,6 +152,32 @@ class CategoryController extends AbstractController
             'TopCategories' => $TopCategories,
             'TargetCategory' => $TargetCategory,
         ));
+    }
+
+    public function addImage(Application $app, Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw new BadRequestHttpException('リクエストが不正です');
+        }
+
+        $images = $request->files->get('admin_category');
+
+        $files = array();
+        if (count($images) > 0) {
+            foreach ($images as $img) {
+                    $mimeType = $img->getMimeType();
+                    if (0 !== strpos($mimeType, 'image')) {
+                        throw new UnsupportedMediaTypeHttpException('ファイル形式が不正です');
+                    }
+
+                    $extension = $img->getClientOriginalExtension();
+                    $filename = date('mdHis').uniqid('_').'.'.$extension;
+                    $img->move($app['config']['image_temp_realdir'], $filename);
+                    $files[] = $filename;
+            }
+        }
+
+        return $app->json(array('files' => $files), 200);
     }
 
     public function delete(Application $app, Request $request, $id)

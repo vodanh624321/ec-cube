@@ -156,6 +156,11 @@ class Category extends \Eccube\Entity\AbstractEntity
     private $name;
 
     /**
+     * @var string
+     */
+    private $category_image;
+
+    /**
      * @var integer
      */
     private $level;
@@ -241,6 +246,30 @@ class Category extends \Eccube\Entity\AbstractEntity
     {
         return $this->name;
     }
+
+    /**
+     * Set name
+     *
+     * @param  string   $name
+     * @return Category
+     */
+    public function setCategoryImage($name)
+    {
+        $this->category_image = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getCategoryImage()
+    {
+        return $this->category_image;
+    }
+
 
     /**
      * Set level

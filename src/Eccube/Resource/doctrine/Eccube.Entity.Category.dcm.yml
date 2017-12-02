@@ -36,6 +36,9 @@ Eccube\Entity\Category:
             unsigned: false
             options:
                 default: '0'
+        category_image:
+            type: text
+            nullable: true
     manyToOne:
         Parent:
             targetEntity: Eccube\Entity\Category
