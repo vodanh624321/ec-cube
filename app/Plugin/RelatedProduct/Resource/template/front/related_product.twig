@@ -1,0 +1,35 @@
+{#
+ This file is part of the Related Product plugin
+
+ Copyright(c) 2000-2016 LOCKON CO.,LTD. All Rights Reserved.
+ http://www.lockon.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+<h3 class="hdM">関連商品</h3>
+<div class="productList">
+    <ul class="clearfix">
+        {% for RelatedProduct in RelatedProducts %}
+        <li>
+            <div class="productItem biggerlink">
+                <p class="productImg"><a href="{{ url('product_detail', {id : RelatedProduct.ChildProduct.id}) }}"><img src="{{ app.config.image_save_urlpath }}/{{ RelatedProduct.ChildProduct.main_list_image|no_image_product }}"></a></p>
+                <div class="productItemBox">
+                    <p class="hlg01">{{ RelatedProduct.ChildProduct.name }}</p>
+                    <p class="productPrice">
+                    {% if RelatedProduct.ChildProduct.hasProductClass %}
+                        {% if RelatedProduct.ChildProduct.getPrice02Min == RelatedProduct.ChildProduct.getPrice02Max %}
+                            {{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|price }}
+                        {% else %}
+                            {{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|price }} ～ {{ RelatedProduct.ChildProduct.getPrice02IncTaxMax|price }}
+                        {% endif %}
+                    {% else %}
+                        {{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|price }}
+                    {% endif %}
+                    </p>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
