@@ -1,3 +1,16 @@
+{% block stylesheet %}
+<style type="text/css">
+    div#cart {
+        min-width: 317px;
+    }
+    @media only screen and (min-width: 768px) {
+        div#cart {
+            left: -300px;
+        }
+    }
+</style>
+{% endblock %}
+
 <div id="cart_area">
     <p class="clearfix cart-trigger" style="display:none;"><a href="#cart">
             <svg class="cb cb-shopping-cart">
@@ -10,7 +23,7 @@
         </a>
         <span class="cart_price pc">合計 <span class="price">{{ Cart.total_price|price }}</span></span>
         </p>
-    <div id="cart" class="cart" style="left: -300px; min-width:317px">
+    <div id="cart" class="cart">
         <div class="inner">
             {% for error in app.session.flashbag.get('eccube.front.cart.error')  %}
                 <div class="message">
