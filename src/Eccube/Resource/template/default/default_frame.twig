@@ -48,7 +48,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     <link rel="stylesheet" href="{{ app.config.front_urlpath }}/css/default.css?v={{ constant('Eccube\\Common\\Constant::VERSION') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ app.config.front_urlpath }}/ellemoi/css/import.css" media="all">
-    <link rel="stylesheet" type="text/css" href="{{ app.config.front_urlpath }}/ellemoi/js/slick/slick.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{{ app.config.front_urlpath }}/ellemoi/css/slick/slick.css" media="all">
     <link rel="stylesheet" type="text/css" href="{{ app.config.front_urlpath }}/ellemoi/css/custom.css" media="all">
     <!-- for original theme CSS -->
     {% block stylesheet %}{% endblock %}
@@ -119,7 +119,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 <div id="main">
                     {# ▼メイン上部 #}
                     {% if PageLayout.MainTop %}
-                        <div id="main_top">
+                        <div id="main_top" class="mainInner">
                             {{ include('block.twig', {'Blocks': PageLayout.MainTop}) }}
                         </div>
                     {% endif %}
@@ -131,7 +131,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                     {# ▼メイン下部 #}
                     {% if PageLayout.MainBottom %}
-                        <div id="main_bottom">
+                        <div id="main_bottom" class="mainInner">
                             {{ include('block.twig', {'Blocks': PageLayout.MainBottom}) }}
                         </div>
                     {% endif %}

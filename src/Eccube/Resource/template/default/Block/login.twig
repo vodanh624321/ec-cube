@@ -22,12 +22,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <div id="headerCustomer">
 {% if is_granted('ROLE_USER') %}
 <p>ようこそ {{ app.user.name01 }} {{ app.user.name02 }}様</p>
+{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 <select name="mypagemenu" onchange="location = this.value;">
-    <option value="#">---------------</option>
-    <option value="{{ url('mypage') }}">ご注文履歴</option>
-    <option value="{{ url('mypage_favorite') }}">お気に入り一覧</option>
-    <option value="{{ url('mypage_change') }}">会員情報編集</option>
-    <option value="{{ url('mypage_delivery') }}">お届け先編集</option>
+    <option {% if currentPath == path('mypage') %}selected=selected{% endif %} value="{{ url('mypage') }}">ご注文履歴</option>
+    <option {% if currentPath == path('mypage_favorite') %}selected=selected{% endif %} value="{{ url('mypage_favorite') }}">お気に入り一覧</option>
+    <option {% if currentPath == path('mypage_change') %}selected=selected{% endif %} value="{{ url('mypage_change') }}">会員情報編集</option>
+    <option {% if currentPath == path('mypage_delivery') %}selected=selected{% endif %} value="{{ url('mypage_delivery') }}">お届け先編集</option>
     <!-- <option><a href="{{ url('mypage_withdraw') }}">退会手続き</a></option> -->
     <option value="{{ url('logout') }}">ログアウト</option>
     </select>
