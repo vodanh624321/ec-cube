@@ -34,7 +34,7 @@ use Eccube\Util\Cache;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20171205540000 extends AbstractMigration
+class Version20171205550000 extends AbstractMigration
 {
 
     /**
