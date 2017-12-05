@@ -4,8 +4,6 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\ORM\EntityManager;
-use Eccube\Entity\PageLayout;
 
 class Version20171201120000 extends AbstractMigration
 {
@@ -15,7 +13,7 @@ class Version20171201120000 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-      if ($this->connection->getDatabasePlatform()->getName() == "mysql") {
+        if ($this->connection->getDatabasePlatform()->getName() == "mysql") {
             $this->addSql("SET FOREIGN_KEY_CHECKS=0;");
             $this->addSql("SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';");
         }

@@ -33,6 +33,8 @@ use Eccube\Util\EntityUtil;
  */
 class Product extends \Eccube\Entity\AbstractEntity
 {
+    const NEW_PRODUCT = 1;
+
     private $_calc = false;
     private $stockFinds = array();
     private $stocks = array();
@@ -122,6 +124,26 @@ class Product extends \Eccube\Entity\AbstractEntity
     public function isEnable()
     {
         return $this->getStatus()->getId() === \Eccube\Entity\Master\Disp::DISPLAY_SHOW ? true : false;
+    }
+
+    /**
+     * Check new product
+     *
+     * @return bool
+     */
+    public function isNew()
+    {
+        $tags = $this->getProductTag();
+        if (count($tags) < 0) {
+            return false;
+        }
+        /** @var ProductTag $tag */
+        foreach ($tags as $tag) {
+            if ($tag->getTag()->getId() == Product::NEW_PRODUCT) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

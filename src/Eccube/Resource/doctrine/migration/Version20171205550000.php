@@ -26,12 +26,15 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\ORM\EntityManagerInterface;
+use Eccube\Entity\Block;
+use Eccube\Entity\BlockPosition;
 use Eccube\Util\Cache;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20171202200000 extends AbstractMigration
+class Version20171205540000 extends AbstractMigration
 {
 
     /**
@@ -39,15 +42,27 @@ class Version20171202200000 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        // Install plugin
-        $app = \Eccube\Application::getInstance();
-        $app->removePluginConfigCache();
-        Cache::clear($app, false);
-        $repoPlugin = $app['eccube.repository.plugin']->findOneBy(array('code' => 'RelatedProduct'));
-        if ($repoPlugin) {
-            $pluginService = $app['eccube.service.plugin'];
-            $pluginService->enable($repoPlugin);
+        if ($this->connection->getDatabasePlatform()->getName() == "mysql") {
+            $this->addSql("SET FOREIGN_KEY_CHECKS=0;");
+            $this->addSql("SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';");
         }
+
+        $this->addSql("UPDATE dtb_block_position SET block_row=9 WHERE block_id=4;");
+//        $app = \Eccube\Application::getInstance();
+//        /** @var EntityManagerInterface $em */
+//        $em = $app["orm.em"];
+//
+//        /** @var Block $block */
+//        $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'recommend_product_block'));
+//        if ($block) {
+//            /** @var BlockPosition $blockPosition */
+//            $blockPosition = $block->getBlockPositions()->first();
+//            $blockPosition->setBlockRow(2);
+//            $blockPosition->setAnywhere(0);
+//
+//            $em->persist($blockPosition);
+//            $em->flush();
+//        }
     }
 
     /**

@@ -1,0 +1,37 @@
+{#
+ * This file is part of the Recommend Product plugin
+ *
+ * Copyright (C) 2016 LOCKON CO.,LTD. All Rights Reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+#}
+
+<!-- ▼item_list▼ -->
+<h2 class="hdL">おすすめ商品<span>recommended item</span></h2>
+<div class="productList">
+    <ul class="clearfix">
+        {% for RecommendProduct in recommend_products %}
+            <li>
+                <div class="productItem biggerlink {% if RecommendProduct.Product.new %}icoNew{% endif %}">
+                    <p class="productImg"><a class="bl-bigger" href="{{ url('product_detail', {'id': RecommendProduct.Product.id}) }}"><img src="{{ app.config.image_save_urlpath }}/{{ RecommendProduct.Product.mainFileName|no_image_product }}"></a></p>
+                    <div class="productItemBox">
+                        <p class="hlg01">{{ RecommendProduct.Product.name }}</p>
+                        <p class="productPrice">
+                            {% if RecommendProduct.Product.hasProductClass %}
+                                {% if RecommendProduct.Product.getPrice02Min == RecommendProduct.Product.getPrice02Max %}
+                                    {{ RecommendProduct.Product.getPrice02IncTaxMin|price }}
+                                {% else %}
+                                    {{ RecommendProduct.Product.getPrice02IncTaxMin|price }} ～ {{ RecommendProduct.Product.getPrice02IncTaxMax|price }}
+                                {% endif %}
+                            {% else %}
+                                {{ RecommendProduct.Product.getPrice02IncTaxMin|price }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<!-- ▲item_list▲ -->

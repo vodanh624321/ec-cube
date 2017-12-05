@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of EC-CUBE
  *
@@ -21,19 +22,38 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+namespace DoctrineMigrations;
 
-namespace Eccube\Controller\Block;
+use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\DBAL\Schema\Schema;
+use Eccube\Util\Cache;
 
-use Eccube\Application;
-
-class RecommendController
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+class Version20171205540000 extends AbstractMigration
 {
-    public function index(Application $app)
-    {
-        $products = $app['eccube.repository.product']->getRecommendProduct();
 
-        return $app->render('Block/recommend.twig', array(
-            'products' => $products
-        ));
+    /**
+     * @param Schema $schema
+     */
+    public function up(Schema $schema)
+    {
+        // Install plugin
+        $app = \Eccube\Application::getInstance();
+        $app->removePluginConfigCache();
+        Cache::clear($app, false);
+        $plugin = $app['eccube.repository.plugin']->findOneBy(array('code' => 'Recommend'));
+        if ($plugin) {
+            $pluginService = $app['eccube.service.plugin'];
+            $pluginService->enable($plugin);
+        }
+    }
+
+    /**
+     * @param Schema $schema
+     */
+    public function down(Schema $schema)
+    {
     }
 }
