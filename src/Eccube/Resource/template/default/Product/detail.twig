@@ -89,7 +89,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     <h2 class="hdL">{{ Product.name }}</h2>
     <!-- ▼item_detail▼ -->
     <div id="item_detail">
-        <div id="detail_wrap" class="row">
+        <div id="detail_wrap" \>
             <!--★画像★-->
             <!-- <div id="item_photo_area" class="col-sm-6"> -->
                 <div id="detail_image_box__slides" class="productDetailImg">
@@ -102,7 +102,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                     <div class="slider sliderNav">
                         {% for ProductImage in Product.ProductImage %}
-                        <div><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
+                        <div class="thumb"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
                         {% endfor %}
                     </div>
 
@@ -125,30 +125,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         {% endfor %}
                     </div>
                 </div>
+                {% if Product.freearea %}
                 <div class="productDetailItem">
-                    <ul class="list01">
-                        <li>■「見た目」にこだわった箱デザイン</li>
-                        <li>■ふんわり柔らかなティシュー</li>
-                        <li>■320枚（160組）</li>
-                        <li>■ピュアパルプ100%</li>
-                        <li>■送料・手数料無料</li>
-                    </ul>
+                    {{ include(template_from_string(Product.freearea)) }}
                 </div>
+                {% endif %}
                 <!-- ▲関連カテゴリ▲ -->
                 <!--★商品名★-->
                 {#<h3 id="detail_description_box__name" class="item_name">{{ Product.name }}</h3>#}
                 <div id="detail_description_box__body" class="item_detail">
 
-                    {% if Product.ProductTag is not empty %}
                         <!--▼商品タグ-->
+                    <!-- {% if Product.ProductTag is not empty %}
                         <div id="product_tag_box" class="product_tag">
                             {% for ProductTag in Product.ProductTag %}
                                 <span id="product_tag_box__product_tag--{{ ProductTag.Tag.id }}" class="product_tag_list">{{ ProductTag.Tag }}</span>
                             {% endfor %}
                         </div>
                         <hr>
+                    {% endif %} -->
                         <!--▲商品タグ-->
-                    {% endif %}
 
                     <!--★通常価格★-->
                     {% if Product.hasProductClass -%}
@@ -269,13 +265,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <p id="detail_not_stock_box__description_detail" class="productIntrBox">{{ Product.description_detail|raw|nl2br }}</p>
 
         {# フリーエリア #}
-        {% if Product.freearea %}
+        <!-- {% if Product.freearea %}
         <div id="sub_area" class="row">
             <div class="col-sm-10 col-sm-offset-1">
                 <div id="detail_free_box__freearea" class="freearea">{{ include(template_from_string(Product.freearea)) }}</div>
             </div>
         </div>
-        {% endif %}
+        {% endif %} -->
     </div>
     <!-- ▲item_detail▲ -->
 {% endblock %}

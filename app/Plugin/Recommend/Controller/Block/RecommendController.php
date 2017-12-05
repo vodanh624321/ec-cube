@@ -29,6 +29,7 @@ class RecommendController
      */
     public function index(Application $app)
     {
+        // die();
         $Disp = $app['eccube.repository.master.disp']->find(Disp::DISPLAY_SHOW);
 
         /**
