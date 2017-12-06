@@ -1,0 +1,220 @@
+{% extends 'default_frame.twig' %}
+
+{% set menus = ['content', 'banner'] %}
+
+{% block title %}コンテンツ管理{% endblock %}
+{% block sub_title %}バナー{% endblock %}
+
+{% form_theme form 'Form/bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ app.config.admin_urlpath }}/assets/css/fileupload/jquery.fileupload.css">
+<link rel="stylesheet" href="{{ app.config.admin_urlpath }}/assets/css/fileupload/jquery.fileupload-ui.css">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+    .ui-state-highlight {
+        height: 148px;
+        border: dashed 1px #ccc;
+        background: #fff;
+    }
+</style>
+{% endblock stylesheet %}
+
+{% block javascript %}
+<script src="{{ app.config.admin_urlpath }}/assets/js/vendor/fileupload/vendor/jquery.ui.widget.js"></script>
+<script src="{{ app.config.admin_urlpath }}/assets/js/vendor/fileupload/jquery.iframe-transport.js"></script>
+<script src="{{ app.config.admin_urlpath }}/assets/js/vendor/fileupload/jquery.fileupload.js"></script>
+<script src="{{ app.config.admin_urlpath }}/assets/js/vendor/fileupload/jquery.fileupload-process.js"></script>
+<script src="{{ app.config.admin_urlpath }}/assets/js/vendor/fileupload/jquery.fileupload-validate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script>
+$(function() {
+    $("#thumb").sortable({
+        cursor: 'move',
+        opacity: 0.7,
+        placeholder: 'ui-state-highlight',
+        update: function (event, ui) {
+            updateRank();
+        }
+    });
+    var proto_img = ''
+            + '<li class="ui-state-default">'
+            + '<img src="__path__" />'
+            + '<a class="delete-image">'
+            + '<svg class="cb cb-close">'
+            + '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cb-close"></use>'
+            + '</svg>'
+            + '</a>'
+            + '</li>';
+    var proto_add = '{{ form_widget(form.add_images.vars.prototype) }}';
+    var proto_del = '{{ form_widget(form.delete_images.vars.prototype) }}';
+    {% for image in form.images %}
+    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_save_urlpath }}/{{ image.vars.value }}'));
+    var $widget = $('{{ form_widget(image) }}');
+    $widget.val('{{ image.vars.value }}');
+    $("#thumb").append($img.append($widget));
+    {% endfor %}
+    {% for add_image in form.add_images %}
+    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_temp_urlpath }}/{{ add_image.vars.value }}'));
+    var $widget = $('{{ form_widget(add_image) }}');
+    $widget.val('{{ add_image.vars.value }}');
+    $("#thumb").append($img.append($widget));
+    {% endfor %}
+    {% for delete_image in form.delete_images %}
+    $("#thumb").append('{{ form_widget(delete_image) }}');
+    {% endfor %}
+    var hideSvg = function () {
+        if ($("#thumb li").length > 0) {
+            $("#icon_no_image").css("display", "none");
+        } else {
+            $("#icon_no_image").css("display", "");
+        }
+    };
+    var updateRank = function () {
+        $("#thumb li").each(function (index) {
+            $(this).find(".rank_images").remove();
+            filename = $(this).find("input[type='hidden']").val();
+            $rank = $('<input type="hidden" class="rank_images" name="rank_images[]" />');
+            $rank.val(filename + '//' + parseInt(index + 1));
+            $(this).append($rank);
+        });
+    }
+    hideSvg();
+    updateRank();
+    // 画像削除時
+    var count_del = 0;
+    $("#thumb").on("click", ".delete-image", function () {
+        var $new_delete_image = $(proto_del.replace(/__name__/g, count_del));
+        var src = $(this).prev().attr('src')
+                .replace('{{ app.config.image_temp_urlpath }}/', '')
+                .replace('{{ app.config.image_save_urlpath }}/', '');
+        $new_delete_image.val(src);
+        $("#thumb").append($new_delete_image);
+        $(this).parent("li").remove();
+        hideSvg();
+        updateRank();
+        count_del++;
+    });
+    var count_add = {{ form.add_images|length|default(0) }};
+    $('#{{ form.file_name.vars.id }}').fileupload({
+        url: "{{ url('admin_file_name_add') }}",
+        type: "post",
+        sequentialUploads: true,
+        dataType: 'json',
+        done: function (e, data) {
+            console.log(data);
+            $('#progress').hide();
+            $.each(data.result.files, function (index, file) {
+                var path = '{{ app.config.image_temp_urlpath }}/' + file;
+                var $img = $(proto_img.replace(/__path__/g, path));
+                var $new_img = $(proto_add.replace(/__name__/g, count_add));
+                $new_img.val(file);
+                $child = $img.append($new_img);
+                $('#thumb').append($child);
+                count_add++;
+            });
+            hideSvg();
+            updateRank();
+        },
+        fail: function (e, data) {
+            alert('アップロードに失敗しました。');
+        },
+        always: function (e, data) {
+            $('#progress').hide();
+            $('#progress .progress-bar').width('0%');
+        },
+        start: function (e, data) {
+            $('#progress').show();
+        },
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        maxFileSize: 10000000,
+        maxNumberOfFiles: 10,
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+            );
+        },
+        processalways: function (e, data) {
+            if (data.files.error) {
+                alert("画像ファイルサイズが大きいか画像ファイルではありません。");
+            }
+        }
+    });
+    // 画像アップロード
+    $('#file_upload').on('click', function () {
+        $('#{{ form.file_name.vars.id }}').click();
+    });
+});
+
+function fnClass(action) {
+    document.form1.action = action;
+    document.form1.submit();
+    return false;
+}
+
+</script>
+{% endblock javascript %}
+
+{% block main %}
+        <div class="row" id="aside_wrap">
+            <form role="form" name="form1" id="form1" method="post" action="" novalidate enctype="multipart/form-data">
+            {{ form_widget(form._token) }}
+                <div id="detail_wrap" class="col-md-9">
+                    <div id="detail_box" class="box form-horizontal">
+                        <div id="detail_box__header" class="box-header">
+                            <h3 class="box-title">バナー</h3>
+                        </div><!-- /.box-header -->
+                        <div id="detail_box__body" class="box-body">
+
+                            <div id="detail_box__image" class="form-group">
+                                <label class="col-sm-2 control-label" for="admin_product_file_name">
+                                    {{ form.file_name.vars.label }}<br>
+                                    <span class="small">620px以上推奨</span>
+                                </label>
+                                <div id="detail_files_box" class="col-sm-9 col-lg-10">
+                                    <div class="photo_files" id="drag-drop-area">
+                                        <svg id="icon_no_image" class="cb cb-photo no-image"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cb-photo"></use></svg>
+                                        <ul id="thumb" class="clearfix"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group marB30">
+                                <div id="detail_box__file_upload" class="col-sm-offset-2 col-sm-9 col-lg-10 ">
+
+                                    <div id="progress" class="progress progress-striped active" style="display:none;">
+                                        <div class="progress-bar progress-bar-info"></div>
+                                    </div>
+
+                                    {{ form_widget(form.file_name, { attr : { accept : 'image/*', style : 'display:none;' } }) }}
+                                    {{ form_errors(form.file_name) }}
+                                    <a id="file_upload" class="with-icon">
+                                        <svg class="cb cb-plus"> <use xlink:href="#cb-plus" /></svg>ファイルをアップロード
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col -->
+
+                <div class="col-md-3" id="aside_column">
+                    <div id="common_box" class="col_inner">
+                        <div id="common_button_box" class="box no-header">
+                            <div id="common_button_box__body" class="box-body">
+                            <div id="common_button_box__insert_button" class="row text-center">
+                            <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
+                                <button type="submit" class="btn btn-primary btn-block btn-lg prevention-btn prevention-mask" >商品を登録</button>
+                            </div>
+                                </div>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+
+                    </div>
+                </div><!-- /.col -->
+
+            </form>
+        </div>
+
+{% endblock %}

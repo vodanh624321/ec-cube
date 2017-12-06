@@ -151,6 +151,9 @@ class AdminControllerProvider implements ControllerProviderInterface
 
         $c->match('/content/cache', '\Eccube\Controller\Admin\Content\CacheController::index')->bind('admin_content_cache');
 
+        $c->post('/content/banner/image/add', '\Eccube\Controller\Admin\Content\BannerController::addImage')->bind('admin_file_name_add');
+        $c->match('/content/banner', '\Eccube\Controller\Admin\Content\BannerController::index')->bind('admin_content_banner');
+
         // shop
         $c->match('/setting/shop', '\Eccube\Controller\Admin\Setting\Shop\ShopController::index')->bind('admin_setting_shop');
 

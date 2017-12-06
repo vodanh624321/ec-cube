@@ -1,0 +1,25 @@
+Eccube\Entity\Banner:
+    type: entity
+    table: dtb_banner
+    repositoryClass: Eccube\Repository\BannerRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            column: banner_id
+            generator:
+                strategy: AUTO
+    fields:
+        file_name:
+            type: text
+            nullable: false
+        rank:
+            type: integer
+            nullable: true
+            unsigned: false
+        create_date:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }

@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             <li class="{% if active_menus(menus)[0] == 'content' %}active{% endif %}">
                 <a class="toggle"><svg class="cb cb-file-text"> <use xlink:href="#cb-file-text" /></svg>コンテンツ管理<svg class="cb cb-angle-down"> <use xlink:href="#cb-angle-down" /></svg></a>
                 <ul {% if active_menus(menus)[0] == 'content' %}class="active" style="display: block;"{% endif %}>
+                    <li id="navi-contents-banner" class="{% if active_menus(menus)[1] == 'banner' %}active{% endif %}"><a href="{{ url('admin_content_banner') }}">バナー</a></li>
                     <li id="navi-contents-index" class="{% if active_menus(menus)[1] == 'news' %}active{% endif %}"><a href="{{ url('admin_content') }}">新着情報管理</a></li>
                     <li id="navi-contents-file" class="{% if active_menus(menus)[1] == 'file' %}active{% endif %}"><a href="{{ url('admin_content_file') }}">ファイル管理</a></li>
                     <li id="navi-contents-page" class="{% if active_menus(menus)[1] == 'page' %}active{% endif %}"><a href="{{ url('admin_content_page') }}">ページ管理</a></li>

@@ -84,11 +84,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual03.jpg" alt=""></div>
         </div>
     </div>
+    {% if banners|length > 0 %}
     <ul class="homeBannerList clearfix">
-        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home01.jpg" alt=""></a></li>
-        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home02.jpg" alt=""></a></li>
-        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home03.jpg" alt=""></a></li>
-        <li><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home04.jpg" alt=""></a></li>
-        <li class="wFull"><a href="#" class="op"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home05.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/bnr_home05_sp.jpg" class="visibleSP" alt=""></a></li>
+        {% for banner in banners %}
+            {% if loop.last %}
+                <li class="wFull"><a href="#" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner|no_image_product }}" class="visibleTP" alt=""><img src="{{ app.config.image_save_urlpath }}/{{ banner|no_image_product }}" class="visibleSP" alt=""></a></li>
+            {% else %}
+                <li><a href="#" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner|no_image_product }}"/></a></li>
+            {% endif %}
+        {% endfor %}
     </ul>
+    {% endif %}
 {% endblock %}

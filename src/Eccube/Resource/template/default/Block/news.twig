@@ -19,14 +19,28 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #}
+{% block stylesheet %}
+<style type="text/css">
+    .newslist dl dt span.news_title:hover {
+        text-decoration: none !important;
+        color: #1b1b1b !important;
+        font-weight: bold !important;
+    }
+    .newslist dl dt span.news_title {
+        text-decoration: underline !important;
+        color: #2d6eab !important;
+        font-weight: bold !important;
+    }
+</style>
+{% endblock %}
 <div class="homeNews news_contents">
     <div id="news_area" style="background:none;">
         <h2 class="hd02">お知らせ</h2>
         <div class="accordion">
         <div class="newslist">
             {% for News in NewsList %}
-            <dl>
-                <dt>
+            <dl style="border-bottom: 1px solid #eee; border-top:none;">
+                <dt style="padding-left: 0px;">
                     <span class="date">{{ News.date|date("Y.m.d") }}</span>
                     <span class="news_title">{{ News.title }}</span>
                     {% if News.comment or News.url %}
