@@ -24,11 +24,10 @@
 
 namespace Eccube\Form\Type\Admin;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Eccube\Entity\Banner;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class BannerType.
@@ -41,8 +40,16 @@ class BannerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('type', 'choice', array(
+                'label' => 'タイプ',
+                'expanded' => true,
+                'choices'  => array(
+                    Banner::BANNER => 'バナー',
+                    Banner::SLIDER => 'スライダー',
+                ),
+            ))
             ->add('file_name', 'file', array(
-                'label' => 'バナー',
+                'label' => 'バナー/スライダー',
                 'multiple' => true,
                 'required' => false,
                 'mapped' => false,
@@ -67,6 +74,20 @@ class BannerType extends AbstractType
                 'mapped' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
+            ))
+            ->add('links', 'collection', array(
+                'label' => 'バナーリンク/スライダリンク',
+                'type' => 'url',
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'options'  => array(
+                    'attr' => array(
+                        'placeholder' => 'URLを入力してください',
+                        'pattern' => 'https?://.+',
+                        'data-fv-uri' => 'true',
+                        ),
+                ),
             ))
         ;
     }

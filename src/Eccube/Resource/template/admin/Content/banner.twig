@@ -17,6 +17,13 @@
         border: dashed 1px #ccc;
         background: #fff;
     }
+    .image_link img {
+        max-width: 150px;
+    }
+    .image_link {
+        padding-bottom: 10px;
+        border-bottom: dashed 1px #ccc;
+    }
 </style>
 {% endblock stylesheet %}
 
@@ -37,6 +44,9 @@ $(function() {
             updateRank();
         }
     });
+    var image_link = '<div class="image_link marB10" id="image_link__key__">'
+        + '<img class="marB10" src="__path__" />'
+        + '</div>';
     var proto_img = ''
             + '<li class="ui-state-default">'
             + '<img src="__path__" />'
@@ -47,22 +57,44 @@ $(function() {
             + '</a>'
             + '</li>';
     var proto_add = '{{ form_widget(form.add_images.vars.prototype) }}';
+    var proto_link = '{{ form_widget(form.links.vars.prototype) }}';
     var proto_del = '{{ form_widget(form.delete_images.vars.prototype) }}';
-    {% for image in form.images %}
-    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_save_urlpath }}/{{ image.vars.value }}'));
-    var $widget = $('{{ form_widget(image) }}');
-    $widget.val('{{ image.vars.value }}');
-    $("#thumb").append($img.append($widget));
+    var appendImageLink = function (key, path, linkData) {
+        var $image_link = image_link.replace(/__key__/g, key);
+        $image_link = $($image_link.replace(/__path__/g, path));
+        var $link = $(proto_link.replace(/__name__/g, key));
+        if (linkData) {
+            $link.val(linkData);
+        }
+        $("#detail_link").append($image_link.append($link));
+    };
+    {% for key, image in form.images %}
+        var image_url = '{{ app.config.image_save_urlpath }}/{{ image.vars.value }}';
+        var $img = $(proto_img.replace(/__path__/g, image_url));
+        var $widget = $('{{ form_widget(image) }}');
+        $widget.val('{{ image.vars.value }}');
+        $("#thumb").append($img.append($widget));
+
+        var $linkData = '{{ form.links[key].vars.value }}';
+        appendImageLink('{{ key }}', image_url, $linkData);
     {% endfor %}
-    {% for add_image in form.add_images %}
-    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_temp_urlpath }}/{{ add_image.vars.value }}'));
-    var $widget = $('{{ form_widget(add_image) }}');
-    $widget.val('{{ add_image.vars.value }}');
-    $("#thumb").append($img.append($widget));
+
+    var count_old = {{ form.images|length|default(0) }};
+    {% for key, add_image in form.add_images %}
+        var image_url = '{{ app.config.image_temp_urlpath }}/{{ add_image.vars.value }}';
+        var $img = $(proto_img.replace(/__path__/g, image_url));
+        var $widget = $('{{ form_widget(add_image) }}');
+        $widget.val('{{ add_image.vars.value }}');
+        $("#thumb").append($img.append($widget));
+
+        var $linkData = {{ form.links[key].vars.value }};
+        appendImageLink(count_old + '{{ key }}', image_url, $linkData);
     {% endfor %}
+
     {% for delete_image in form.delete_images %}
-    $("#thumb").append('{{ form_widget(delete_image) }}');
+        $("#thumb").append('{{ form_widget(delete_image) }}');
     {% endfor %}
+
     var hideSvg = function () {
         if ($("#thumb li").length > 0) {
             $("#icon_no_image").css("display", "none");
@@ -70,6 +102,7 @@ $(function() {
             $("#icon_no_image").css("display", "");
         }
     };
+
     var updateRank = function () {
         $("#thumb li").each(function (index) {
             $(this).find(".rank_images").remove();
@@ -78,7 +111,7 @@ $(function() {
             $rank.val(filename + '//' + parseInt(index + 1));
             $(this).append($rank);
         });
-    }
+    };
     hideSvg();
     updateRank();
     // 画像削除時
@@ -90,28 +123,36 @@ $(function() {
                 .replace('{{ app.config.image_save_urlpath }}/', '');
         $new_delete_image.val(src);
         $("#thumb").append($new_delete_image);
-        $(this).parent("li").remove();
+        var deleteLi = $(this).parent("li");
+        deleteLi.remove();
+        // Remove image link
+        var $key = $(deleteLi).find('input').first().attr('id').replace('admin_content_banner_add_images_', '').replace('admin_content_banner_images_', '');
+        $('#image_link' + $key).remove();
+
         hideSvg();
         updateRank();
         count_del++;
     });
-    var count_add = {{ form.add_images|length|default(0) }};
+
     $('#{{ form.file_name.vars.id }}').fileupload({
         url: "{{ url('admin_file_name_add') }}",
         type: "post",
         sequentialUploads: true,
         dataType: 'json',
         done: function (e, data) {
-            console.log(data);
             $('#progress').hide();
             $.each(data.result.files, function (index, file) {
                 var path = '{{ app.config.image_temp_urlpath }}/' + file;
                 var $img = $(proto_img.replace(/__path__/g, path));
-                var $new_img = $(proto_add.replace(/__name__/g, count_add));
+                var $new_img = $(proto_add.replace(/__name__/g, count_old));
                 $new_img.val(file);
                 $child = $img.append($new_img);
                 $('#thumb').append($child);
-                count_add++;
+
+                // append image link to new row
+                appendImageLink(count_old, path);
+
+                count_old++;
             });
             hideSvg();
             updateRank();
@@ -142,79 +183,85 @@ $(function() {
             }
         }
     });
+
     // 画像アップロード
     $('#file_upload').on('click', function () {
         $('#{{ form.file_name.vars.id }}').click();
     });
+
+    $("input[name='admin_content_banner[type]']").change(function() {
+        var val = $(this).val();
+        var url = '{{ url('admin_content_banner') }}' + '?type='+val;
+        window.location.href = url;
+    })
+
 });
-
-function fnClass(action) {
-    document.form1.action = action;
-    document.form1.submit();
-    return false;
-}
-
 </script>
 {% endblock javascript %}
 
 {% block main %}
-        <div class="row" id="aside_wrap">
-            <form role="form" name="form1" id="form1" method="post" action="" novalidate enctype="multipart/form-data">
-            {{ form_widget(form._token) }}
-                <div id="detail_wrap" class="col-md-9">
-                    <div id="detail_box" class="box form-horizontal">
-                        <div id="detail_box__header" class="box-header">
-                            <h3 class="box-title">バナー</h3>
-                        </div><!-- /.box-header -->
-                        <div id="detail_box__body" class="box-body">
+    <div class="row" id="aside_wrap">
+        <form name="form1" id="form1" method="post" enctype="multipart/form-data">
+        {{ form_widget(form._token) }}
+            <div id="detail_wrap" class="col-md-9">
+                <div id="detail_box" class="box form-horizontal">
+                    <div id="detail_box__header" class="box-header">
+                        <h3 class="box-title">バナー</h3>
+                    </div><!-- /.box-header -->
+                    <div id="detail_box__body" class="box-body">
+                        {{ form_row(form.type) }}
 
-                            <div id="detail_box__image" class="form-group">
-                                <label class="col-sm-2 control-label" for="admin_product_file_name">
-                                    {{ form.file_name.vars.label }}<br>
-                                    <span class="small">620px以上推奨</span>
-                                </label>
-                                <div id="detail_files_box" class="col-sm-9 col-lg-10">
-                                    <div class="photo_files" id="drag-drop-area">
-                                        <svg id="icon_no_image" class="cb cb-photo no-image"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cb-photo"></use></svg>
-                                        <ul id="thumb" class="clearfix"></ul>
-                                    </div>
+                        <div id="detail_box__image" class="form-group">
+                            <label class="col-sm-2 control-label">
+                                {{ form.file_name.vars.label }}<br>
+                                <span class="small">620px以上推奨</span>
+                            </label>
+                            <div id="detail_files_box" class="col-sm-9 col-lg-10">
+                                <div class="photo_files" id="drag-drop-area">
+                                    <svg id="icon_no_image" class="cb cb-photo no-image"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cb-photo"></use></svg>
+                                    <ul id="thumb" class="clearfix"></ul>
                                 </div>
                             </div>
-                            <div class="form-group marB30">
-                                <div id="detail_box__file_upload" class="col-sm-offset-2 col-sm-9 col-lg-10 ">
-
-                                    <div id="progress" class="progress progress-striped active" style="display:none;">
-                                        <div class="progress-bar progress-bar-info"></div>
-                                    </div>
-
-                                    {{ form_widget(form.file_name, { attr : { accept : 'image/*', style : 'display:none;' } }) }}
-                                    {{ form_errors(form.file_name) }}
-                                    <a id="file_upload" class="with-icon">
-                                        <svg class="cb cb-plus"> <use xlink:href="#cb-plus" /></svg>ファイルをアップロード
-                                    </a>
-
+                        </div>
+                        <div class="form-group marB30">
+                            <div id="detail_box__file_upload" class="col-sm-offset-2 col-sm-9 col-lg-10 ">
+                                <div id="progress" class="progress progress-striped active" style="display:none;">
+                                    <div class="progress-bar progress-bar-info"></div>
                                 </div>
+                                {{ form_widget(form.file_name, { attr : { accept : 'image/*', style : 'display:none;' } }) }}
+                                {{ form_errors(form.file_name) }}
+                                <a id="file_upload" class="with-icon">
+                                    <svg class="cb cb-plus"> <use xlink:href="#cb-plus" /></svg>ファイルをアップロード
+                                </a>
+
+                            </div>
+                        </div>
+                        <div id="image" class="form-group">
+                            <label class="col-sm-2 control-label" for="">
+                                {{ form.links.vars.label }}
+                            </label>
+                            <div id="detail_link" class="col-sm-9 col-lg-10">
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+
+            <div class="col-md-3" id="aside_column">
+                <div id="common_box" class="col_inner">
+                    <div id="common_button_box" class="box no-header">
+                        <div id="common_button_box__body" class="box-body">
+                        <div id="common_button_box__insert_button" class="row text-center">
+                        <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">商品を登録</button>
+                        </div>
                             </div>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
-                </div><!-- /.col -->
 
-                <div class="col-md-3" id="aside_column">
-                    <div id="common_box" class="col_inner">
-                        <div id="common_button_box" class="box no-header">
-                            <div id="common_button_box__body" class="box-body">
-                            <div id="common_button_box__insert_button" class="row text-center">
-                            <div class="col-sm-6 col-sm-offset-3 col-md-12 col-md-offset-0">
-                                <button type="submit" class="btn btn-primary btn-block btn-lg prevention-btn prevention-mask" >商品を登録</button>
-                            </div>
-                                </div>
-                            </div><!-- /.box-body -->
-                        </div><!-- /.box -->
+                </div>
+            </div><!-- /.col -->
 
-                    </div>
-                </div><!-- /.col -->
-
-            </form>
-        </div>
-
+        </form>
+    </div>
 {% endblock %}

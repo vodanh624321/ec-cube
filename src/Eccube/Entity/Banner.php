@@ -10,6 +10,8 @@ use Eccube\Util\EntityUtil;
  */
 class Banner extends \Eccube\Entity\AbstractEntity
 {
+    const BANNER = 1;
+    const SLIDER = 2;
     /**
      * @return string
      */
@@ -32,6 +34,16 @@ class Banner extends \Eccube\Entity\AbstractEntity
      * @var integer
      */
     private $rank;
+
+    /**
+     * @var integer
+     */
+    private $type;
+
+    /**
+     * @var string
+     */
+    private $link;
 
     /**
      * @var \DateTime
@@ -92,6 +104,52 @@ class Banner extends \Eccube\Entity\AbstractEntity
     public function getRank()
     {
         return $this->rank;
+    }
+
+    /**
+     * Set $Link
+     *
+     * @param string $Link
+     * @return Banner
+     */
+    public function setLink($Link)
+    {
+        $this->link = $Link;
+
+        return $this;
+    }
+
+    /**
+     * Get file_name
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param integer $Type
+     * @return Banner
+     */
+    public function setType($Type)
+    {
+        $this->type = $Type;
+
+        return $this;
+    }
+
+    /**
+     * Get Type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**

@@ -4,7 +4,6 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\ORM\Tools\SchemaTool;
 use Eccube\Application;
-use Doctrine\ORM\EntityManager;
 /**
  * Class Version20171206223925.
  */
@@ -56,16 +55,5 @@ class Version20171206223925 extends AbstractMigration
         $tool = new SchemaTool($em);
         $tool->createSchema($classes);
         return true;
-    }
-    /**
-     * Get metadata.
-     *
-     * @param EntityManager $em
-     *
-     * @return array
-     */
-    protected function getMetadata(EntityManager $em)
-    {
-        return $em->getMetadataFactory()->getMetadataFor($this->entity);
     }
 }

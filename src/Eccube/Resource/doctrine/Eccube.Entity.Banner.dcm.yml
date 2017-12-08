@@ -6,7 +6,7 @@ Eccube\Entity\Banner:
         id:
             type: integer
             nullable: false
-            unsigned: false
+            unsigned: true
             id: true
             column: banner_id
             generator:
@@ -18,7 +18,14 @@ Eccube\Entity\Banner:
         rank:
             type: integer
             nullable: true
-            unsigned: false
+            unsigned: true
+        type:
+            type: smallint
+            nullable: true
+            unsigned: true
+        link:
+            type: text
+            nullable: true
         create_date:
             type: datetime
             nullable: false

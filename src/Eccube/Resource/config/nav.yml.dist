@@ -65,7 +65,7 @@
         name: キャッシュ管理
         url: admin_content_cache
       - id: banner
-        name: バナー
+        name: バナー/スライダー
         url: admin_content_banner
 - id: setting
   name: 設定

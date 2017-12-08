@@ -24,15 +24,12 @@
 namespace Eccube\Controller\Admin\Content;
 
 use Eccube\Application;
-use Eccube\Common\Constant;
 use Eccube\Controller\AbstractController;
-use Eccube\Event\EccubeEvents;
-use Eccube\Event\EventArgs;
+use Eccube\Entity\Banner;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnsupportedMediaTypeHttpException;
 
 /**
@@ -48,28 +45,35 @@ class BannerController extends AbstractController
      */
     public function index(Application $app, Request $request)
     {
-        $banners = $app['eccube.repository.banner']->findBy(array(), array('id' => 'ASC'));
-
+        $type = $request->get('type', Banner::BANNER);
+        $banners = $app['eccube.repository.banner']->findBy(array('type' => $type), array('id' => 'ASC'));
         $builder = $app['form.factory']
             ->createBuilder('admin_content_banner');
-
         $form = $builder->getForm();
         $images = array();
-        foreach ($banners as $banner) {
+        $links = array();
+        foreach ($banners as $key => $banner) {
             $images[] = $banner->getFileName();
+            $links[] = $banner->getLink();
         }
         $form['images']->setData($images);
+        $form['links']->setData($links);
+        $form['type']->setData($type);
 
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $add_images = $form->get('add_images')->getData();
+                $old_images = $form->get('images')->getData();
+                $links = $form->get('links')->getData();
                 $cnt = 1;
-                foreach ($add_images as $add_image) {
+                foreach ($add_images as $key => $add_image) {
                     $Banner = new \Eccube\Entity\Banner();
                     $Banner
                         ->setFileName($add_image)
-                        ->setRank($cnt);
+                        ->setRank($cnt)
+                        ->setType($type)
+                        ->setLink($links[$key]);
                     $cnt++;
                     $app['orm.em']->persist($Banner);
 
@@ -90,6 +94,15 @@ class BannerController extends AbstractController
                         $fs->remove($app['config']['image_save_realdir'].'/'.$delete_image);
                     }
                 }
+                if (!empty($old_images)) {
+                    foreach ($old_images as $key => $old_image) {
+                        $Banner = $app['eccube.repository.banner']->findOneBy(array('file_name' => $old_image));
+                        if ($Banner) {
+                            $Banner->setLink($links[$key]);
+                            $app['orm.em']->persist($Banner);
+                        }
+                    }
+                }
                 $app['orm.em']->flush();
                 $app->addSuccess("admin.content.banner.success", 'admin');
 
@@ -99,7 +112,6 @@ class BannerController extends AbstractController
 
         return $app->render('Content/banner.twig', array(
             'form' => $form->createView(),
-            'banners' => $banners,
         ));
     }
 
