@@ -53,6 +53,15 @@ class CategoryType extends AbstractType
                     )),
                 ),
             ))
+            ->add('name_en', 'text', array(
+                'label' => 'カテゴリ英語名',
+                'constraints' => array(
+                    new Assert\NotBlank(),
+                    new Assert\Length(array(
+                        'max' => $this->config['stext_len'],
+                    )),
+                ),
+            ))
             ->add('category_image', 'file', array(
                 'label' => 'Image',
                 'multiple' => false,

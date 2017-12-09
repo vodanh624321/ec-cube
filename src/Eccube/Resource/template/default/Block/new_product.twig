@@ -19,14 +19,16 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #}
-<h2 class="hdL">商品カテゴリーから探す<span>search by category</span></h2>
+<h2 class="hdL">商品カテゴリーから探す</h2>
 <div class="productCategoryList">
     <ul class="clearfix">
     {% for Category in categories %}
         <li>
             <div class="productCategoryItem">
                 <p class="productImg"><a href="{{url('product_list', {'category_id': Category.id})}}"><img src="{{ app.config.image_save_urlpath }}/{{ Category.category_image|no_image_product }}"></a></p>
-                <p class="productCategory"><a href="{{url('product_list', {'category_id': Category.id})}}">{{Category.name}}</a></p>
+                <p class="productCategory">
+                    <a href="{{url('product_list', {'category_id': Category.id})}}">{{Category.name}}<span>{{ Category.name_en }}</span></a>
+                </p>
             </div>
         </li>
     {% endfor %}

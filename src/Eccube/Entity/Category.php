@@ -247,6 +247,31 @@ class Category extends \Eccube\Entity\AbstractEntity
         return $this->name;
     }
 
+    protected $name_en;
+
+    /**
+     * Set name
+     *
+     * @param  string   $name
+     * @return Category
+     */
+    public function setNameEn($name)
+    {
+        $this->name_en = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getNameEn()
+    {
+        return $this->name_en;
+    }
+
     /**
      * Set name
      *

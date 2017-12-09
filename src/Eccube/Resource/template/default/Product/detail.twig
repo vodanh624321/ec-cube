@@ -91,7 +91,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     <div id="item_detail">
         <div id="detail_wrap" class="productDetail clearfix">
             <!--★画像★-->
-            <!-- <div id="item_photo_area" class="col-sm-6"> -->
                 <div id="detail_image_box__slides" class="productDetailImg">
                     {% if Product.ProductImage|length > 0 %}
                     <div class="slider sliderFor {% if Product.new %}icoNew{% endif %}">
@@ -99,13 +98,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         <div id="detail_image_box__item--{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
                         {% endfor %}
                     </div>
-
                     <div class="slider sliderNav">
                         {% for ProductImage in Product.ProductImage %}
                         <div class="thumb"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
                         {% endfor %}
                     </div>
-
                     {% else %}
                         <div id="detail_image_box__item"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></div>
                     {% endif %}
@@ -132,7 +129,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 {% endif %}
                 <!-- ▲関連カテゴリ▲ -->
                 <!--★商品名★-->
-                {#<h3 id="detail_description_box__name" class="item_name">{{ Product.name }}</h3>#}
                 <div id="detail_description_box__body" class="item_detail">
 
                         <!--▼商品タグ-->
