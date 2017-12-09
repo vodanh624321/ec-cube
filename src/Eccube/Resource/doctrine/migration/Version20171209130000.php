@@ -67,14 +67,15 @@ class Version20171209130000 extends AbstractMigration
                 ->setDeletableFlg(0);
 
             $em->persist($block);
+            $em->flush();
         }
         if ($block) {
             /** @var BlockPosition $blockPosition */
             $blockPosition = new BlockPosition();
             $blockPosition->setPageLayout($page)->setPageId(1);
             $blockPosition->setTargetId(4);
-            $blockPosition->setBlockId($block->getId());
             $blockPosition->setBlock($block);
+            $blockPosition->setBlockId($block->getId());
             $blockPosition->setBlockRow(3);
             $blockPosition->setAnywhere(1);
 
