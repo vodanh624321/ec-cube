@@ -57,6 +57,17 @@ class Version20171209130000 extends AbstractMigration
         /** @var Block $block */
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'pg_calendar'));
         $page = $app['eccube.repository.page_layout']->find(1);
+        if (!$block) {
+            $block = new Block();
+            $DeviceType = $app['eccube.repository.master.device_type']->find(10);
+            $block->setDeviceType($DeviceType);
+            $block->setFileName('pg_calendar')
+                ->setName('定休日カレンダー')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(0);
+
+            $em->persist($block);
+        }
         if ($block) {
             /** @var BlockPosition $blockPosition */
             $blockPosition = new BlockPosition();
