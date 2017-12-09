@@ -1,0 +1,8 @@
+admin.holiday.up.complete: 定休日を上へ移動しました。
+admin.holiday.up.error: 定休日を上へ移動できませんでした。
+admin.holiday.down.complete: 定休日を下へ移動しました。
+admin.holiday.down.error: 定休日を下へ移動できませんでした。
+admin.holiday.save.complete: 定休日を保存しました。
+admin.holiday.save.error: 定休日を保存できませんでした。
+admin.holiday.delete.complete: 定休日を削除しました。
+admin.holiday.delete.error: 定休日を削除できませんでした。

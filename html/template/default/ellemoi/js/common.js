@@ -129,16 +129,16 @@ var common = (function(){
 	$(window).on('load resize',function(){
 			$('#sNavi').height($(window).height()-50);
 		});
-	
-	$('#calendar').DatePicker({
-		flat: true,
-		date: ['2017-11-03', '2017-11-04', '2017-11-18', '2017-11-23', '2017-12-01', '2017-12-08', '2017-12-28'],
-		format: 'Y-m-d',
-		calendars: 2,
-		mode: 'multiple',
-		starts: 0
-	});
-	
+	/*
+	// $('#calendar').DatePicker({
+	// 	flat: true,
+	// 	date: ['2017-11-03', '2017-11-04', '2017-11-18', '2017-11-23', '2017-12-01', '2017-12-08', '2017-12-28'],
+	// 	format: 'Y-m-d',
+	// 	calendars: 2,
+	// 	mode: 'multiple',
+	// 	starts: 0
+	// });
+	*/
 	if($('.biggerlink').length > 0){
 		$('.biggerlink').biggerlink();
 	}

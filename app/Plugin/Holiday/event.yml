@@ -1,0 +1,9 @@
+# Front Page Event
+
+# Admin Page Event
+
+# All Page Event
+eccube.event.app.before:
+    - [onRenderHoliday, NORMAL]
+
+# Deprecated Event (for v3.0.0 - 3.0.8)

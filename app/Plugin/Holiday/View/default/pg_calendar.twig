@@ -1,0 +1,53 @@
+{# CSSの初期設定読込 #}
+<link rel="stylesheet" href="{{ app.config.front_urlpath }}/css/pg_calendar.css">
+<div id="calendar" class="calendar hidden-xs">
+    {#<div class="calendar_title">カレンダー</div>#}
+    {% for roop in 0..(HolidayConfig['0']['config_data']-1) %}
+        {% set day = date('first day of this month') %}
+        {% set month = day|date_modify("+" ~ roop ~ " month")|date('n') %}
+        {% set year = day|date_modify("+" ~ roop ~ " month")|date('Y') %}
+
+        {% if (month != "1") %}
+            {% set roop_week = day|date_modify("+" ~ (roop+1) ~ " month")|date_modify('-1 day')|date('W') - day|date_modify(year ~ "-" ~ month ~ "-" ~ "01")|date('W') %}
+        {% else %}
+            {% set roop_week = day|date_modify("+" ~ (roop+1) ~ " month")|date_modify('-1 day')|date('W') - 1 %}
+        {% endif %}
+
+        {% if ((day|date_modify("+" ~ (roop+1) ~ " month")|date_modify('-1 day')|date('w')) == "0") %}
+            {% set roop_week = (roop_week+1) %}
+        {% endif %}
+        {% set day = day|date_modify("+" ~ roop ~ " month")|date_modify('-' ~ day|date_modify("+" ~ roop ~ " month")|date('w') ~ 'days') %}
+
+		<table cellspacing="0" cellpadding="0" class="datepickerViewDays">
+			<thead>
+			<tr>
+				<th colspan="7" class="datepickerMonth">{{ year }}年{{ month }}月の定休日</th>
+			</tr>
+			<tr class="datepickerDoW"><th id="sunday">日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th id="saturday">土</th></tr>
+			</thead>
+			<tbody class="datepickerDays">
+            {% for i in (0..roop_week) %}
+				<tr>
+                    {% for j in (0..6) %}
+                        {% if day|date('n') == month %}
+                            {% if HolidayWeek[j] %}
+								<td class="datepickerSelected">{{ day|date('j') }}</td>
+                            {% else %}
+                                {% if Holidays[month][day|date('j')] is defined and Holidays[month][day|date('j')] is not empty %}
+									<td class="datepickerSelected">{{ day|date('j') }}</td>
+                                {% else %}
+									<td>{{ day|date('j') }}</td>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+							<td>&nbsp;</td>
+                        {% endif %}
+                        {% set day = day|date_modify('+1day') %}
+                    {% endfor %}
+				</tr>
+            {% endfor %}
+			</tbody>
+		</table>
+
+    {% endfor %}
+</div>

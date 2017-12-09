@@ -1,0 +1,42 @@
+{% extends 'default_frame.twig' %}
+{% set menus = ['setting', 'holiday', 'holiday_config'] %}
+
+{% block title %}定休日設定{% endblock %}
+{% block sub_title %}基本設定{% endblock %}
+
+{% form_theme form 'Form/bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script>
+        function changeAction(action) {
+            document.form1.action = action;
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">カレンダー表示月数</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-inline">
+                        <form role="form" class="form-horizontal" name="form1" id="form1" method="post">
+                        {{ form_errors(form.config_data) }}
+                        {{ form_widget(form._token) }}{{ form_widget(form.id) }}
+                        {{ form_widget(form.config_data, {attr: {placeholder: '○ヵ月分表示'}}) }}
+                        &nbsp;ヵ月分表示　　<button class="btn btn-default btn-sm" type="submit" onclick="document.form1.submit(); return false;">この内容で登録する</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="form-inline">
+                        <span style="color:#f00">フロント画面に定休日カレンダーを表示する場合は、「コンテンツ管理－ページ管理」の「レイアウト編集」画面にて「定休日カレンダー」ブロックを設置してください。</br>カレンダーのCSS変更については、「pg_calendar.css」ファイルにて変更してください。</span>
+                    </div>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+{% endblock %}

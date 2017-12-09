@@ -1,0 +1,36 @@
+{% extends 'default_frame.twig' %}
+{% set menus = ['setting', 'holiday', 'holiday_week'] %}
+
+{% block title %}定休日管理{% endblock %}
+{% block sub_title %}定休日管理{% endblock %}
+
+{% form_theme form 'Form/bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script>
+        function changeAction(action) {
+            document.form1.action = action;
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">定休日設定</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body form-horizontal">
+                    <div class="form-inline">
+                        <form role="form" class="form-horizontal" name="form1" id="form1" method="post">
+                        {{ form_errors(form.week) }}
+                        {{ form_widget(form._token) }}{{ form_widget(form.id) }}
+                        {{ form_widget(form.week) }}<button class="btn btn-default btn-sm" type="submit" onclick="document.form1.submit(); return false;">この内容で登録する</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

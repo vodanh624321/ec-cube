@@ -1,0 +1,57 @@
+{#
+* Plugin Name : CheckedItem
+*
+* Copyright (C) 2015 BraTech Co., Ltd. All Rights Reserved.
+* http://www.bratech.co.jp/
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+#}
+<!--最近チェックした商品-->
+{% if checkedItems %}
+    <style type="text/css">
+        .hdM a {
+            font-size: 60%;
+        }
+    </style>
+    {% if delete == 0 %}
+        <h3 class="hdM">
+            この商品を見た人はこんな商品も見ています
+            <a href="{{ url('block_checkeditem_delete')}}" class="btn btn-info btn-sm pull-right">履歴を削除</a>
+        </h3>
+    {% else %}
+        <h3 class="hdM">この商品を見た人はこんな商品も見ています</h3>
+    {% endif %}
+    <div id="checkeditem" class="productList">
+        <ul class="clearfix">
+            {% for checkedItem in checkedItems|slice(0,displayNum)  %}
+                <li>
+                    <div class="productItem biggerlink bl-hot">
+                        <p class="productImg">
+                            <a class="bl-bigger" href="{{ url('product_detail', {'id': checkedItem.id}) }}">
+                                <img src="{{ app.config.image_save_urlpath }}/{{ checkedItem.main_list_image|no_image_product }}">
+                            </a>
+                        </p>
+                        <div class="productItemBox">
+                            <p class="hlg01">{{checkedItem.name}}</p>
+                            <p class="productPrice">
+                                {% if checkedItem.hasProductClass -%}
+                                    {% if checkedItem.getPrice02Min == checkedItem.getPrice02Max %}
+                                        {{ checkedItem.getPrice02IncTaxMin|price }}
+                                    {% elseif checkedItem.getPrice02Min is not null and checkedItem.getPrice02Max is not null %}
+                                        {{ checkedItem.getPrice02IncTaxMin|price }} ～ {{ checkedItem.getPrice02IncTaxMax|price }}
+                                    {% endif %}
+                                {% else -%}
+                                    {% if checkedItem.getPrice02Max is not null %}
+                                        {{ checkedItem.getPrice02IncTaxMin|price }}
+                                    {% endif %}
+                                {% endif -%}
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+{% endif %}

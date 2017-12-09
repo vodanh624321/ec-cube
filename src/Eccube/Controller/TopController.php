@@ -25,13 +25,15 @@
 namespace Eccube\Controller;
 
 use Eccube\Application;
+use Eccube\Entity\Banner;
 
 class TopController extends AbstractController
 {
 
     public function index(Application $app)
     {
-    	$banners = $app['eccube.repository.banner']->findBy(array(), array('id' => 'ASC'));
-        return $app->render('index.twig', array('banners' => $banners));
+    	$banners = $app['eccube.repository.banner']->findBy(array('type' => Banner::BANNER), array('id' => 'ASC'));
+    	$sliders = $app['eccube.repository.banner']->findBy(array('type' => Banner::SLIDER), array('id' => 'ASC'));
+        return $app->render('index.twig', array('banners' => $banners, 'sliders' => $sliders));
     }
 }

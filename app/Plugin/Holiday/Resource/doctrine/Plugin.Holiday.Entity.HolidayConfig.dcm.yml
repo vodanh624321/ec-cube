@@ -1,0 +1,31 @@
+Plugin\Holiday\Entity\HolidayConfig:
+    type: entity
+    table: plg_holiday_config
+    repositoryClass: Plugin\Holiday\Repository\HolidayConfigRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            column: holiday_config_id
+            generator:
+                strategy: AUTO
+    fields:
+        config_data:
+            type: text
+            nullable: true
+        del_flg:
+            type: smallint
+            nullable: false
+            unsigned: false
+            options:
+                default: '0'
+        create_date:
+            type: datetime
+            nullable: false
+        update_date:
+            type: datetime
+            nullable: false
+
+    lifecycleCallbacks: {  }

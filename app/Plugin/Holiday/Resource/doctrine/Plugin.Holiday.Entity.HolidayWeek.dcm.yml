@@ -1,0 +1,31 @@
+Plugin\Holiday\Entity\HolidayWeek:
+    type: entity
+    table: plg_holiday_week
+    repositoryClass: Plugin\Holiday\Repository\HolidayWeekRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            id: true
+            column: holiday_week_id
+            generator:
+                strategy: AUTO
+    fields:
+        week:
+            type: text
+            nullable: false
+        del_flg:
+            type: smallint
+            nullable: false
+            unsigned: false
+            options:
+                default: '0'
+        create_date:
+            type: datetime
+            nullable: false
+        update_date:
+            type: datetime
+            nullable: false
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,13 @@
+Plugin\CheckedItem\Entity\Config:
+    type: entity
+    table: plg_checkeditem_dtb_config
+    repositoryClass: Plugin\CheckedItem\Repository\ConfigRepository
+    id:
+        name:
+            type: text
+            nullable: false
+    fields:
+        value:
+            type: text
+            nullable: true
+    lifecycleCallbacks: {  }

@@ -1,0 +1,82 @@
+{% extends 'default_frame.twig' %}
+
+{% set menus = ['setting', 'holiday', 'holiday'] %}
+
+{% block title %}定休日管理{% endblock %}
+{% block sub_title %}休日管理{% endblock %}
+
+{% form_theme form 'Form/bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block javascript %}
+    <script>
+        function changeAction(action) {
+            document.form1.action = action;
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">休日設定</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-inline">
+                        <form role="form" class="form-horizontal" name="form1" id="form1" method="post">
+                        {{ form_errors(form.title) }}
+                        {{ form_errors(form.month) }}
+                        {{ form_errors(form.day) }}
+                        {{ form_widget(form._token) }}{{ form_widget(form.id) }}
+                        {{ form_widget(form.title, {attr: {placeholder: '休日タイトルを入力'}}) }}　　{{ form_widget(form.month, {attr: {placeholder: '休日(月)'}}) }}&nbsp;月&nbsp;{{ form_widget(form.day, {attr: {placeholder: '休日(日)'}}) }}&nbsp;日　　<button class="btn btn-default btn-sm" type="submit" onclick="document.form1.submit(); return false;">この内容で登録する</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form name="form1" id="form1" method="post" action="">
+                        <div class="table_list">
+                            <div class="table-responsive with-border">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>休日名</th>
+                                        <th>休日日付</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for Holiday in Holidays %}
+                                    <tr>
+                                        <td>{{ Holiday.title }}</td>
+                                        <td>{{ Holiday.month }}月{{ Holiday.day }}日</td>
+                                        <td class="icon_edit">
+                                            <div class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown"><svg class="cb cb-ellipsis-h"> <use xlink:href="#cb-ellipsis-h" /></svg></a>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li>
+                                                        {% if Holiday.id != TargetHoliday.id %}
+                                                            <a href="{{ url('admin_holiday', {id: Holiday.id}) }}">編集</a>
+                                                        {% else %}
+                                                            <a>編集中</a>
+                                                        {% endif %}
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ url('admin_holiday_delete', { id: Holiday.id}) }}" {{ csrf_token_for_anchor() }} data-method="delete">削除</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.box -->
+        </div>
+    </div>
+{% endblock %}

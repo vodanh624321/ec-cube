@@ -64,33 +64,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% endblock %}
 {% block main %}
     <input type="hidden" id="pageID" value="gNav01">
+    {% if sliders|length > 0 %}
     <div id="mainVisual">
         <div class="slider sliderFor">
-            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual01.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual01_sp.jpg" class="visibleSP" alt=""></div>
-            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual02.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual02_sp.jpg" class="visibleSP" alt=""></div>
-            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03_sp.jpg" class="visibleSP" alt=""></div>
-            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual04.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual04_sp.jpg" class="visibleSP" alt=""></div>
-            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual05.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual05_sp.jpg" class="visibleSP" alt=""></div>
-            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual06.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual06_sp.jpg" class="visibleSP" alt=""></div>
-            <div><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03.jpg" class="visibleTP" alt=""><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/mainvisual03_sp.jpg" class="visibleSP" alt=""></div>
+        {% for slider in sliders %}
+            <div>
+            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleTP" alt="">
+            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleSP" alt="">
+            </div>
+        {% endfor %}
         </div>
         <div class="slider sliderNav">
-            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual01.jpg" alt=""></div>
-            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual02.jpg" alt=""></div>
-            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual03.jpg" alt=""></div>
-            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual04.jpg" alt=""></div>
-            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual05.jpg" alt=""></div>
-            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual06.jpg" alt=""></div>
-            <div class="thumb"><img src="{{ app.config.front_urlpath }}/ellemoi/img/home/thumb_mainvisual03.jpg" alt=""></div>
+        {% for slider in sliders %}
+            <div class="thumb">
+            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" alt="">
+            </div>
+        {% endfor %}
         </div>
     </div>
+    {% endif %}
     {% if banners|length > 0 %}
     <ul class="homeBannerList clearfix">
         {% for banner in banners %}
             {% if loop.last %}
-                <li class="wFull"><a href="#" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner|no_image_product }}" class="visibleTP" alt=""><img src="{{ app.config.image_save_urlpath }}/{{ banner|no_image_product }}" class="visibleSP" alt=""></a></li>
+                <li class="wFull"><a href="{{banner.link}}" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleTP" alt=""><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleSP" alt=""></a></li>
             {% else %}
-                <li><a href="#" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner|no_image_product }}"/></a></li>
+                <li><a href="{{banner.link}}" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}"/></a></li>
             {% endif %}
         {% endfor %}
     </ul>

@@ -106,7 +106,7 @@ class BannerController extends AbstractController
                 $app['orm.em']->flush();
                 $app->addSuccess("admin.content.banner.success", 'admin');
 
-                return $app->redirect($app->url('admin_content_banner'));
+                return $app->redirect($app->url('admin_content_banner', ['type' => $type]));
             }
         }
 

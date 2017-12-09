@@ -1,0 +1,8 @@
+name: 最近チェックした商品
+code: CheckedItem
+version: 1.1.2
+event: CheckedItemEvent
+service:
+    - CheckedItemServiceProvider
+orm.path:
+    - /Resource/doctrine
