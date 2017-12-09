@@ -3,6 +3,8 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\ORM\EntityManagerInterface;
+use Eccube\Entity\Block;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -90,12 +92,20 @@ class Version201512111730 extends AbstractMigration{
 		}
 
 		/* ブロックの追加 */
-		$Block_insert = "INSERT INTO dtb_block(
-						block_id, device_type_id, block_name, file_name, logic_flg, deletable_flg, create_date, update_date
-					) VALUES (
-						(SELECT max(block_id) +1 as block_id FROM dtb_block AS sel_dtb_block WHERE device_type_id = 10), '10', '定休日カレンダー', 'pg_calendar', 0, 0, '$datetime', '$datetime'
-					);";
-		$this->connection->executeUpdate($Block_insert);
+        $app = \Eccube\Application::getInstance();
+        /** @var EntityManagerInterface $em */
+        $em = $app["orm.em"];
+
+        $block = new Block();
+        $DeviceType = $app['eccube.repository.master.device_type']->find(10);
+        $block->setDeviceType($DeviceType);
+        $block->setFileName('pg_calendar')
+            ->setName('定休日カレンダー')
+            ->setLogicFlg(0)
+            ->setDeletableFlg(0);
+
+        $em->persist($block);
+        $em->flush();
 
 		/* ブロックファイルとCSSファイルの生成 */
 		$pg_calendar_filename = $app['config']['block_realdir']."/pg_calendar.twig";
