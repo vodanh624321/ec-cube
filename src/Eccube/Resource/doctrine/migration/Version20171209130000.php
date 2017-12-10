@@ -45,9 +45,9 @@ class Version20171209130000 extends AbstractMigration
             $this->addSql("SET FOREIGN_KEY_CHECKS=0;");
             $this->addSql("SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';");
         }
-        $this->addSql("UPDATE dtb_block SET block_name='Free area' WHERE  block_id=9;");
+//        $this->addSql("UPDATE dtb_block SET block_name='Free area' WHERE  block_id=9;");
         $this->addSql("UPDATE dtb_block SET block_name='カテゴリ別製品' WHERE block_id=8;");
-        $this->addSql("UPDATE dtb_block_position SET block_row=4 WHERE block_id=9;");
+        $this->addSql("UPDATE dtb_block_position SET block_row=4 WHERE block_id=9 AND page_id=1;");
         $this->addSql("UPDATE dtb_block_position SET block_row=3 WHERE block_id=8 AND page_id=3;");
 
         $app = \Eccube\Application::getInstance();
