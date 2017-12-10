@@ -82,20 +82,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 </div>
                 <nav id="sNavi" style="height: 433px; display: none;">
                     <ul>
-                        <li><a href="#">マイページ</a></li>
-                        <li><a href="#">新規会員登録</a></li>
-                        <li><a href="#">メールマガジン登録</a></li>
+                        <li><a href="{{url('mypage')}}">マイページ</a></li>
+                        <li><a href="{{url('entry')}}">新規会員登録</a></li>
+                        <li><a href="{{url('mypage_change')}}">メールマガジン登録</a></li>
                     </ul>
                     <ul>
-                        <li><a href="#">商品一覧</a></li>
-                        <li><a href="#">カテゴリーから探す</a></li>
-                        <li><a href="#">会員限定セール</a></li>
-                        <li><a href="#">メーカー工場直販</a></li>
+                        <li><a href="{{url('product_list')}}">商品一覧</a></li>
+                        <li><a href="{{url('index')}}#search_category">カテゴリーから探す</a></li>
+                        <li><a href="{{url('product_list')}}">会員限定セール</a></li>
+                        <li><a href="{{url('product_list')}}">メーカー工場直販</a></li>
                     </ul>
                     <ul>
-                        <li><a href="#">お知らせ</a></li>
-                        <li><a href="#">ご利用ガイド</a></li>
-                        <li><a href="#">お問い合わせ</a></li>
+                        <li><a href="{{url('index')}}#news_area">お知らせ</a></li>
+                        <li><a href="{{url('help_guide')}}">ご利用ガイド</a></li>
+                        <li><a href="{{url('contact')}}">お問い合わせ</a></li>
                     </ul>
                 </nav>
             </div>
