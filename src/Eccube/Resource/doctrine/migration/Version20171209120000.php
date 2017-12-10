@@ -26,6 +26,9 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Eccube\Common\Constant;
+use Eccube\Entity\Plugin;
+use Eccube\Service\PluginService;
 use Eccube\Util\Cache;
 
 /**
@@ -43,15 +46,22 @@ class Version20171209120000 extends AbstractMigration
         $app = \Eccube\Application::getInstance();
         $app->removePluginConfigCache();
         Cache::clear($app, false);
+        /** @var Plugin $plugin */
         $plugin = $app['eccube.repository.plugin']->findOneBy(array('code' => 'CheckedItem'));
+        /** @var PluginService $pluginService */
+        $pluginService = $app['eccube.service.plugin'];
         if ($plugin) {
-            $pluginService = $app['eccube.service.plugin'];
+            if ($plugin->getEnable() == Constant::ENABLED) {
+                $pluginService->disable($plugin);
+            }
             $pluginService->enable($plugin);
         }
 
         $plugin = $app['eccube.repository.plugin']->findOneBy(array('code' => 'Holiday'));
         if ($plugin) {
-            $pluginService = $app['eccube.service.plugin'];
+            if ($plugin->getEnable() == Constant::ENABLED) {
+                $pluginService->disable($plugin);
+            }
             $pluginService->enable($plugin);
         }
     }

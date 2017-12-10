@@ -26,6 +26,9 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Eccube\Common\Constant;
+use Eccube\Entity\Plugin;
+use Eccube\Service\PluginService;
 use Eccube\Util\Cache;
 
 /**
@@ -43,9 +46,14 @@ class Version20171202200000 extends AbstractMigration
         $app = \Eccube\Application::getInstance();
         $app->removePluginConfigCache();
         Cache::clear($app, false);
+        /** @var Plugin $repoPlugin */
         $repoPlugin = $app['eccube.repository.plugin']->findOneBy(array('code' => 'RelatedProduct'));
         if ($repoPlugin) {
+            /** @var PluginService $pluginService */
             $pluginService = $app['eccube.service.plugin'];
+            if ($repoPlugin->getEnable() == Constant::ENABLED) {
+                $pluginService->disable($repoPlugin);
+            }
             $pluginService->enable($repoPlugin);
         }
     }

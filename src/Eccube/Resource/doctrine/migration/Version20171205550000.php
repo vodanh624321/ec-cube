@@ -47,22 +47,7 @@ class Version20171205550000 extends AbstractMigration
             $this->addSql("SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';");
         }
 
-        $this->addSql("UPDATE dtb_block_position SET block_row=9 WHERE block_id=4;");
-//        $app = \Eccube\Application::getInstance();
-//        /** @var EntityManagerInterface $em */
-//        $em = $app["orm.em"];
-//
-//        /** @var Block $block */
-//        $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'recommend_product_block'));
-//        if ($block) {
-//            /** @var BlockPosition $blockPosition */
-//            $blockPosition = $block->getBlockPositions()->first();
-//            $blockPosition->setBlockRow(2);
-//            $blockPosition->setAnywhere(0);
-//
-//            $em->persist($blockPosition);
-//            $em->flush();
-//        }
+        $this->addSql("UPDATE dtb_block_position SET block_row=9 WHERE block_id=4 AND page_id=1;");
     }
 
     /**

@@ -26,6 +26,8 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Eccube\Entity\Plugin;
+use Eccube\Entity\PluginEventHandler;
 use Eccube\Util\Cache;
 use Eccube\Service\PluginService;
 
@@ -49,6 +51,12 @@ class Version20171202150000 extends AbstractMigration
         $app = \Eccube\Application::getInstance();
         $app->removePluginConfigCache();
         Cache::clear($app, false);
+        /** @var Plugin $plugin */
+        $plugin = $app['eccube.repository.plugin']->findOneBy(array('code' => 'RelatedProduct', 'del_flg' => 0));
+        if ($plugin) {
+            return;
+        }
+
         $pluginService = $app['eccube.service.plugin'];
         $dir = $app['config']['plugin_realdir'].'/RelatedProduct/';
         $config = $pluginService->readYml($dir.PluginService::CONFIG_YML);
