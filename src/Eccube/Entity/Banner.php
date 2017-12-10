@@ -12,6 +12,9 @@ class Banner extends \Eccube\Entity\AbstractEntity
 {
     const BANNER = 1;
     const SLIDER = 2;
+
+    const IS_BIG = 2;
+    const IS_SMALL = 1;
     /**
      * @return string
      */
@@ -150,6 +153,31 @@ class Banner extends \Eccube\Entity\AbstractEntity
     public function getType()
     {
         return $this->type;
+    }
+
+    protected $big;
+
+    /**
+     * Set rank
+     *
+     * @param integer $Type
+     * @return Banner
+     */
+    public function setBig($Type)
+    {
+        $this->big = $Type;
+
+        return $this;
+    }
+
+    /**
+     * Get Type
+     *
+     * @return integer
+     */
+    public function getBig()
+    {
+        return $this->big;
     }
 
     /**

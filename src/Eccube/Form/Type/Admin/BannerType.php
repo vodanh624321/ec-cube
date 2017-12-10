@@ -81,12 +81,28 @@ class BannerType extends AbstractType
                 'prototype' => true,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'required' => false,
                 'options'  => array(
                     'attr' => array(
                         'placeholder' => 'URLを入力してください',
                         'pattern' => 'https?://.+',
                         'data-fv-uri' => 'true',
                         ),
+                ),
+            ))
+            ->add('big', 'collection', array(
+                'label' => '大きなバナー',
+                'type' => 'choice',
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+                'options' => array(
+//                    'expanded' => true,
+                    'choices' => array(
+                        Banner::IS_SMALL => '小さい',
+                        Banner::IS_BIG => '大',
+                    ),
                 ),
             ))
         ;

@@ -52,20 +52,24 @@ class BannerController extends AbstractController
         $form = $builder->getForm();
         $images = array();
         $links = array();
-        foreach ($banners as $key => $banner) {
+        $big = array();
+        /** @var Banner $banner */
+        foreach ($banners as $banner) {
             $images[] = $banner->getFileName();
             $links[] = $banner->getLink();
+            $big[] = $banner->getBig();
         }
         $form['images']->setData($images);
         $form['links']->setData($links);
         $form['type']->setData($type);
-
+        $form['big']->setData($big);
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $add_images = $form->get('add_images')->getData();
                 $old_images = $form->get('images')->getData();
                 $links = $form->get('links')->getData();
+                $bigs = $form->get('big')->getData();
                 $cnt = 1;
                 foreach ($add_images as $key => $add_image) {
                     $Banner = new \Eccube\Entity\Banner();
@@ -74,6 +78,9 @@ class BannerController extends AbstractController
                         ->setRank($cnt)
                         ->setType($type)
                         ->setLink($links[$key]);
+                    if ($type == Banner::BANNER) {
+                        $Banner->setBig($bigs[$key]);
+                    }
                     $cnt++;
                     $app['orm.em']->persist($Banner);
 
@@ -83,8 +90,7 @@ class BannerController extends AbstractController
 
                 $delete_images = $form->get('delete_images')->getData();
                 foreach ($delete_images as $delete_image) {
-                    $Banner = $app['eccube.repository.banner']
-                        ->findOneBy(array('file_name' => $delete_image));
+                    $Banner = $app['eccube.repository.banner']->findOneBy(array('file_name' => $delete_image));
                     if ($Banner instanceof \Eccube\Entity\Banner) {
                         $app['orm.em']->remove($Banner);
 
@@ -94,11 +100,16 @@ class BannerController extends AbstractController
                         $fs->remove($app['config']['image_save_realdir'].'/'.$delete_image);
                     }
                 }
+
                 if (!empty($old_images)) {
                     foreach ($old_images as $key => $old_image) {
+                        /** @var Banner $Banner */
                         $Banner = $app['eccube.repository.banner']->findOneBy(array('file_name' => $old_image));
                         if ($Banner) {
                             $Banner->setLink($links[$key]);
+                            if ($type == Banner::BANNER) {
+                                $Banner->setBig($bigs[$key]);
+                            }
                             $app['orm.em']->persist($Banner);
                         }
                     }

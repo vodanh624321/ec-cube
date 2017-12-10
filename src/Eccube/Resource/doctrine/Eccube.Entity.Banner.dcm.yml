@@ -29,4 +29,9 @@ Eccube\Entity\Banner:
         create_date:
             type: datetime
             nullable: false
+        big:
+            type: smallint
+            nullable: true
+            options:
+                default: '0'
     lifecycleCallbacks: {  }

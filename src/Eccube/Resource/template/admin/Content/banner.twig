@@ -57,16 +57,27 @@
                 + '</a>'
                 + '</li>';
             var proto_add = '{{ form_widget(form.add_images.vars.prototype) }}';
-            var proto_link = '{{ form_widget(form.links.vars.prototype) }}';
             var proto_del = '{{ form_widget(form.delete_images.vars.prototype) }}';
-            var appendImageLink = function (key, path, linkData) {
+            var proto_link = '{{ form_widget(form.links.vars.prototype) }}';
+            var proto_big = '<div class="padT08" style="display:__show__;">'+'{{ form_widget(form.big.vars.prototype) }}'+'</div>';
+            var appendImageLink = function (key, path, linkData, isBig) {
                 var $image_link = image_link.replace(/__key__/g, key);
                 $image_link = $($image_link.replace(/__path__/g, path));
                 var $link = $(proto_link.replace(/__name__/g, key));
                 if (linkData) {
                     $link.val(linkData);
                 }
-                $("#detail_link").append($image_link.append($link));
+                var display = 'none';
+                if ('{{ app.request.get('type', 1) }}' == '{{ constant('Eccube\\Entity\\Banner::BANNER') }}') {
+                    display = 'block';
+                }
+                // div included
+                var $big = $(proto_big.replace(/__name__/g, key).replace(/__show__/g, display));
+                if (isBig) {
+                    $big.find('select').val(isBig);
+                }
+
+                $("#detail_link").append($image_link.append($link).append($big));
             };
             {% for key, image in form.images %}
             var image_url = '{{ app.config.image_save_urlpath }}/{{ image.vars.value }}';
@@ -76,7 +87,8 @@
             $("#thumb").append($img.append($widget));
 
             var $linkData = '{{ form.links[key].vars.value }}';
-            appendImageLink('{{ key }}', image_url, $linkData);
+            var $big = '{{ form.big[key].vars.value }}';
+            appendImageLink('{{ key }}', image_url, $linkData, $big);
             {% endfor %}
 
             var count_old = {{ form.images|length|default(0) }};
@@ -88,7 +100,8 @@
             $("#thumb").append($img.append($widget));
 
             var $linkData = {{ form.links[key].vars.value }};
-            appendImageLink(count_old + '{{ key }}', image_url, $linkData);
+            var $big = '{{ form.big[key].vars.value }}';
+            appendImageLink(count_old + '{{ key }}', image_url, $linkData, $big);
             {% endfor %}
 
             {% for delete_image in form.delete_images %}

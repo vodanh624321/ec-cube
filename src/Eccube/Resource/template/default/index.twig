@@ -54,44 +54,66 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     </script>
 {% endblock %}
 {% block stylesheet %}
-<style type="text/css">
-    @media screen and (max-width: 959px) {    
-    .homeBannerList {
-        padding-top: 13px;
-    }
-    }
-</style>
+    <style type="text/css">
+        @media screen and (max-width: 959px) {
+            .homeBannerList {
+                padding-top: 13px;
+            }
+        }
+    </style>
 {% endblock %}
 {% block main %}
     <input type="hidden" id="pageID" value="gNav01">
     {% if sliders|length > 0 %}
-    <div id="mainVisual">
-        <div class="slider sliderFor">
-        {% for slider in sliders %}
-            <div>
-            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleTP" alt="">
-            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleSP" alt="">
+        <div id="mainVisual">
+            <div class="slider sliderFor">
+                {% for slider in sliders %}
+                    <div>
+                        {% if slider.link %}
+                        <a href="{{ slider.link }}">
+                            {% endif %}
+                            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleTP" alt="">
+                            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleSP" alt="">
+                            {% if slider.link %}
+                        </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-        </div>
-        <div class="slider sliderNav">
-        {% for slider in sliders %}
-            <div class="thumb">
-            <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" alt="">
+            <div class="slider sliderNav">
+                {% for slider in sliders %}
+                    <div class="thumb">
+                        <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" alt="">
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
         </div>
-    </div>
     {% endif %}
     {% if banners|length > 0 %}
-    <ul class="homeBannerList clearfix">
-        {% for banner in banners %}
-            {% if loop.last %}
-                <li class="wFull"><a href="{{banner.link}}" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleTP" alt=""><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleSP" alt=""></a></li>
-            {% else %}
-                <li><a href="{{banner.link}}" class="op"><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}"/></a></li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+        <ul class="homeBannerList clearfix">
+            {% for banner in banners %}
+                {% if banner.big == constant('Eccube\\Entity\\Banner::IS_BIG') %}
+                    <li class="wFull">
+                        {% if banner.link %}
+                        <a href="{{banner.link}}" class="op">
+                        {% endif %}
+                            <img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleTP" alt=""><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleSP" alt="">
+                        {% if banner.link %}
+                        </a>
+                        {% endif %}
+                    </li>
+                {% else %}
+                    <li>
+                        {% if banner.link %}
+                        <a href="{{banner.link}}" class="op">
+                            {% endif %}
+                            <img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}"/>
+                        {% if banner.link %}
+                        </a>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
     {% endif %}
 {% endblock %}
