@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="{{ app.config.front_urlpath }}/css/pg_calendar.css">
 <style type="text/css">
 	div#calendar {
+		padding: 20px 0;
 		font-family: Arial, Helvetica, sans-serif;
 	}
 	#calendar a, #calendar td, #calendar th {
@@ -21,6 +22,9 @@
 		line-height: 21px;
 		width: 60px;
 		text-align: center;
+	}
+	.datepickerSpace {
+		height: 10px;
 	}
 </style>
 <div id="calendar" class="calendar hidden-xs">
@@ -72,6 +76,7 @@
             {% endfor %}
 			</tbody>
 		</table>
+		<p class="datepickerSpace"></p>
 
     {% endfor %}
     {#</div>#}

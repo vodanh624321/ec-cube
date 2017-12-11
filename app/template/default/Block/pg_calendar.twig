@@ -23,6 +23,9 @@
 		width: 60px;
 		text-align: center;
 	}
+	.datepickerSpace {
+		height: 10px;
+	}
 </style>
 <div id="calendar" class="calendar hidden-xs">
     {#<div class="calendar_title">カレンダー</div>#}
@@ -73,6 +76,7 @@
             {% endfor %}
 			</tbody>
 		</table>
+		<p class="datepickerSpace"></p>
 
     {% endfor %}
 	{#</div>#}
