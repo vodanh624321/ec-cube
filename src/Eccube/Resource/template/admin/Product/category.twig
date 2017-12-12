@@ -141,17 +141,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             $("#icon_no_image").css("display", "");
         }
     };
-    var updateRank = function () {
-        $("#thumb li").each(function (index) {
-            $(this).find(".rank_images").remove();
-            filename = $(this).find("input[type='hidden']").val();
-            $rank = $('<input type="hidden" class="rank_images" name="rank_images[]" />');
-            $rank.val(filename + '//' + parseInt(index + 1));
-            $(this).append($rank);
-        });
-    }
+//    var updateRank = function () {
+//        $("#thumb li").each(function (index) {
+//            $(this).find(".rank_images").remove();
+//            filename = $(this).find("input[type='hidden']").val();
+//            $rank = $('<input type="hidden" class="rank_images" name="rank_images[]" />');
+//            $rank.val(filename + '//' + parseInt(index + 1));
+//            $(this).append($rank);
+//        });
+//    }
     hideSvg();
-    updateRank();
+//    updateRank();
     // 画像削除時
     var count_del = 0;
     $("#thumb").on("click", ".delete-image", function () {
@@ -163,7 +163,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         $("#thumb").append($new_delete_image);
         $(this).parent("li").remove();
         hideSvg();
-        updateRank();
+//        updateRank();
         count_del++;
     });
 
@@ -186,7 +186,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 count_add++;
             });
             hideSvg();
-            updateRank();
+//            updateRank();
         },
         fail: function (e, data) {
             alert('アップロードに失敗しました。');

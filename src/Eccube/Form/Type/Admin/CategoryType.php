@@ -55,8 +55,8 @@ class CategoryType extends AbstractType
             ))
             ->add('name_en', 'text', array(
                 'label' => 'カテゴリ英語名',
+                'required' => false,
                 'constraints' => array(
-                    new Assert\NotBlank(),
                     new Assert\Length(array(
                         'max' => $this->config['stext_len'],
                     )),
