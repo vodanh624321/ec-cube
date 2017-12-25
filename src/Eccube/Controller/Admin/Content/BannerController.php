@@ -47,22 +47,24 @@ class BannerController extends AbstractController
     {
         $type = $request->get('type', Banner::BANNER);
         $banners = $app['eccube.repository.banner']->findBy(array('type' => $type), array('id' => 'ASC'));
-        $builder = $app['form.factory']
-            ->createBuilder('admin_content_banner');
+        $builder = $app['form.factory']->createBuilder('admin_content_banner');
         $form = $builder->getForm();
         $images = array();
         $links = array();
         $big = array();
+        $target = array();
         /** @var Banner $banner */
         foreach ($banners as $banner) {
             $images[] = $banner->getFileName();
             $links[] = $banner->getLink();
             $big[] = $banner->getBig();
+            $target[] = (bool)$banner->getTarget();
         }
         $form['images']->setData($images);
         $form['links']->setData($links);
         $form['type']->setData($type);
         $form['big']->setData($big);
+        $form['target']->setData($target);
         if ('POST' === $request->getMethod()) {
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -70,6 +72,7 @@ class BannerController extends AbstractController
                 $old_images = $form->get('images')->getData();
                 $links = $form->get('links')->getData();
                 $bigs = $form->get('big')->getData();
+                $targets = $form->get('target')->getData();
                 $cnt = 1;
                 foreach ($add_images as $key => $add_image) {
                     $Banner = new \Eccube\Entity\Banner();
@@ -78,6 +81,9 @@ class BannerController extends AbstractController
                         ->setRank($cnt)
                         ->setType($type)
                         ->setLink($links[$key]);
+                    if (isset($targets[$key])) {
+                        $Banner->setTarget($targets[$key]);
+                    }
                     if ($type == Banner::BANNER) {
                         $Banner->setBig($bigs[$key]);
                     }
@@ -107,6 +113,9 @@ class BannerController extends AbstractController
                         $Banner = $app['eccube.repository.banner']->findOneBy(array('file_name' => $old_image));
                         if ($Banner) {
                             $Banner->setLink($links[$key]);
+                            if (isset($targets[$key])) {
+                                $Banner->setTarget($targets[$key]);
+                            }
                             if ($type == Banner::BANNER) {
                                 $Banner->setBig($bigs[$key]);
                             }

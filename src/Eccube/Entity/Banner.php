@@ -54,6 +54,11 @@ class Banner extends \Eccube\Entity\AbstractEntity
     private $create_date;
 
     /**
+     * @var integer
+     */
+    private $target;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -201,5 +206,28 @@ class Banner extends \Eccube\Entity\AbstractEntity
     public function getCreateDate()
     {
         return $this->create_date;
+    }
+
+    /**
+     * Get target
+     *
+     * @return integer
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * Set target
+     *
+     * @param string $target
+     * @return Banner
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
+
+        return $this;
     }
 }

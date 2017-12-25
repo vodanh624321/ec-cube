@@ -105,6 +105,21 @@ class BannerType extends AbstractType
                     ),
                 ),
             ))
+            ->add('target', 'collection', array(
+                'label' => '別ウィンドウを開く',
+                'type' => 'checkbox',
+                'prototype' => true,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+//                'options' => array(
+//                    'multiple' => true,
+//                    'expanded' => true,
+//                    'choices' => array(
+//                        1 => '別ウィンドウを開く',
+//                    ),
+//                ),
+            ))
         ;
     }
 
