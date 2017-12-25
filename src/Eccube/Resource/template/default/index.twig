@@ -70,11 +70,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 {% for slider in sliders %}
                     <div>
                         {% if slider.link %}
-                        <a href="{{ slider.link }}">
-                            {% endif %}
+                        <a href="{{ slider.link }}" {% if slider.target %}target="_blank"{% endif %}>
+                        {% endif %}
                             <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleTP" alt="">
                             <img src="{{ app.config.image_save_urlpath }}/{{ slider.file_name|no_image_product }}" class="visibleSP" alt="">
-                            {% if slider.link %}
+                        {% if slider.link %}
                         </a>
                         {% endif %}
                     </div>
@@ -95,7 +95,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 {% if banner.big == constant('Eccube\\Entity\\Banner::IS_BIG') %}
                     <li class="wFull">
                         {% if banner.link %}
-                        <a href="{{banner.link}}" class="op">
+                        <a href="{{banner.link}}" class="op" {% if banner.target %}target="_blank"{% endif %}>
                         {% endif %}
                             <img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleTP" alt=""><img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}" class="visibleSP" alt="">
                         {% if banner.link %}
@@ -105,7 +105,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 {% else %}
                     <li>
                         {% if banner.link %}
-                        <a href="{{banner.link}}" class="op">
+                        <a href="{{banner.link}}" class="op" {% if banner.target %}target="_blank"{% endif %}>
                             {% endif %}
                             <img src="{{ app.config.image_save_urlpath }}/{{ banner.file_name|no_image_product }}"/>
                         {% if banner.link %}
