@@ -24,65 +24,65 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% set body_class = 'product_page' %}
 
 {% block javascript %}
-<script type="text/javascript">
-    eccube.classCategories = {{ Product.class_categories|json_encode|raw }};
+    <script type="text/javascript">
+        eccube.classCategories = {{ Product.class_categories|json_encode|raw }};
 
-    // 規格2に選択肢を割り当てる。
-    function fnSetClassCategories(form, classcat_id2_selected) {
-        var $form = $(form);
-        var product_id = $form.find('input[name=product_id]').val();
-        var $sele1 = $form.find('select[name=classcategory_id1]');
-        var $sele2 = $form.find('select[name=classcategory_id2]');
-        eccube.setClassCategories($form, product_id, $sele1, $sele2, classcat_id2_selected);
-    }
+        // 規格2に選択肢を割り当てる。
+        function fnSetClassCategories(form, classcat_id2_selected) {
+            var $form = $(form);
+            var product_id = $form.find('input[name=product_id]').val();
+            var $sele1 = $form.find('select[name=classcategory_id1]');
+            var $sele2 = $form.find('select[name=classcategory_id2]');
+            eccube.setClassCategories($form, product_id, $sele1, $sele2, classcat_id2_selected);
+        }
 
-    {% if form.classcategory_id2 is defined %}
-    fnSetClassCategories(
+        {% if form.classcategory_id2 is defined %}
+        fnSetClassCategories(
             document.form1, {{ form.classcategory_id2.vars.value|json_encode|raw }}
-    );
-    {% elseif form.classcategory_id1 is defined %}
-          eccube.checkStock(document.form1, {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);
-    {% endif %}
-    $(function(){
-        $('.sliderFor').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            fade: true,
-            asNavFor: '.sliderNav',
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        arrows: true
+        );
+        {% elseif form.classcategory_id1 is defined %}
+        eccube.checkStock(document.form1, {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);
+        {% endif %}
+        $(function(){
+            $('.sliderFor').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: '.sliderNav',
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            arrows: true
+                        }
                     }
+                ]
+            });
+            $('.sliderNav').slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                asNavFor: '.sliderFor',
+                arrows: false,
+                focusOnSelect: true
+            });
+
+            $('#favorite').click(function() {
+                $('#mode').val('add_favorite');
+            });
+
+            $('#add-cart').click(function() {
+                $('#mode').val('add_cart');
+            });
+
+            // bfcache無効化
+            $(window).bind('pageshow', function(event) {
+                if (event.originalEvent.persisted) {
+                    location.reload(true);
                 }
-            ]
+            });
         });
-        $('.sliderNav').slick({
-            slidesToShow: 4,
-            slidesToScroll: 1,
-            asNavFor: '.sliderFor',
-            arrows: false,
-            focusOnSelect: true
-        });
-
-        $('#favorite').click(function() {
-            $('#mode').val('add_favorite');
-        });
-
-        $('#add-cart').click(function() {
-            $('#mode').val('add_cart');
-        });
-
-        // bfcache無効化
-        $(window).bind('pageshow', function(event) {
-            if (event.originalEvent.persisted) {
-                location.reload(true);
-            }
-        });
-    });
-</script>
+    </script>
 {% endblock %}
 
 {% block main %}
@@ -91,47 +91,48 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     <div id="item_detail">
         <div id="detail_wrap" class="productDetail clearfix">
             <!--★画像★-->
-                <div id="detail_image_box__slides" class="productDetailImg">
-                    {% if Product.ProductImage|length > 0 %}
+            <div id="detail_image_box__slides" class="productDetailImg">
+                {% if Product.ProductImage|length > 0 %}
                     <div class="slider sliderFor {% if Product.new %}icoNew{% endif %}">
                         {% for ProductImage in Product.ProductImage %}
-                        <div id="detail_image_box__item--{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
+                            <div id="detail_image_box__item--{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
                         {% endfor %}
                     </div>
                     <div class="slider sliderNav">
                         {% for ProductImage in Product.ProductImage %}
-                        <div class="thumb"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
+                            <div class="thumb"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></div>
                         {% endfor %}
                     </div>
-                    {% else %}
-                        <div id="detail_image_box__item"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></div>
-                    {% endif %}
-                </div>
+                {% else %}
+                    <div id="detail_image_box__item"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></div>
+                {% endif %}
+            </div>
 
             <section id="item_detail_area" class="productDetailBox">
                 <div class="productDetailItem">
-                    <p class="productDetailID">{{ Product.id }}</p>
+                    <p class="productDetailID">{{ Product.code_min }}{% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}</p>
                     <!-- ▼関連カテゴリ▼ -->
                     <div id="relative_category_box" class="relative_cat">
-                        {% for ProductCategory in Product.ProductCategories %}
-                            <ol id="relative_category_box__relative_category--{{ ProductCategory.product_id }}_{{ loop.index }}">
-                                {% for Category in ProductCategory.Category.path %}
-                                    <li><a id="relative_category_box__relative_category--{{ ProductCategory.product_id }}_{{ loop.parent.loop.index }}_{{ Category.id }}" href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a></li>
-                                {% endfor %}
-                            </ol>
-                        {% endfor %}
+                        <ol id="relative_category_box__relative_category">
+                            {% for ProductCategory in Product.ProductCategories %}
+                                {% set Category = ProductCategory.Category.path|last %}
+                                <li>
+                                    <a id="relative_category_box__relative_category--{{ ProductCategory.product_id }}_{{ loop.index }}_{{ Category.id }}" href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ol>
                     </div>
                 </div>
                 {% if Product.freearea %}
-                <div class="productDetailItem">
-                    {{ include(template_from_string(Product.freearea|nl2br)) }}
-                </div>
+                    <div class="productDetailItem">
+                        {{ include(template_from_string(Product.freearea|nl2br)) }}
+                    </div>
                 {% endif %}
                 <!-- ▲関連カテゴリ▲ -->
                 <!--★商品名★-->
                 <div id="detail_description_box__body" class="item_detail">
 
-                        <!--▼商品タグ-->
+                    <!--▼商品タグ-->
                     <!-- {% if Product.ProductTag is not empty %}
                         <div id="product_tag_box" class="product_tag">
                             {% for ProductTag in Product.ProductTag %}
@@ -140,37 +141,39 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         </div>
                         <hr>
                     {% endif %} -->
-                        <!--▲商品タグ-->
+                    <!--▲商品タグ-->
 
                     <!--★通常価格★-->
-                    {% if Product.hasProductClass -%}
-                        {% if Product.getPrice01Min is not null and Product.getPrice01IncTaxMin == Product.getPrice01IncTaxMax %}
-                        <p id="detail_description_box__class_normal_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice01IncTaxMin|price }}</i>（税込）</span></p>
-                        {% elseif Product.getPrice01Min is not null and Product.getPrice01Max is not null %}
-                        <p id="detail_description_box__class_normal_range_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice01IncTaxMin|price }} ～ {{ Product.getPrice01IncTaxMax|price }}</i>（税込）</span></p>
-                        {% endif %}
-                    {% else -%}
-                        {% if Product.getPrice01Max is not null %}
-                        <p id="detail_description_box__normal_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice01IncTaxMin|price }}</i>（税込）</span></p>
-                        {% endif %}
-                    {% endif -%}
+                    {#{% if Product.hasProductClass -%}#}
+                    {#{% if Product.getPrice01Min is not null and Product.getPrice01IncTaxMin == Product.getPrice01IncTaxMax %}#}
+                    {#<p id="detail_description_box__class_normal_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice01IncTaxMin|price }}</i>（税込）</span></p>#}
+                    {#{% elseif Product.getPrice01Min is not null and Product.getPrice01Max is not null %}#}
+                    {#<p id="detail_description_box__class_normal_range_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice01IncTaxMin|price }} ～ {{ Product.getPrice01IncTaxMax|price }}</i>（税込）</span></p>#}
+                    {#{% endif %}#}
+                    {#{% else -%}#}
+                    {#{% if Product.getPrice01Max is not null %}#}
+                    {#<p id="detail_description_box__normal_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice01IncTaxMin|price }}</i>（税込）</span></p>#}
+                    {#{% endif %}#}
+                    {#{% endif -%}#}
 
                     <!--★販売価格★-->
                     {% if Product.hasProductClass -%}
                         {% if Product.getPrice02IncTaxMin == Product.getPrice02IncTaxMax %}
-                        <p id="detail_description_box__class_sale_price" class="productPriceMember">会員限定価格 / <span class="fwB"><i>{{ Product.getPrice02IncTaxMin|price }}</i>（税込）</span></p>
+                            <p id="detail_description_box__class_sale_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice02IncTaxMin|price }}</i>（税込）</span></p>
                         {% else %}
-                        <p id="detail_description_box__class_range_sale_price" class="productPriceMember">会員限定価格 / <span class="fwB"><i>{{ Product.getPrice02IncTaxMin|price }} ～ {{  Product.getPrice02IncTaxMax|price }}</i>（税込）</span></p>
+                            <p id="detail_description_box__class_range_sale_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice02IncTaxMin|price }} ～ {{  Product.getPrice02IncTaxMax|price }}</i>（税込）</span></p>
                         {% endif %}
                     {% else -%}
-                        <p id="detail_description_box__sale_price" class="productPriceMember">会員限定価格 / <span class="fwB"><i>{{ Product.getPrice02IncTaxMin|price }}</i>（税込）</span></p>
+                        <p id="detail_description_box__sale_price" class="productPriceNormal">通常販売価格 / <span class="fwB"><i>{{ Product.getPrice02IncTaxMin|price }}</i>（税込）</span></p>
                     {% endif -%}
+
+                    <!--member_price-->
 
                     <!--▼商品コード-->
                     {#<p id="detail_description_box__item_range_code" class="item_code">商品コード： <span id="item_code_default">#}
-                        {#{{ Product.code_min }}#}
-                        {#{% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}#}
-                        {#</span> </p>#}
+                    {#{{ Product.code_min }}#}
+                    {#{% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}#}
+                    {#</span> </p>#}
                     <!--▲商品コード-->
 
                     <form action="?" method="post" id="form1" name="form1">
@@ -179,20 +182,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                             {% if Product.stock_find %}
                                 {# 規格 #}
                                 {% if form.classcategory_id1 is defined %}
-                                <ul id="detail_cart_box__cart_class_category_id" class="classcategory_list">
-                                    {# 規格1 #}
-                                    <li>
-                                        {{ form_widget(form.classcategory_id1) }}
-                                        {{ form_errors(form.classcategory_id1) }}
-                                    </li>
-                                    {# 規格2 #}
-                                    {% if form.classcategory_id2 is defined %}
+                                    <ul id="detail_cart_box__cart_class_category_id" class="classcategory_list">
+                                        {# 規格1 #}
                                         <li>
-                                            {{ form_widget(form.classcategory_id2) }}
-                                            {{ form_errors(form.classcategory_id2) }}
+                                            {{ form_widget(form.classcategory_id1) }}
+                                            {{ form_errors(form.classcategory_id1) }}
                                         </li>
-                                     {% endif %}
-                                </ul>
+                                        {# 規格2 #}
+                                        {% if form.classcategory_id2 is defined %}
+                                            <li>
+                                                {{ form_widget(form.classcategory_id2) }}
+                                                {{ form_errors(form.classcategory_id2) }}
+                                            </li>
+                                        {% endif %}
+                                    </ul>
                                 {% endif %}
 
                                 {# 数量 #}
@@ -258,16 +261,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         </div>
         <!--★商品説明★-->
         <h3 class="hdM">商品説明</h3>
-        <p id="detail_not_stock_box__description_detail" class="productIntrBox">{{ Product.description_detail|raw|nl2br }}</p>
+        {#<p id="detail_not_stock_box__description_detail" class="productIntrBox">{{ Product.description_detail|raw|nl2br }}</p>#}
+        <p id="detail_not_stock_box__description_detail" class="productIntrBox">{{ Product.description_detail|raw }}<br><br></p>
 
         {# フリーエリア #}
-        <!-- {% if Product.freearea %}
-        <div id="sub_area" class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div id="detail_free_box__freearea" class="freearea">{{ include(template_from_string(Product.freearea)) }}</div>
-            </div>
-        </div>
-        {% endif %} -->
+        {#{% if Product.freearea %}#}
+        {#<div id="sub_area" class="row">#}
+        {#<div class="col-sm-10 col-sm-offset-1">#}
+        {#<div id="detail_free_box__freearea" class="freearea">{{ include(template_from_string(Product.freearea)) }}</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#{% endif %}#}
     </div>
     <!-- ▲item_detail▲ -->
     <!--# related-product-plugin-tag #-->
