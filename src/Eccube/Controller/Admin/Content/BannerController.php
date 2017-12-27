@@ -46,7 +46,7 @@ class BannerController extends AbstractController
     public function index(Application $app, Request $request)
     {
         $type = $request->get('type', Banner::BANNER);
-        $banners = $app['eccube.repository.banner']->findBy(array('type' => $type), array('id' => 'ASC'));
+        $banners = $app['eccube.repository.banner']->findBy(array('type' => $type), array('rank' => 'ASC'));
         $builder = $app['form.factory']->createBuilder('admin_content_banner');
         $form = $builder->getForm();
         $images = array();
@@ -73,12 +73,11 @@ class BannerController extends AbstractController
                 $links = $form->get('links')->getData();
                 $bigs = $form->get('big')->getData();
                 $targets = $form->get('target')->getData();
-                $cnt = 1;
                 foreach ($add_images as $key => $add_image) {
                     $Banner = new \Eccube\Entity\Banner();
                     $Banner
                         ->setFileName($add_image)
-                        ->setRank($cnt)
+                        ->setRank(1)
                         ->setType($type)
                         ->setLink($links[$key]);
                     if (isset($targets[$key])) {
@@ -87,7 +86,6 @@ class BannerController extends AbstractController
                     if ($type == Banner::BANNER) {
                         $Banner->setBig($bigs[$key]);
                     }
-                    $cnt++;
                     $app['orm.em']->persist($Banner);
 
                     $file = new File($app['config']['image_temp_realdir'].'/'.$add_image);
@@ -123,6 +121,21 @@ class BannerController extends AbstractController
                         }
                     }
                 }
+                $app['orm.em']->flush();
+
+                $ranks = $request->get('rank_images');
+                if ($ranks) {
+                    foreach ($ranks as $key => $rank) {
+                        list($filename, $rank_val) = explode('//', $rank);
+                        unset($banner);
+                        $banner = $app['eccube.repository.banner']->findOneBy(array('file_name' => $filename, 'type' => $type));
+                        if ($banner) {
+                            $banner->setRank($rank_val);
+                            $app['orm.em']->persist($banner);
+                        }
+                    }
+                }
+
                 $app['orm.em']->flush();
                 $app->addSuccess("admin.content.banner.success", 'admin');
 

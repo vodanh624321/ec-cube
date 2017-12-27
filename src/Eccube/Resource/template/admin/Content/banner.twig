@@ -21,8 +21,8 @@
             max-width: 150px;
         }
         .image_link {
-            padding-bottom: 10px;
-            border-bottom: dashed 1px #ccc;
+            padding: 16px 2em 16px 16px;
+            border-top: 1px solid #d1d8d9;
         }
     </style>
 {% endblock stylesheet %}
@@ -63,6 +63,7 @@
 
             var proto_target = '<div class="marT15">'+'{{ form_widget(form.target.vars.prototype)|e('js')|raw }}'+'</div>';
             var target_label = '{{ form.target.vars.label }}';
+            proto_target = proto_target.replace(/__name__label__/g, target_label);
 
             var appendImageLink = function (key, path, linkData, isBig, target) {
                 var $image_link = image_link.replace(/__key__/g, key);
@@ -81,7 +82,7 @@
                     $big.find('select').val(isBig);
                 }
 
-                var $target = $(proto_target.replace(/__name__label__/g, target_label).replace(/__name__/g, key));
+                var $target = $(proto_target.replace(/__name__/g, key));
                 if (target) {
                     $target.find('input').prop('checked', true);
                 }

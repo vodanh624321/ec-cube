@@ -98,7 +98,6 @@ class BannerType extends AbstractType
                 'allow_delete' => true,
                 'required' => false,
                 'options' => array(
-//                    'expanded' => true,
                     'choices' => array(
                         Banner::IS_SMALL => '小さい',
                         Banner::IS_BIG => '大',
@@ -112,13 +111,6 @@ class BannerType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'required' => false,
-//                'options' => array(
-//                    'multiple' => true,
-//                    'expanded' => true,
-//                    'choices' => array(
-//                        1 => '別ウィンドウを開く',
-//                    ),
-//                ),
             ))
         ;
     }

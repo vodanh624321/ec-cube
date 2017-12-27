@@ -32,8 +32,8 @@ class TopController extends AbstractController
 
     public function index(Application $app)
     {
-    	$banners = $app['eccube.repository.banner']->findBy(array('type' => Banner::BANNER), array('id' => 'ASC'));
-    	$sliders = $app['eccube.repository.banner']->findBy(array('type' => Banner::SLIDER), array('id' => 'ASC'));
+    	$banners = $app['eccube.repository.banner']->findBy(array('type' => Banner::BANNER), array('rank' => 'ASC'));
+    	$sliders = $app['eccube.repository.banner']->findBy(array('type' => Banner::SLIDER), array('rank' => 'ASC'));
         return $app->render('index.twig', array('banners' => $banners, 'sliders' => $sliders));
     }
 }
