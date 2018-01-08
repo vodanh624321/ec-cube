@@ -174,9 +174,14 @@ var common = (function(){
 	$(window).resize(function(){
 		$('.datepicker').height($('.datepickerContainer table').height() + 20);
 	});
-	
-	
-	$('#lNavi a.parents').each(function(){
+
+    // $('#lNavi a.parents').each(function() {
+    //     $(this).click(function(e) {
+    //         return false;
+    //     });
+    // });
+
+	$('#lNavi a.parents span').each(function() {
 		$(this).click(function(){
 			var $parent = $(this).parent();
 			if($parent.find('.subNavi').length > 0){
@@ -189,7 +194,7 @@ var common = (function(){
 				}
 				return false;
 			}
-		});
+        });
 		
 	});
 });

@@ -630,6 +630,7 @@ body > #wrapper {
 #side {
 	float: left;
 	width: 21.25%;
+	position: relative;
 }
 #lNavi {
 	border: 1px solid #d9d9d9;
@@ -648,13 +649,14 @@ body > #wrapper {
 	border-top: 1px solid #d9d9d9;
 }
 #lNavi .subNavi li a {
-	padding: 9px 0 9px 40px;
+	padding: 9px 35px 9px 40px;
 	font-size: 1.3rem;
 	line-height: 1.5;
 	color: #2d6eab;
 	text-decoration: underline;
 	display: block;
 	font-weight: bold;
+	position: relative;
 }
 #lNavi .subNavi li a.parents {
 	background: #e0e9f1;
@@ -677,6 +679,33 @@ body > #wrapper {
 .bg04 {
 	background: #013f77;
 }
+
+.side .subNavi > li a span {
+	/*width: 10px;*/
+	/*height: 100%;*/
+	display: inline-block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	float: right;
+	z-index: 10;
+	/*background: url(../img/common/ico_cat.png) 3px center no-repeat;*/
+	/*background-size: 5px;*/
+}
+
+.side .subNavi > li a.parents span {
+	width: 35px !important;
+	height: 100%;
+	background: url(../img/common/ico_open_w.png) 7px center no-repeat;
+	background-size: 20px;
+}
+.side .subNavi > li a.parents.on span{
+	width:35px !important;
+	height:100%;
+	background:url(../img/common/ico_close_w.png) 7px center no-repeat;
+	background-size:20px;
+}
+
 .sideCalendar {
 	padding: 30px 0
 }
