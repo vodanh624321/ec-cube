@@ -790,38 +790,38 @@ body > #wrapper {
 	#lNavi > ul > li > a {
 		position: relative;
 	}
-	#lNavi .parents:before {
-		position: absolute;
-		right: 20px;
-		width: 14px;
-		height: 14px;
-		background: url(../img/common/ico_open.png) center center no-repeat;
-		background-size: cover;
-		top: 50%;
-		margin-top: -7px;
-		z-index: 2;
-		content: "";
-	}
-		#lNavi .parents.on:before {
-		background: url(../img/common/ico_close.png) center center no-repeat;
-		background-size: cover;
-	}
-	#lNavi .bg04.parents:before {
-		position: absolute;
-		right: 20px;
-		width: 14px;
-		height: 14px;
-		background: url(../img/common/ico_open_w.png) center center no-repeat;
-		background-size: cover;
-		top: 50%;
-		margin-top: -7px;
-		z-index: 2;
-		content: "";
-	}
-		#lNavi .bg04.parents.on:before {
-		background: url(../img/common/ico_close_w.png) center center no-repeat;
-		background-size: cover;
-	}
+	/*#lNavi .parents:before {*/
+		/*position: absolute;*/
+		/*right: 20px;*/
+		/*width: 14px;*/
+		/*height: 14px;*/
+		/*background: url(../img/common/ico_open.png) center center no-repeat;*/
+		/*background-size: cover;*/
+		/*top: 50%;*/
+		/*margin-top: -7px;*/
+		/*z-index: 2;*/
+		/*content: "";*/
+	/*}*/
+		/*#lNavi .parents.on:before {*/
+		/*background: url(../img/common/ico_close.png) center center no-repeat;*/
+		/*background-size: cover;*/
+	/*}*/
+	/*#lNavi .bg04.parents:before {*/
+		/*position: absolute;*/
+		/*right: 20px;*/
+		/*width: 14px;*/
+		/*height: 14px;*/
+		/*background: url(../img/common/ico_open_w.png) center center no-repeat;*/
+		/*background-size: cover;*/
+		/*top: 50%;*/
+		/*margin-top: -7px;*/
+		/*z-index: 2;*/
+		/*content: "";*/
+	/*}*/
+		/*#lNavi .bg04.parents.on:before {*/
+		/*background: url(../img/common/ico_close_w.png) center center no-repeat;*/
+		/*background-size: cover;*/
+	/*}*/
 	#lNavi .subNavi li a.parents {
 		position: relative;
 	}
