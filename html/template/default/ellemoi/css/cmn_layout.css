@@ -647,7 +647,9 @@ body > #wrapper {
 }
 #lNavi .subNavi li {
 	border-top: 1px solid #d9d9d9;
+	background-color: white;
 }
+
 #lNavi .subNavi li a {
 	padding: 9px 35px 9px 30px;
 	font-size: 1.3rem;
@@ -667,17 +669,12 @@ body > #wrapper {
 	display: none;
 }
 
-.bg01 {
-	background: #006ed3;
-}
-.bg02 {
+.side ul.child-1 > li {
 	background: #009ad3;
 }
-.bg03 {
-	background: #86c4ea;
-}
-.bg04 {
-	background: #013f77;
+
+.side ul.child-1 > li:nth-child(odd) {
+	background: #006ed3;
 }
 
 .side .subNavi > li a span {
