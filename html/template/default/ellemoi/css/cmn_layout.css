@@ -693,13 +693,13 @@ body > #wrapper {
 .side .subNavi > li a.parents span {
 	width: 35px;
 	height: 100%;
-	background: url(../img/common/ico_open_w.png) 7px center no-repeat;
+	background: url(../img/common/ico_open.png) 7px center no-repeat;
 	background-size: 20px;
 }
 .side .subNavi > li a.parents.on span {
 	width:35px;
 	height:100%;
-	background:url(../img/common/ico_close_w.png) 7px center no-repeat;
+	background:url(../img/common/ico_close.png) 7px center no-repeat;
 	background-size:20px;
 }
 
