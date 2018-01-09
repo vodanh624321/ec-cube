@@ -48,9 +48,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         {% set paddingLeft = true %}
     {% endif %}
     <li>
-        <a href="{{ url('product_list') }}?category_id={{ Category.id }}" class="{% if key is not empty %}bg0{{ key }}{% endif %} {% if isParent == true %}parents{% endif %}" {% if paddingLeft %}style="background: #e0e9f1;padding-left: 16px;"{% endif %}>
+        <a href="{{ url('product_list') }}?category_id={{ Category.id }}" class="{% if key is not empty %}bg0{{ key }}{% endif %} {% if isParent == true %}parents{% endif %}"
+           {% if paddingLeft %}style="background: #e0e9f1;padding-left: 16px;"{% endif %}>
             {{ Category.name }}
-            <span> </span>
+            <span></span>
         </a>
         {% if Category.children|length > 0 %}
             <ul class="subNavi {% if show == true %}block{% endif %}">

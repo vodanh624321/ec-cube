@@ -112,7 +112,7 @@ sub   { font-size: 8px; vertical-align: baseline;}
 
 /* !Tools ------------------------------------------------------------------- */
 .clear { clear: both;}
-.block { display: block !important;}
+.block { display: block;}
 .hide  { display: none !important;}
 .bgN   { background: none !important;}
 .tdU   { text-decoration: underline;}

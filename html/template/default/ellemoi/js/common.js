@@ -175,28 +175,34 @@ var common = (function(){
 		$('.datepicker').height($('.datepickerContainer table').height() + 20);
 	});
 
-    // $('#lNavi a.parents').each(function() {
-    //     $(this).click(function(e) {
-    //         return false;
-    //     });
-    // });
+	// $('#lNavi a.parents span').each(function() {
+	// 	$(this).click(function(){
+     //        var $parent = $(this).parent();
+	// 		if($parent.find('.subNavi').length > 0){
+	// 			if($(this).hasClass('on')){
+	// 				$(this).next().stop().slideUp(200);
+	// 				$(this).removeClass('on');
+	// 			}else{
+	// 				$(this).next().stop().slideDown(200);
+	// 				$(this).addClass('on');
+	// 			}
+	// 			return false;
+	// 		}
+     //    });
+	//
+	// });
 
-	$('#lNavi a.parents span').each(function() {
-		$(this).click(function(){
-			var $parent = $(this).parent();
-			if($parent.find('.subNavi').length > 0){
-				if($(this).hasClass('on')){
-					$(this).next().stop().slideUp(200);
-					$(this).removeClass('on');
-				}else{
-					$(this).next().stop().slideDown(200);
-					$(this).addClass('on');
-				}
-				return false;
-			}
-        });
-		
-	});
+    $("#lNavi a.parents span").on("click", function(event){
+        var parent = $(this).parent("a");
+        if ($(parent).hasClass("on")) {
+            $(parent).next().slideUp();
+            $(parent).removeClass("on");
+        } else {
+            $(parent).next().slideDown();
+            $(parent).addClass("on");
+        }
+        return false;
+    });
 });
 
 
