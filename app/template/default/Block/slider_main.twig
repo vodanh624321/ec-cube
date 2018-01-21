@@ -1,0 +1,70 @@
+{% block javascript %}
+<script type="text/javascript">
+    $(function(){
+        $( '.slider-pro-pc' ).sliderPro({
+            width: 900,
+            height: 263,
+            visibleSize: '100%',
+            arrows: true,
+            buttons: true,
+            autoSlideSize: true,
+            slideDistance:6
+        });
+        $( '.slider-pro-ts' ).sliderPro({
+            width: 640,
+            height: 220,
+            visibleSize: '100%',
+            arrows: false,
+            buttons: true,
+            autoSlideSize: true,
+            slideDistance:0
+        });
+    });
+</script>
+{% endblock %}
+<div class="sliderMain">
+	<div class="visiblePC">
+		<div class="topSlider">
+			<div class="slider-pro-pc">
+				<div class="sp-slides">
+					<div class="sp-slide">
+						<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+					</div>
+					<div class="sp-slide">
+						<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+					</div>
+					<div class="sp-slide">
+						<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+					</div>
+					<div class="sp-slide">
+						<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+					</div>
+					<div class="sp-slide">
+						<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="visibleTS">
+		<div class="slider-pro-ts">
+			<div class="sp-slides">
+				<div class="sp-slide">
+					<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+				</div>
+				<div class="sp-slide">
+					<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+				</div>
+				<div class="sp-slide">
+					<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+				</div>
+				<div class="sp-slide">
+					<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+				</div>
+				<div class="sp-slide">
+					<p class="sp-img taC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_slider01.jpg" alt=""></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

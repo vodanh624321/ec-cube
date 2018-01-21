@@ -1,0 +1,7 @@
+{% if breadcrumb is defined and breadcrumb is not null %}
+<div class="inner">
+	<div id="breadcrumb">
+		<a href="{{ url('index') }}">ホーム</a>{{ breadcrumb|raw }}
+	</div><!-- /#breadcrumb -->
+</div>
+{% endif %}

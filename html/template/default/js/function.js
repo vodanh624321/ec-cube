@@ -168,9 +168,9 @@ $.fn.rollover = function () {
 };
 
 // 画像をロールオーバーする箇所(imgタグ)を指定
-$(function () {
-    $('.rollover').rollover();
-});
+// $(function () {
+//     $('.rollover').rollover();
+// });
 
 
 /////////// 高さ揃え

@@ -61,4 +61,9 @@ class HelpController extends AbstractController
             'help' => $Help,
         ));
     }
+
+    public function recommend(Application $app)
+    {
+        return $app->render('Help/recommend.twig');
+    }
 }

@@ -1,0 +1,113 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) 2000-2015 LOCKON CO.,LTD. All Rights Reserved.
+
+http://www.lockon.co.jp/
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'front_page' %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        $(function(){
+            $('.topSale').bxSlider({
+                mode: 'horizontal',
+                speed: 2000,
+                pause: 5000,
+                auto:true,
+                controls:true,
+                pager:false
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="topSaleSlider">
+        <ul class="topSale">
+            <li><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/top_slider01_c_pc.jpg" alt=""></li>
+            <li><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/top_slider01_c_pc.jpg" alt=""></li>
+            <li><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/top_slider01_c_pc.jpg" alt=""></li>
+        </ul>
+    </div>
+
+    <div class="topTypecMain">
+        <ul class="topListC clearfix">
+            <li>
+                <div class="topPanel01 hlg01">
+                    <div class="hlg02 topTypecBox02">
+                        <div class="topShop">
+                            <p class="tit">備品.comでお買い物</p>
+                            <p>ログインしてお買い物をお楽しみください</p>
+                        </div>
+                        <p class="topShopBtn01"><a href="#">ログイン</a></p>
+                    </div>
+                    <p class="typecLink01">始めてご利用ですが?<a href="#">新規登録はこちら</a></p>
+                </div>
+            </li>
+            <li>
+                <div class="topPanel01 hlg01">
+                    <div class="hlg02 topTypecBox02">
+                        <p class="topTypecTit01">カテゴリー</p>
+                        <div class="topTypecBox01">
+                            <ul class="topTypecList clearfix">
+                                <li><p class="biggerlink"><span class="txt"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/img_topsort01.png" alt=""></a></span><span class="txt01">用度品・備品</span></p></li>
+                                <li><p class="biggerlink"><span class="txt"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/img_topsort02.png" alt=""></a></span><span class="txt01">調剤備品</span></p></li>
+                                <li><p class="biggerlink"><span class="txt"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/img_topsort03.png" alt=""></a></span><span class="txt01">ポリ袋</span></p></li>
+                                <li><p class="biggerlink"><span class="txt"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/img_topsort04.png" alt=""></a></span><span class="txt01">縫製品</span></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="typecLink02"><a href="#">すべてのカテゴリー</a></p>
+                </div>
+            </li>
+            <li>
+                <div class="topPanel01 hlg01">
+                    <div class="hlg02 topTypecBox02">
+                        <p class="topTypecTit01">コンシェルジュ</p>
+                        <div class="topTypecIn">
+                            <p class="topConcImg"><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/img_topconci.png" alt=""></p>
+                            <p class="topConcTxt">お探しの商品はございましたか？<br>AIコンシェルジュがサポートいたします。</p>
+                            <p class="topShopBtn02"><a href="#">コンシェルジュに相談する</a></p>
+                        </div>
+                    </div>
+                    <p class="typecLink02"><a href="#">人気アイテムをチェック</a></p>
+                </div>
+            </li>
+            <li>
+                <div class="hlg01 clearfix topPanel04">
+                    <div class="topPanel02 topPanelLine hlg04">
+                        <p class="topTypecTit02">便利な機能</p>
+                        <p><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/img_toplogo01.png" alt=""></p>
+                        <p class="link01"><a href="#">「だから備品.com」<br class="visibleTS">便利な機能のご紹介</a></p>
+                        <p class="link02"><a href="#">今すぐチェック</a></p>
+                    </div>
+                    <div class="topPanel03 hlg04">
+                        <p class="topTypecTit03">あなたにオススメ</p>
+                        <dl class="clearfix">
+                            <dt><img src="{{ app.config.front_urlpath }}/bihin-com/img/top/img_toprecom.png" alt=""></dt>
+                            <dd class="visiblePC">￥3,588</dd>
+                        </dl>
+                        <p class="link03"><a href="#">もっと見る</a></p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

@@ -45,6 +45,8 @@ class FrontControllerProvider implements ControllerProviderInterface
         $c->match('/', '\Eccube\Controller\TopController::index')->bind('homepage');
         $c->match('/', '\Eccube\Controller\TopController::index')->bind('top'); // deprecated since 3.0.0, to be removed in 3.1
         $c->match('/', '\Eccube\Controller\TopController::index')->bind('index'); // deprecated since 3.0.0, to be removed in 3.1
+        $c->match('/index-b', '\Eccube\Controller\TopController::indexB')->bind('homepage_b');
+        $c->match('/index-c', '\Eccube\Controller\TopController::indexC')->bind('homepage_c');
 
         // cart
         $c->match('/cart', '\Eccube\Controller\CartController::index')->bind('cart');
@@ -77,12 +79,15 @@ class FrontControllerProvider implements ControllerProviderInterface
         $c->match('/block/news', '\Eccube\Controller\Block\NewsController::index')->bind('block_news');
         $c->match('/block/login', '\Eccube\Controller\Block\LoginController::index')->bind('block_login');
 
+        $c->match('/block/tool_bar', '\Eccube\Controller\Block\ToolBarController::index')->bind('block_tool_bar');
+
         // 特定商取引 order -> help/traderaw
         $c->match('/help/about', '\Eccube\Controller\HelpController::about')->bind('help_about');
         $c->match('/help/guide', '\Eccube\Controller\HelpController::guide')->bind('help_guide');
         $c->match('/help/privacy', '\Eccube\Controller\HelpController::privacy')->bind('help_privacy');
         $c->match('/help/tradelaw', '\Eccube\Controller\HelpController::tradelaw')->bind('help_tradelaw');
         $c->match('/help/agreement', '\Eccube\Controller\HelpController::agreement')->bind('help_agreement');
+        $c->match('/help/recommend', '\Eccube\Controller\HelpController::recommend')->bind('help_recommend');
 
         // mypage
         $c->match('/mypage', '\Eccube\Controller\Mypage\MypageController::index')->bind('mypage');
@@ -105,6 +110,10 @@ class FrontControllerProvider implements ControllerProviderInterface
         // products
         $c->match('/products/list', '\Eccube\Controller\ProductController::index')->bind('product_list');
         $c->match('/products/detail/{id}', '\Eccube\Controller\ProductController::detail')->bind('product_detail')->assert('id', '\d+');
+
+        // news
+        $c->match('/news/list', '\Eccube\Controller\NewsController::index')->bind('news_list');
+        $c->match('/news/detail/{id}', '\Eccube\Controller\NewsController::detail')->bind('news_detail')->assert('id', '\d+');
 
         // shopping
         $c->match('/shopping', '\Eccube\Controller\ShoppingController::index')->bind('shopping');

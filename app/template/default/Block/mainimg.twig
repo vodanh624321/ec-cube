@@ -1,0 +1,47 @@
+{% block javascript %}
+<script type="text/javascript">
+    $(function(){
+        $('.customSelect').customSelect();
+        $(window).on('load resize',function() {
+            var winW = $(window).width();
+            var mW = $('.mainimgScroll');
+            var sW = mW[0].scrollWidth/2-winW/2;
+            mW.scrollLeft(sW);
+        });
+    });
+</script>
+{% endblock %}
+<div id="mainimg">
+    <div class="visiblePC">
+        <div class="mainimgImg">
+            <div class="mainimgMpa"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/mainimg.png" alt="">
+                <p class="link01"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg01.png" alt=""></a></p>
+                <p class="link02"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg02.png" alt=""></a></p>
+                <p class="link03"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg03.png" alt=""></a></p>
+                <p class="link04"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg04.png" alt=""></a></p>
+                <p class="link05"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg05.png" alt=""></a></p>
+                <p class="link06"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg06.png" alt=""></a></p>
+                <p class="link07"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg07.png" alt=""></a></p>
+            </div>
+            <!--<p class="mainimgCloud01"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/ico_cloud01.png" alt=""></p>
+					<p class="mainimgCloud02"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/ico_cloud02.png" alt=""></p>
+					<p class="mainimgCloud03"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/ico_cloud03.png" alt=""></p>
+					<p class="mainimgCloud04"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/ico_cloud04.png" alt=""></p>
+					<p class="mainimgCloud05"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/ico_cloud05.png" alt=""></p>-->
+        </div>
+    </div>
+    <div class="mainimgScroll visibleTS">
+        <div class="mainimgImg">
+            <div class="mainimgMpa"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/mainimg_ts.png" alt="">
+                <p class="link01"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg01.png" alt=""></a></p>
+                <p class="link02"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg02.png" alt=""></a></p>
+                <p class="link03"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg03.png" alt=""></a></p>
+                <p class="link04"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg04.png" alt=""></a></p>
+                <p class="link05"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg05.png" alt=""></a></p>
+                <p class="link06"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg06.png" alt=""></a></p>
+                <p class="link07"><a href="#"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/link_mainimg07.png" alt=""></a></p>
+            </div>
+        </div>
+    </div>
+    <p class="mainimgLimit visiblePC"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_mainimg.png" alt=""></p>
+</div><!-- /#mainimg -->

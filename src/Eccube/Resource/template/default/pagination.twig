@@ -24,58 +24,48 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% else  %}
     {% set pageinrange  = false %}
 {% endif %}
-
 {% if pages.pageCount > 1 %}
-<div id="pagination_wrap" class="pagination">
-    <ul>
+    <div class="pagenavBox">
+        <div class="boxAlpha">
+            <span class="total">{{ pages.totalCount }}</span>
+            件中　<span class="first">{{ pages.firstItemNumber }}</span>
+            件目～<span class="last">{{ pages.lastItemNumber }}</span>件目を表示
+        </div>
 
-        {% if pageinrange and pages.firstPageInRange != 1 %}
-            {# 最初へリンクを表示 #}
-            <li class="pagenation__item-first">
+        <div class="boxBeta">
+            {% if pageinrange and pages.firstPageInRange != 1 %}
+                {# 最初へリンクを表示 #}
                 <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': pages.first})) }}"
-                   aria-label="First"><span aria-hidden="true">最初へ</span></a>
-            </li>
-        {% endif %}
-
-        {% if pages.previous is defined %}
-            <li class="pagenation__item-previous">
-                <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': pages.previous})) }}"
-                   aria-label="Previous"><span aria-hidden="true">前へ</span></a>
-            </li>
-        {% endif %}
-
-        {% if pageinrange and pages.firstPageInRange != 1 %}
-            {# 1ページリンクが表示されない場合、「...」を表示 #}
-            <li>...</li>
-        {% endif %}
-
-        {% for page in pages.pagesInRange %}
-            {% if page == pages.current %}
-                <li class="pagenation__item active"><a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page})) }}"> {{ page }} </a></li>
-            {% else %}
-                <li class="pagenation__item"><a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page})) }}"> {{ page }} </a></li>
+                   aria-label="First"><span aria-hidden="true">1</span></a>
             {% endif %}
-        {% endfor %}
 
-        {% if pageinrange and pages.last != pages.lastPageInRange %}
-            {# 最終ページリンクが表示されない場合、「...」を表示 #}
-            <li>...</li>
-        {% endif %}
+            {% if pages.previous is defined %}
+                <a class="previouspostslink" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': pages.previous})) }}"
+                   aria-label="Previous"><span aria-hidden="true">&lt;</span></a>
+            {% endif %}
+            {% if pageinrange and pages.firstPageInRange != 1 %}
+                {# 1ページリンクが表示されない場合、「...」を表示 #}
+                <span class="dots">...</span>
+            {% endif %}
 
-        {% if pages.next is defined %}
-            <li class="pagenation__item-next">
-                <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': pages.next})) }}"
-                   aria-label="Next"><span aria-hidden="true">次へ</span></a>
-            </li>
-        {% endif %}
+            {% for page in pages.pagesInRange %}
+                {% if page == pages.current %}
+                    <a class="current" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page})) }}"> {{ page }} </a>
+                {% else %}
+                    <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page})) }}"> {{ page }} </a>
+                {% endif %}
+            {% endfor %}
 
-        {% if pageinrange and pages.last != pages.lastPageInRange %}
-            {# 最後へリンクを表示 #}
-            <li class="pagenation__item-last">
+            {% if pageinrange and pages.last != pages.lastPageInRange %}
+                {# 最終ページリンクが表示されない場合、「...」を表示 #}
+                <span class="dots">...</span>
+            {% endif %}
+
+            {% if pageinrange and pages.last != pages.lastPageInRange %}
+                {# 最後へリンクを表示 #}
                 <a href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': pages.last})) }}"
-                   aria-label="Last"><span aria-hidden="true">最後へ</span></a>
-            </li>
-        {% endif %}
-    </ul>
-</div>
+                   aria-label="Last"><span aria-hidden="true">{{ pages.totalCount }}</span></a>
+            {% endif %}
+        </div>
+    </div>
 {% endif %}

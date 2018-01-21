@@ -340,6 +340,22 @@ class News extends \Eccube\Entity\AbstractEntity
     }
 
     /**
+     * @return bool
+     */
+    public function isNew()
+    {
+        $current = new \DateTime();
+//        dump($current);
+//        dump($this->date->modify('+1 day'));
+//        dump($current <= $this->getDate()->modify('+1 day'));
+        if ($current <= $this->getDate()->modify('+1 day')) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * Set Creator
      *
      * @param  \Eccube\Entity\Member $creator

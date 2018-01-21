@@ -1,0 +1,67 @@
+<script type="text/javascript">
+    // $(function() {
+    //     $('.customList li .customImg a').click(function() {
+    //
+    //         $('.customList li .customImg a').removeClass('active');
+    //     });
+    // });
+</script>
+<div id="headerIn" class="clearfix">
+	<h1 id="headerLogo"><a href="{{ url('index') }}">
+        <img src="{{ app.config.front_urlpath }}/bihin-com/common/img/logo.png" alt=""></a>
+    </h1>
+	<div class="hdMain">
+		<div class="visiblePC">
+			<div class="hdmenu clearfix">
+				<div class="customBtn">
+					<p class="customLink">TOPページカスタマイズ</p>
+					<div class="customBox">
+						<div class="customIn">
+							<ul class="customList">
+								<li>
+									<p class="customTit">Type A</p>
+									<p class="customImg"><a href="{{ url('index') }}" class="active"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_a.png" alt=""></a></p>
+								</li>
+								<li>
+									<p class="customTit">Type B</p>
+									<p class="customImg"><a href="{{ url('homepage_b') }}"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_b.png" alt=""></a></p>
+								</li>
+								<li>
+									<p class="customTit">Type C</p>
+									<p class="customImg"><a href="{{ url('homepage_c') }}"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_c.png" alt=""></a></p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<ul class="hdMemberLink">
+					<li><a href="{{ url('mypage') }}">ログイン</a></li>
+					<li><a href="{{ url('entry') }}">新規会員登録</a></li>
+					<li><a href="{{ url('mypage') }}">マイページ</a></li>
+					<li><a href="{{ url('mypage') }}">会員サービス</a></li>
+					<li><a href="{{ url('contact') }}">ヘルプ・お問い合わせ</a></li>
+				</ul>
+			</div>
+			<div class="hdPick">
+				<dl class="pickLink clearfix">
+					<dt>今週のピックアップ</dt>
+					<dd class="ftBox">
+						<span class="txt"><a href="#">パーティション</a></span>
+						<span class="txt"><a href="#">コピー用紙定期配送</a></span>
+						<span class="txt"><a href="#">コーヒー</a></span>
+						<span class="txt"><a href="#">かわいい文房具</a></span>
+						<span class="txt"><a href="#">塗装用品</a></span>
+						<span class="txt"><a href="#">はんこ作成</a></span>
+						<span class="txt"><a href="#">Web広告1万円</a></span>
+						<span class="txt"><a href="#">ハロウィン</a></span>
+						<span class="txt"><a href="#">トップ100へ</a></span>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<ul class="hdLog visibleTS">
+		<li><a href="#" class="loginBtn01">会員登録</a></li>
+		<li><a href="#" class="loginBtn02">ログイン</a></li>
+	</ul>
+</div><!-- /.headerIn -->

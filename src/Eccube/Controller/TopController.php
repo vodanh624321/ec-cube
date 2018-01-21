@@ -33,4 +33,14 @@ class TopController extends AbstractController
     {
         return $app->render('index.twig');
     }
+
+    public function indexB(Application $app)
+    {
+        return $app->render('index_b.twig');
+    }
+
+    public function indexC(Application $app)
+    {
+        return $app->render('index_c.twig');
+    }
 }

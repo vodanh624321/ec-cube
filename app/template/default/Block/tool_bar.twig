@@ -1,0 +1,51 @@
+<div class="toolbar">
+    <div class="visiblePC">
+        <table class="toolBarTable">
+            <tr>
+                <td class="tdW01">
+                    <form method="get" id="searchform" action="{{ path('product_list') }}">
+                        <ul class="toolSearch">
+                            <li class="searchW01">
+                                <div class="selectWrap01">
+                                    {{ form_widget(form.category_id, {'attr': {'class': 'customSelect'}}) }}
+                                    {#<select class="customSelect">#}
+                                    {#<option>このカテゴリ内で検索</option>#}
+                                    {#<option>このカテゴリ内で検索</option>#}
+                                    {#<option>このカテゴリ内で検索</option>#}
+                                    {#<option>このカテゴリ内で検索</option>#}
+                                    {#<option>このカテゴリ内で検索</option>#}
+                                    {#<option>このカテゴリ内で検索</option>#}
+                                    {#</select>#}
+                                </div>
+                            </li>
+                            <li>
+                                <input type="text" id="name" name="name" class="hdSearch" placeholder="このカテゴリ内で探す">
+                            </li>
+                            <li class="searchW02">
+                                <input type="submit" value="検索" class="hdSearchBtn">
+                            </li>
+                        </ul>
+                    </form>
+                </td>
+                <td class="tdW02">
+                    <span class="favor"><a href="{{ url('cart') }}">お気に入り<br>リスト</a></span>
+                </td>
+                <td class="tdW03">
+                    <div class="clearfix toolBox">
+                        <p class="shopCart"><a href="{{ url('cart') }}">カート</a></p>
+                        <p class="shopPrice"><a href="{{ url('cart') }}"><span class="txt01"><i>{{ Cart.total_price|price }}</i>点</span><span class="txt02">小計<i>0</i>円</span></a></p>
+                    </div>
+                </td>
+                <td class="tdW04">
+                    <span class="order"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/ico_order.png" alt="" class="vaM"><a href="{{ url('mypage') }}">ご注文履歴</a></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="visibleTS">
+        <div class="clearfix">
+            <p class="spSearch"><input type="text" id="search" name="search" class="hdSearch" placeholder="このカテゴリ内で探す"></p>
+            <p class="spSearchBtn"><input type="button" value="検索" class="hdSearchBtn"></p>
+        </div>
+    </div>
+</div>
