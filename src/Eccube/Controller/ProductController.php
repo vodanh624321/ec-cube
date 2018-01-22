@@ -196,6 +196,7 @@ class ProductController
             'order_by_form' => $orderByForm->createView(),
             'forms' => $forms,
             'Category' => $Category,
+            'breadcrumb' => '商品一覧'
         ));
     }
 

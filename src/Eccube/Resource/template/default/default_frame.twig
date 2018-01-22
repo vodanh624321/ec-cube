@@ -98,7 +98,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
         {#<div class="container-fluid inner">#}
         <div id="bihin_contents">
-            <div class="{{ bihin_contents|default('') }}">
+            <div class="{{ bihin_contents|default('innerNone clearfix') }}">
                 {# ▼LEFT COLUMN #}
                 {% if PageLayout.SideLeft %}
                     <div id="side_left" class="side">
@@ -188,8 +188,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <script type="text/javascript" src="{{ app.config.front_urlpath }}/bihin-com/common/js/jquery.bxslider.js"></script>
 <script type="text/javascript" src="{{ app.config.front_urlpath }}/bihin-com/common/js/wow.min.js"></script>
 
-<script>
+<script type="text/javascript">
     new WOW().init();
+    $('.customSelect').customSelect();
 </script>
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
