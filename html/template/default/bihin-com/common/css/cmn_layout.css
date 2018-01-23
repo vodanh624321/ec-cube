@@ -833,7 +833,7 @@ body { }
 	border-bottom:1px solid #ccc;
 	position:relative;
 }
-.navbarPanel .navbarTit:before {
+.navbarPanel > .navbarTit.hasChild:before {
 	background:url(../img/ico_open01.png) 0 0 no-repeat;
 	background-size:100%;
 	width:15px;
@@ -846,7 +846,7 @@ body { }
 	z-index:2;
 	position:absolute;
 }
-.navbarPanel .navbarTit.on:before {
+.navbarPanel > .navbarTit.hasChild.on:before {
 	background:url(../img/ico_close01.png) 0 0 no-repeat;
 	background-size:100%;
 	width:14px;
@@ -873,19 +873,19 @@ body { }
 	display:block;
 	color:#545454;
 }
-.navbarBox .navbarTxt:before {
-	background:url(../img/ico_open02.png) 0 0 no-repeat;
-	background-size:100%;
-	width:8px;
-	height:18px;
-	top:50%;
-	right:13px;
-	transform:translateY(-50%);
-	-webkit-transform:translateY(-50%);
-	content:"";
-	z-index:2;
-	position:absolute;
-}
+/*.navbarBox .navbarTxt:before {*/
+	/*background:url(../img/ico_open02.png) 0 0 no-repeat;*/
+	/*background-size:100%;*/
+	/*width:8px;*/
+	/*height:18px;*/
+	/*top:50%;*/
+	/*right:13px;*/
+	/*transform:translateY(-50%);*/
+	/*-webkit-transform:translateY(-50%);*/
+	/*content:"";*/
+	/*z-index:2;*/
+	/*position:absolute;*/
+/*}*/
 .navbarBox .navpullDown:before {
 	background:url(../img/ico_open02.png) 0 0 no-repeat;
 	background-size:100%;
@@ -914,8 +914,8 @@ body { }
 }
 .navbarLink p a {
 	display:block;
-	padding:10px 0 10px 20px;
-	border-bottom:1px solid #ccc;
+	padding:2px 0 3px 20px;
+	/*border-bottom:1px solid #ccc;*/
 	position:relative;
 	color:#545454;
 }

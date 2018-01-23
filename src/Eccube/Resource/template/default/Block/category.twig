@@ -20,13 +20,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #}
 {% macro tree(Category, isParent) %}
-    {% set isParent =  %}
-    <li class="parent">
-        <a class="parent_a" href="{{ url('product_list') }}?category_id={{ Category.id }}">
+    {% set isParent = isParent|default('') %}
+
+    {% set hasChild = false %}
+    {% if Category.children|length > 0 %}
+        {% set hasChild = true %}
+    {% endif %}
+
+    <li class="{% if isParent %}parent{% elseif hasChild %}pullLink{% endif %}">
+        <a class="{% if isParent %}parent_a{% elseif hasChild %}parent_b{% endif %}" href="{{ url('product_list') }}?category_id={{ Category.id }}">
             {{ Category.name }}
         </a>
         {% if Category.children|length > 0 %}
-            <ul class="pulldownmenu">
+            <ul class="{% if isParent %}pulldownmenu{% elseif hasChild %}pullBox{% endif %}">
             {% for ChildCategory in Category.children %}
                     {{ _self.tree(ChildCategory) }}
             {% endfor %}
@@ -37,149 +43,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 <nav id="gNavi" class="visiblePC">
     <ul class="clearfix">
-    {% for Category in Categories %}
+    {% for Category in Categories[0:6] %}
         {{ _self.tree(Category, true) }}
     {% endfor %}
     </ul> <!-- category-nav -->
 </nav>
-
-<nav id="gNavi" class="visiblePC">
-    <ul class="clearfix">
-        <li class="parent"><a href="#" class="parent_a">用度品・備品</a>
-            <ul class="pulldownmenu">
-                <li><a href="#">店内備品</a></li>
-                <li class="pullLink"><a href="#" class="parent_b">包装</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li class="pullLink"><a href="#" class="parent_b">販促物</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">制服</a></li>
-                <li><a href="#">電化製品</a></li>
-            </ul>
-        </li>
-        <li class="parent"><a href="#" class="parent_a">調剤備品</a>
-            <ul class="pulldownmenu">
-                <li><a href="#">店内備品</a></li>
-                <li class="pullLink"><a href="#" class="parent_b">包装</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li class="pullLink"><a href="#" class="parent_b">販促物</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">制服</a></li>
-                <li><a href="#">電化製品</a></li>
-            </ul>
-        </li>
-        <li class="parent"><a href="#" class="parent_a">ポリ袋</a>
-            <ul class="pulldownmenu">
-                <li><a href="#">店内備品</a></li>
-                <li class="pullLink"><a href="#" class="parent_b">包装</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li class="pullLink"><a href="#" class="parent_b">販促物</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">制服</a></li>
-                <li><a href="#">電化製品</a></li>
-            </ul>
-        </li>
-        <li class="parent"><a href="#" class="parent_a">縫製品</a>
-            <ul class="pulldownmenu">
-                <li><a href="#">店内備品</a></li>
-                <li class="pullLink"><a href="#" class="parent_b">包装</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li class="pullLink"><a href="#" class="parent_b">販促物</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">制服</a></li>
-                <li><a href="#">電化製品</a></li>
-            </ul>
-        </li>
-        <li class="parent"><a href="#" class="parent_a">紙袋</a>
-            <ul class="pulldownmenu">
-                <li><a href="#">店内備品</a></li>
-                <li class="pullLink"><a href="#" class="parent_b">包装</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li class="pullLink"><a href="#" class="parent_b">販促物</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">制服</a></li>
-                <li><a href="#">電化製品</a></li>
-            </ul>
-        </li>
-        <li class="parent"><a href="#" class="parent_a">オーダー商品</a>
-            <ul class="pulldownmenu">
-                <li><a href="#">店内備品</a></li>
-                <li class="pullLink"><a href="#" class="parent_b">包装</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li class="pullLink"><a href="#" class="parent_b">販促物</a>
-                    <ul class="pullBox">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">制服</a></li>
-                <li><a href="#">電化製品</a></li>
-            </ul>
-        </li>
-        <li class="parent"><a href="#" class="parent_a">その他の商品</a>
-            <ul class="pulldownmenu">
-                <li><a href="#">店内備品</a></li>
-                <li class="pullLink"><a href="#" class="parent_b">包装</a>
-                    <ul class="pullIn">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li class="pullLink"><a href="#" class="parent_b">販促物</a>
-                    <ul class="pullIn">
-                        <li><a href="#">オーピーパック</a></li>
-                        <li><a href="#">手書きPOP</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">制服</a></li>
-                <li><a href="#">電化製品</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav><!-- /#gNavi -->
 
 <div class="naviSp visibleTS">
     <ul class="naviList clearfix">
@@ -190,133 +58,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         <li class="navInst hlg01" data-target=".customBox"><span class="txt01">カスタマイズ</span></li>
     </ul>
 
+    {% macro treeTS(Category, isParent) %}
+        {% set isParent = isParent|default('') %}
+        {% set hasChild = false %}
+        {% set isSub = false %}
+        {% if Category.children|length > 0 %}
+            {% set hasChild = true %}
+            {% if Category.level == 2 %}
+                {% set isSub = true %}
+            {% endif %}
+        {% endif %}
+        <p class="{% if isParent %}navbarTit{% else %}navbarTxt{% endif %}{% if isSub %} navpullDown{% endif %}{% if hasChild %} hasChild{% endif %}">
+            {% if hasChild  %}
+                {{ Category.name }}
+            {% else %}
+                <a href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a>
+            {% endif %}
+        </p>
+            {% if Category.children|length > 0 %}
+                <div class="{% if isParent %}navbarBox{% else %}navbarLink{% endif %}{% if hasChild %} hasChild{% endif %}">
+                    {% for ChildCategory in Category.children %}
+                        {{ _self.treeTS(ChildCategory) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+    {% endmacro %}
 
     <nav class="navbarCollapse">
         <div class="navbarPanel">
-            <p class="navbarTit">用度品・備品</p>
-            <div class="navbarBox">
-                <p class="navbarTxt"><a href="#">店内備品</a></p>
-                <p class="navbarTxt navpullDown">包装</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt navpullDown">販促物</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt"><a href="#">制服</a></p>
-                <p class="navbarTxt"><a href="#">電化製品</a></p>
-            </div>
-        </div>
-        <div class="navbarPanel">
-            <p class="navbarTit">調整備品</p>
-            <div class="navbarBox">
-                <p class="navbarTxt"><a href="#">店内備品</a></p>
-                <p class="navbarTxt navpullDown">包装</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt navpullDown">販促物</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt"><a href="#">制服</a></p>
-                <p class="navbarTxt"><a href="#">電化製品</a></p>
-            </div>
-        </div>
-        <div class="navbarPanel">
-            <p class="navbarTit">ポリ袋</p>
-            <div class="navbarBox">
-                <p class="navbarTxt"><a href="#">店内備品</a></p>
-                <p class="navbarTxt navpullDown">包装</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt navpullDown">販促物</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt"><a href="#">制服</a></p>
-                <p class="navbarTxt"><a href="#">電化製品</a></p>
-            </div>
-        </div>
-        <div class="navbarPanel">
-            <p class="navbarTit">縫製品</p>
-            <div class="navbarBox">
-                <p class="navbarTxt"><a href="#">店内備品</a></p>
-                <p class="navbarTxt navpullDown">包装</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt navpullDown">販促物</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt"><a href="#">制服</a></p>
-                <p class="navbarTxt"><a href="#">電化製品</a></p>
-            </div>
-        </div>
-        <div class="navbarPanel">
-            <p class="navbarTit">紙袋</p>
-            <div class="navbarBox">
-                <p class="navbarTxt"><a href="#">店内備品</a></p>
-                <p class="navbarTxt navpullDown">包装</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt navpullDown">販促物</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt"><a href="#">制服</a></p>
-                <p class="navbarTxt"><a href="#">電化製品</a></p>
-            </div>
-        </div>
-        <div class="navbarPanel">
-            <p class="navbarTit">オーダー商品</p>
-            <div class="navbarBox">
-                <p class="navbarTxt"><a href="#">店内備品</a></p>
-                <p class="navbarTxt navpullDown">包装</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt navpullDown">販促物</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt"><a href="#">制服</a></p>
-                <p class="navbarTxt"><a href="#">電化製品</a></p>
-            </div>
-        </div>
-        <div class="navbarPanel">
-            <p class="navbarTit">その他の商品</p>
-            <div class="navbarBox">
-                <p class="navbarTxt"><a href="#">店内備品</a></p>
-                <p class="navbarTxt navpullDown">包装</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt navpullDown">販促物</p>
-                <div class="navbarLink">
-                    <p><a href="#">オーピーパック</a></p>
-                    <p><a href="#">手書きPOP</a></p>
-                </div>
-                <p class="navbarTxt"><a href="#">制服</a></p>
-                <p class="navbarTxt"><a href="#">電化製品</a></p>
-            </div>
+            {% for Category in Categories %}
+                {{ _self.treeTS(Category, true) }}
+            {% endfor %}
         </div>
     </nav>
 
@@ -326,15 +98,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             <ul class="customList">
                 <li>
                     <p class="customTit">Type A</p>
-                    <p class="customImg"><a href="index_a.html" class="active"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_a_sp.png" alt=""></a></p>
+                    <p class="customImg"><a href="{{ url('homepage') }}" class="active"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_a_sp.png" alt=""></a></p>
                 </li>
                 <li>
                     <p class="customTit">Type B</p>
-                    <p class="customImg"><a href="index_b.html"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_b_sp.png" alt=""></a></p>
+                    <p class="customImg"><a href="{{ url('homepage_b') }}"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_b_sp.png" alt=""></a></p>
                 </li>
                 <li>
                     <p class="customTit">Type C</p>
-                    <p class="customImg"><a href="index_c.html"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_c_sp.png" alt=""></a></p>
+                    <p class="customImg"><a href="{{ url('homepage_c') }}"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_c_sp.png" alt=""></a></p>
                 </li>
             </ul>
         </div>

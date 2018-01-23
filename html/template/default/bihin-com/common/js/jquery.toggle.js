@@ -23,7 +23,7 @@ $(function(){
 	});
 });
 $(function(){
-	$('.navbarPanel .navbarTit').click(function(){
+	$('.navbarPanel .navbarTit.hasChild').click(function(){
 		if($(this).hasClass("on")){
 			$(this).next().stop().slideUp(200);
 			$(this).removeClass("on");
