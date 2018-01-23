@@ -43,7 +43,7 @@ class Version20180121222000 extends AbstractMigration
         $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, '初めての方へ', 'help_recommend', 'Help/recommend', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
         $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'News', 'news_list', 'News/list', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
         $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'News detail', 'news_detail', 'News/detail', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'Header In', 'header_in', '2018-01-21 16:45:14', '2018-01-21 16:45:14', 0, 1);");
+        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'Header In', 'header_in', '2018-01-21 16:45:14', '2018-01-21 16:45:14', 1, 1);");
         $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'tool bar', 'tool_bar', '2018-01-21 16:46:35', '2018-01-21 16:46:35', 1, 1);");
         $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'navi', 'navi', '2018-01-21 16:47:14', '2018-01-21 16:47:14', 0, 1);");
         $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'mainimg', 'mainimg', '2018-01-21 16:48:43', '2018-01-21 16:48:43', 0, 1);");
@@ -55,12 +55,14 @@ class Version20180121222000 extends AbstractMigration
         $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'breadcrumb', 'breadcrumb', '2018-01-21 19:39:44', '2018-01-21 23:38:56', 0, 1);");
 
         $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'bottom main type b', 'bottom_main_type_b', '2018-01-23 15:48:51', '2018-01-23 15:48:51', 0, 1);");
+        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'sale ranking', 'sale_ranking', '2018-01-23 22:50:27', '2018-01-23 22:50:27', 0, 1);");
         
         $this->addSql("DELETE FROM dtb_block_position");
+        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 1, 3, 1);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 9, 7, 1, 1);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 11, 1, 1);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 12, 2, 1);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 13, 3, 1);");
+//        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 13, 3, 1);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 14, 2, 0);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 15, 3, 0);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 16, 4, 0);");
@@ -68,6 +70,7 @@ class Version20180121222000 extends AbstractMigration
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 7, 18, 1, 0);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 8, 19, 1, 0);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 20, 1, 1);");
+        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (2, 4, 23, 1, 0);");
     }
 
     /**

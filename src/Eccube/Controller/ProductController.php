@@ -29,6 +29,7 @@ use Eccube\Common\Constant;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Eccube\Exception\CartException;
+use Eccube\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -187,15 +188,18 @@ class ProductController
         $orderByForm->handleRequest($request);
 
         $Category = $searchForm->get('category_id')->getData();
-
+        /** @var CategoryRepository $CateRepo */
+        $CateRepo = $app['eccube.repository.category'];
+//        dump($CateRepo->getList());
         return $app->render('Product/list.twig', array(
             'subtitle' => $this->getPageTitle($searchData),
             'pagination' => $pagination,
             'search_form' => $searchForm->createView(),
-            'disp_number_form' => $dispNumberForm->createView(),
-            'order_by_form' => $orderByForm->createView(),
+//            'disp_number_form' => $dispNumberForm->createView(),
+//            'order_by_form' => $orderByForm->createView(),
             'forms' => $forms,
             'Category' => $Category,
+            'cates' => $CateRepo->getList(),
             'breadcrumb' => '商品一覧'
         ));
     }

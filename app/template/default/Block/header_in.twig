@@ -59,7 +59,7 @@
 			<div class="hdPick">
 				<dl class="pickLink clearfix">
 					<dt>今週のピックアップ</dt>
-					{% if keywords is not empty %}
+					{% if keywords is defined and keywords is not empty %}
 					<dd class="ftBox">
                         {% for keyword in keywords %}
 							<span class="txt"><a href="{{ path('product_list') }}?category_id=&name={{ keyword }}">{{ keyword }}</a></span>
