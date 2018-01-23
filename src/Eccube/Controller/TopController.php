@@ -36,7 +36,13 @@ class TopController extends AbstractController
 
     public function indexB(Application $app)
     {
-        return $app->render('index_b.twig');
+        /** @var \Plugin\LimitedTimeSale\Entity\LimitedTimeSale[] $limitTimeSale */
+        $limitTimeSale = array();
+        if (isset($app['limitedtimesale.repository.limitedtimesale'])) {
+            $limitTimeSale = $app['limitedtimesale.repository.limitedtimesale']->findAll();
+        }
+        $products = $app['eccube.repository.product']->getProductNews();
+        return $app->render('index_b.twig', array('limitTimeSale' => $limitTimeSale, 'products' => $products));
     }
 
     public function indexC(Application $app)

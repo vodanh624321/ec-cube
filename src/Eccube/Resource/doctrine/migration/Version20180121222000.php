@@ -54,6 +54,8 @@ class Version20180121222000 extends AbstractMigration
         $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'top link', 'top_link', '2018-01-21 16:53:39', '2018-01-21 16:53:39', 0, 1);");
         $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'breadcrumb', 'breadcrumb', '2018-01-21 19:39:44', '2018-01-21 23:38:56', 0, 1);");
 
+        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'bottom main type b', 'bottom_main_type_b', '2018-01-23 15:48:51', '2018-01-23 15:48:51', 0, 1);");
+        
         $this->addSql("DELETE FROM dtb_block_position");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 9, 7, 1, 1);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 11, 1, 1);");

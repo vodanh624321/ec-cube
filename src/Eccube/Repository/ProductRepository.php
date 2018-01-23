@@ -307,4 +307,40 @@ class ProductRepository extends EntityRepository
 
         return $qb;
     }
+
+    /**
+     * get Product.
+     *
+     * @return \Eccube\Entity\Product[]
+     *
+     * @throws NotFoundHttpException
+     */
+    public function getProductNews()
+    {
+        // Product
+        try {
+            $qb = $this->createQueryBuilder('p');
+            $qb->addSelect(array('pc', 'cc1', 'cc2', 'pi', 'ps'))
+                ->innerJoin('p.ProductClasses', 'pc')
+                ->leftJoin('pc.ClassCategory1', 'cc1')
+                ->leftJoin('pc.ClassCategory2', 'cc2')
+                ->leftJoin('p.ProductImage', 'pi')
+                ->innerJoin('pc.ProductStock', 'ps')
+                ->innerJoin('p.ProductTag', 'pt')
+                ->where('pt.Tag = :tid')
+                ->orderBy('cc1.rank', 'DESC')
+                ->addOrderBy('cc2.rank', 'DESC');
+
+            $product = $qb
+                ->getQuery()
+                ->setParameters(array(
+                    'tid' => 1,
+                ))
+                ->getResult();
+        } catch (NoResultException $e) {
+            throw new NotFoundHttpException();
+        }
+
+        return $product;
+    }
 }
