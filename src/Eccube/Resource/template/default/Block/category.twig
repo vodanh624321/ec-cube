@@ -21,7 +21,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #}
 {% macro tree(Category, isParent) %}
     {% set isParent = isParent|default('') %}
-
     {% set hasChild = false %}
     {% if Category.children|length > 0 %}
         {% set hasChild = true %}
@@ -92,21 +91,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         </div>
     </nav>
 
-
     <div class="customBox">
         <div class="customIn">
+            {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+            {% set currentPage = currentPath|split('/')|last %}
+            {% if currentPage == url('homepage_b')|split('/')|last %}
+                {% set active = 'index-b' %}
+            {% elseif currentPage == url('homepage_c')|split('/')|last %}
+                {% set active = 'index-c' %}
+            {% else %}
+                {% set active = 'index-a' %}
+            {% endif %}
             <ul class="customList">
                 <li>
                     <p class="customTit">Type A</p>
-                    <p class="customImg"><a href="{{ url('homepage') }}" class="active"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_a_sp.png" alt=""></a></p>
+                    <p class="customImg"><a href="{{ url('homepage') }}" {% if active == 'index-a' %}class="active"{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_a_sp.png" alt=""></a></p>
                 </li>
                 <li>
                     <p class="customTit">Type B</p>
-                    <p class="customImg"><a href="{{ url('homepage_b') }}"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_b_sp.png" alt=""></a></p>
+                    <p class="customImg"><a href="{{ url('homepage_b') }}" {% if active == 'index-b' %}class="active"{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_b_sp.png" alt=""></a></p>
                 </li>
                 <li>
                     <p class="customTit">Type C</p>
-                    <p class="customImg"><a href="{{ url('homepage_c') }}"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_c_sp.png" alt=""></a></p>
+                    <p class="customImg"><a href="{{ url('homepage_c') }}" {% if active == 'index-c' %}class="active"{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_c_sp.png" alt=""></a></p>
                 </li>
             </ul>
         </div>
