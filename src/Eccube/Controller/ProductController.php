@@ -26,6 +26,7 @@ namespace Eccube\Controller;
 
 use Eccube\Application;
 use Eccube\Common\Constant;
+use Eccube\Entity\Category;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Eccube\Exception\CartException;
@@ -190,7 +191,28 @@ class ProductController
         $Category = $searchForm->get('category_id')->getData();
         /** @var CategoryRepository $CateRepo */
         $CateRepo = $app['eccube.repository.category'];
-//        dump($CateRepo->getList());
+        $categories = $CateRepo->getList();
+        $arrCateC = array();
+        $arrCateG = array();
+        $cates = array();
+        foreach ($categories as $cate) {
+            $cates[] = $cate->toArray();
+            if ($cate->getChildren()->count() > 0) {
+                $childs = $cate->getChildren();
+                /** @var Category $child */
+                foreach ($childs as $child) {
+                    $arrCateC[$cate->getId()][] = $child->toArray();
+                    if ($child->getChildren()->count() > 0) {
+                        foreach ($child->getChildren() as $grandson) {
+                            $arrCateG[$child->getId()][] = $grandson->toArray();
+                        }
+                    }
+                }
+            }
+        }
+//        dump($cates);
+//        dump($arrCateC);
+//        dump($arrCateG);
         return $app->render('Product/list.twig', array(
             'subtitle' => $this->getPageTitle($searchData),
             'pagination' => $pagination,
@@ -199,7 +221,9 @@ class ProductController
 //            'order_by_form' => $orderByForm->createView(),
             'forms' => $forms,
             'Category' => $Category,
-            'cates' => $CateRepo->getList(),
+            'cate' => $cates,
+            'cate_child' => $arrCateC,
+            'cate_grandson' => $arrCateG,
             'breadcrumb' => '商品一覧'
         ));
     }

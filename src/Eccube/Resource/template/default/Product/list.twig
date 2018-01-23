@@ -29,6 +29,53 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 {% block javascript %}
     <script type="text/javascript">
+        var cate_child = $.parseJSON('{{ cate_child|json_encode|raw }}');
+        var cate_grandson = $.parseJSON('{{ cate_grandson|json_encode|raw }}');
+        $('#cate_parent').change(function () {
+            //Reset child + grandson
+            $("#cate_child option:eq(0)").attr('selected', 'selected');
+            $("#cate_child").parent(".selectWrap").find(".customSelectInner").text('指定ない');
+            $("#cate_child").html("<option value=''>指定ない</option>");
+
+            $("#cate_grandson option:eq(0)").attr('selected', 'selected');
+            $("#cate_grandson").parent(".selectWrap").find(".customSelectInner").text('指定ない');
+            $("#cate_grandson").html("<option value=''>指定ない</option>");
+            var pid = $(this).val();
+            // Set to search form
+            $("#category_id").val(pid);
+            // Set child
+            if (cate_child[pid] != "undefined") {
+                $(cate_child[pid]).each(function (key, value) {
+                    var html = "<option value='"+value.id+"'>"+value.name+"</option>";
+                    $("#cate_child").append(html);
+                });
+            }
+        });
+
+        $('#cate_child').change(function () {
+            // Reset grandson
+            $("#cate_grandson option:eq(0)").attr('selected', 'selected');
+            $("#cate_grandson").parent(".selectWrap").find(".customSelectInner").text('指定ない');
+            $("#cate_grandson").html("<option value=''>指定ない</option>");
+
+            var cid = $(this).val();
+            // Set to search form
+            $("#category_id").val(cid);
+            // Set child
+            if (cate_grandson[cid] != "undefined") {
+                $(cate_grandson[cid]).each(function (key, value) {
+                    var html = "<option value='"+value.id+"'>"+value.name+"</option>";
+                    $("#cate_grandson").append(html);
+                });
+            }
+        });
+
+        $('#cate_grandson').change(function () {
+            var cid = $(this).val();
+            // Set to search form
+            $("#category_id").val(cid);
+        });
+
         // 商品表示BOXの高さを揃える
         // $(window).load(function() {
         //     $('.product_item').matchHeight();
@@ -157,21 +204,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                     <ul class="categoryList clearfix">
                                         <li>
                                             <div class="selectWrap">
-                                                <select class="customSelect">
+                                                <select class="customSelect" id="cate_parent">
+                                                    <option>指定ない</option>
+                                                    {% for Category in cate %}
+                                                        <option value="{{ Category.id }}">{{ Category.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="selectWrap">
+                                                <select class="customSelect" id="cate_child">
                                                     <option>指定ない</option>
                                                 </select>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="selectWrap">
-                                                <select class="customSelect">
-                                                    <option>指定ない</option>
-                                                </select>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="selectWrap">
-                                                <select class="customSelect">
+                                                <select class="customSelect" id="cate_grandson">
                                                     <option>指定ない</option>
                                                 </select>
                                             </div>
