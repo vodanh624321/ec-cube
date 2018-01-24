@@ -38,8 +38,8 @@ class Version20180121222000 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'TOPページ', 'homepage_b', 'index_b', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
-        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'TOPページ', 'homepage_c', 'index_c', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
+        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'TOPページ B', 'homepage_b', 'index_b', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
+        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'TOPページ C', 'homepage_c', 'index_c', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
         $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, '初めての方へ', 'help_recommend', 'Help/recommend', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
         $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'News', 'news_list', 'News/list', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
         $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'News detail', 'news_detail', 'News/detail', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
@@ -71,6 +71,11 @@ class Version20180121222000 extends AbstractMigration
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 8, 19, 1, 0);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 20, 1, 1);");
         $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (2, 4, 23, 1, 0);");
+
+        // Update display item
+        $this->addSql("REPLACE INTO mtb_product_list_max (id, name, rank) VALUES (10, '10件', 0);");
+        
+
     }
 
     /**

@@ -31,6 +31,7 @@ use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Eccube\Exception\CartException;
 use Eccube\Repository\CategoryRepository;
+use Eccube\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -82,7 +83,10 @@ class ProductController
 
         // paginator
         $searchData = $searchForm->getData();
-        $qb = $app['eccube.repository.product']->getQueryBuilderBySearchData($searchData);
+        // dump($searchData);
+        /** @var ProductRepository $productRepo */
+        $productRepo = $app['eccube.repository.product'];
+        $qb = $productRepo->getQueryBuilderBySearchData($searchData);
 
         $event = new EventArgs(
             array(
@@ -142,52 +146,6 @@ class ProductController
             $forms[$Product->getId()] = $addCartForm->createView();
         }
 
-        // 表示件数
-        $builder = $app['form.factory']->createNamedBuilder('disp_number', 'product_list_max', null, array(
-            'empty_data' => null,
-            'required' => false,
-            'label' => '表示件数',
-            'allow_extra_fields' => true,
-        ));
-        if ($request->getMethod() === 'GET') {
-            $builder->setMethod('GET');
-        }
-
-        $event = new EventArgs(
-            array(
-                'builder' => $builder,
-            ),
-            $request
-        );
-        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::FRONT_PRODUCT_INDEX_DISP, $event);
-
-        $dispNumberForm = $builder->getForm();
-
-        $dispNumberForm->handleRequest($request);
-
-        // ソート順
-        $builder = $app['form.factory']->createNamedBuilder('orderby', 'product_list_order_by', null, array(
-            'empty_data' => null,
-            'required' => false,
-            'label' => '表示順',
-            'allow_extra_fields' => true,
-        ));
-        if ($request->getMethod() === 'GET') {
-            $builder->setMethod('GET');
-        }
-
-        $event = new EventArgs(
-            array(
-                'builder' => $builder,
-            ),
-            $request
-        );
-        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::FRONT_PRODUCT_INDEX_ORDER, $event);
-
-        $orderByForm = $builder->getForm();
-
-        $orderByForm->handleRequest($request);
-
         $Category = $searchForm->get('category_id')->getData();
         /** @var CategoryRepository $CateRepo */
         $CateRepo = $app['eccube.repository.category'];
@@ -217,8 +175,6 @@ class ProductController
             'subtitle' => $this->getPageTitle($searchData),
             'pagination' => $pagination,
             'search_form' => $searchForm->createView(),
-//            'disp_number_form' => $dispNumberForm->createView(),
-//            'order_by_form' => $orderByForm->createView(),
             'forms' => $forms,
             'Category' => $Category,
             'cate' => $cates,
