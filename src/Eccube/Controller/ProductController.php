@@ -27,6 +27,7 @@ namespace Eccube\Controller;
 use Eccube\Application;
 use Eccube\Common\Constant;
 use Eccube\Entity\Category;
+use Eccube\Entity\Master\Tag;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Eccube\Exception\CartException;
@@ -62,8 +63,8 @@ class ProductController
         // searchForm
         /* @var $builder \Symfony\Component\Form\FormBuilderInterface */
         $builder = $app['form.factory']->createNamedBuilder('', 'search_product');
-        $builder->setAttribute('freeze', true);
-        $builder->setAttribute('freeze_display_text', false);
+//        $builder->setAttribute('freeze', true);
+//        $builder->setAttribute('freeze_display_text', false);
         if ($request->getMethod() === 'GET') {
             $builder->setMethod('GET');
         }
@@ -78,12 +79,13 @@ class ProductController
 
         /* @var $searchForm \Symfony\Component\Form\FormInterface */
         $searchForm = $builder->getForm();
-
+        $searchForm->get('recommend_id')->setData($request->get('recommend_id'));
+        $searchForm->get('disp_number')->setData(10);
         $searchForm->handleRequest($request);
 
         // paginator
         $searchData = $searchForm->getData();
-        // dump($searchData);
+        $searchData['disp_number'] = 10;
         /** @var ProductRepository $productRepo */
         $productRepo = $app['eccube.repository.product'];
         $qb = $productRepo->getQueryBuilderBySearchData($searchData);
@@ -95,13 +97,15 @@ class ProductController
             ),
             $request
         );
+//        dump($searchData);
         $app['eccube.event.dispatcher']->dispatch(EccubeEvents::FRONT_PRODUCT_INDEX_SEARCH, $event);
         $searchData = $event->getArgument('searchData');
 
+//        dump($searchData);
         $pagination = $app['paginator']()->paginate(
             $qb,
             !empty($searchData['pageno']) ? $searchData['pageno'] : 1,
-            $searchData['disp_number']->getId()
+            !empty($searchData['disp_number']) ? $searchData['disp_number'] : 10
         );
 
         // addCart form
@@ -154,7 +158,7 @@ class ProductController
         $arrCateG = array();
         $cates = array();
         foreach ($categories as $cate) {
-            $cates[] = $cate->toArray();
+            $cates[$cate->getId()] = $cate->toArray();
             if ($cate->getChildren()->count() > 0) {
                 $childs = $cate->getChildren();
                 /** @var Category $child */
@@ -168,9 +172,8 @@ class ProductController
                 }
             }
         }
-//        dump($cates);
-//        dump($arrCateC);
-//        dump($arrCateG);
+        $Tag = $app['eccube.repository.master.tag']->findBy(array(), array('rank' => 'ASC'));
+
         return $app->render('Product/list.twig', array(
             'subtitle' => $this->getPageTitle($searchData),
             'pagination' => $pagination,
@@ -180,7 +183,9 @@ class ProductController
             'cate' => $cates,
             'cate_child' => $arrCateC,
             'cate_grandson' => $arrCateG,
-            'breadcrumb' => '商品一覧'
+            'breadcrumb' => '商品一覧',
+            'recommend' =>  Tag::Recommend,
+            'tags' => $Tag
         ));
     }
 

@@ -54,36 +54,69 @@ class SearchProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $Categories = $this->app['eccube.repository.category']
-            ->getList(null, true);
+
+        $priceRange = array(100, 500, 1000, 5000, 10000, 20000);
+        $searchPlaceHolderMessage = '製品名とキーワードで検索します';
+        // if has install plugin, get it
+        if (isset($this->app['crowl_plg_cust_prod_search_b.repository.crowl_plg_cust_prod_search_b_cfg'])) {
+            /** @var \Plugin\CRowlPlgCustProdSearchB\Repository\CRowlPlgCustProdSearchBCfgRepository $repo */
+            $repo = $this->app['crowl_plg_cust_prod_search_b.repository.crowl_plg_cust_prod_search_b_cfg'];
+            /** @var \Plugin\CRowlPlgCustProdSearchB\Entity\CRowlPlgCustProdSearchBCfg $config */
+            $config = $repo->find(1);
+            if ($config) {
+                if ($config->getSearchProductPrice() && $config->getPriceRange()) {
+                    $priceRange = explode(',', $config->getPriceRange());
+                }
+            }
+
+            $searchPlaceHolderMessage = '商品名やお申込番号、型番で検索';
+        }
+
+//        $Categories = $this->app['eccube.repository.category']
+//            ->getList(null, true);
 
         $builder->add('mode', 'hidden', array(
             'data' => 'search',
         ));
-        $builder->add('category_id', 'entity', array(
-            'class' => 'Eccube\Entity\Category',
-            'property' => 'NameWithLevel',
-            'choices' => $Categories,
-            'empty_value' => '全ての商品',
-            'empty_data' => null,
-            'required' => false,
-            'label' => '商品カテゴリから選ぶ',
-        ));
+//        $builder->add('category_id', 'entity', array(
+//            'class' => 'Eccube\Entity\Category',
+//            'property' => 'NameWithLevel',
+//            'choices' => $Categories,
+//            'empty_value' => '全ての商品',
+//            'empty_data' => null,
+//            'required' => false,
+//            'label' => '商品カテゴリから選ぶ',
+//        ));
+        $builder->add('category_id', 'hidden', array());
+
         $builder->add('name', 'search', array(
             'required' => false,
             'label' => '商品名を入力',
             'empty_data' => null,
             'attr' => array(
                 'maxlength' => 50,
+                'placeholder' => $searchPlaceHolderMessage,
             ),
         ));
         $builder->add('pageno', 'hidden', array());
-        $builder->add('disp_number', 'product_list_max', array(
-            'label' => '表示件数',
+        $builder->add('disp_number', 'hidden', array());
+        $builder->add('orderby', 'hidden', array());
+        $builder->add('price_range_from', 'choice', array(
+            'choices' => array_combine($priceRange, $priceRange),
+            'empty_value' => '指定ない',
+            'empty_data' => null,
+            'required' => false,
+            'label' => '価格',
         ));
-        $builder->add('orderby', 'product_list_order_by', array(
-            'label' => '表示順',
+        $builder->add('price_range_to', 'choice', array(
+            'choices' => array_combine($priceRange, $priceRange),
+            'empty_value' => '指定ない',
+            'empty_data' => null,
+            'required' => false,
+            'label' => '価格',
         ));
+        $builder->add('recommend_id', 'collection', array('type' => 'hidden'));
+        $builder->add('tag_id', 'hidden', array());
     }
 
     /**

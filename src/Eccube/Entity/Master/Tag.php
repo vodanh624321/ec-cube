@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tag extends \Eccube\Entity\AbstractEntity
 {
+    const Recommend = array(
+        4 => '期間限定格',
+        5 => 'プレイスダワン商品',
+        6 => 'キャンページ中'
+    );
     /**
      * @return string
      */

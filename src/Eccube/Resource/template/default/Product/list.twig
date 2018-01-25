@@ -29,58 +29,58 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 {% block javascript %}
     <script type="text/javascript">
-        var cate_child = $.parseJSON('{{ cate_child|json_encode|raw }}');
-        var cate_grandson = $.parseJSON('{{ cate_grandson|json_encode|raw }}');
-        $('#cate_parent').change(function () {
-            //Reset child + grandson
-            $("#cate_child option:eq(0)").attr('selected', 'selected');
-            $("#cate_child").parent(".selectWrap").find(".customSelectInner").text('指定ない');
-            $("#cate_child").html("<option value=''>指定ない</option>");
-
-            $("#cate_grandson option:eq(0)").attr('selected', 'selected');
-            $("#cate_grandson").parent(".selectWrap").find(".customSelectInner").text('指定ない');
-            $("#cate_grandson").html("<option value=''>指定ない</option>");
-            var pid = $(this).val();
-            // Set to search form
-            $("#category_id").val(pid);
-            // Set child
-            if (cate_child[pid] != "undefined") {
-                $(cate_child[pid]).each(function (key, value) {
-                    var html = "<option value='"+value.id+"'>"+value.name+"</option>";
-                    $("#cate_child").append(html);
-                });
-            }
-        });
-
-        $('#cate_child').change(function () {
-            // Reset grandson
-            $("#cate_grandson option:eq(0)").attr('selected', 'selected');
-            $("#cate_grandson").parent(".selectWrap").find(".customSelectInner").text('指定ない');
-            $("#cate_grandson").html("<option value=''>指定ない</option>");
-
-            var cid = $(this).val();
-            // Set to search form
-            $("#category_id").val(cid);
-            // Set child
-            if (cate_grandson[cid] != "undefined") {
-                $(cate_grandson[cid]).each(function (key, value) {
-                    var html = "<option value='"+value.id+"'>"+value.name+"</option>";
-                    $("#cate_grandson").append(html);
-                });
-            }
-        });
-
-        $('#cate_grandson').change(function () {
-            var cid = $(this).val();
-            // Set to search form
-            $("#category_id").val(cid);
-        });
-
-        // 商品表示BOXの高さを揃える
-        // $(window).load(function() {
-        //     $('.product_item').matchHeight();
-        // });
         $(function(){
+            var cate_child = $.parseJSON('{{ cate_child|json_encode|raw }}');
+            var cate_grandson = $.parseJSON('{{ cate_grandson|json_encode|raw }}');
+            $('#cate_parent').change(function () {
+                //Reset child + grandson
+                $("#cate_child option:eq(0)").attr('selected', 'selected');
+                $("#cate_child").parent(".selectWrap").find(".customSelectInner").text('指定ない');
+                $("#cate_child").html("<option value=''>指定ない</option>");
+
+                $("#cate_grandson option:eq(0)").attr('selected', 'selected');
+                $("#cate_grandson").parent(".selectWrap").find(".customSelectInner").text('指定ない');
+                $("#cate_grandson").html("<option value=''>指定ない</option>");
+                var pid = $(this).val();
+                // Set to search form
+                $("#form1 #category_id").val(pid);
+                // Set child
+                if (cate_child[pid] != "undefined") {
+                    $(cate_child[pid]).each(function (key, value) {
+                        var html = "<option value='"+value.id+"'>"+value.name+"</option>";
+                        $("#cate_child").append(html);
+                    });
+                }
+            });
+
+            $('#cate_child').change(function () {
+                // Reset grandson
+                $("#cate_grandson option:eq(0)").attr('selected', 'selected');
+                $("#cate_grandson").parent(".selectWrap").find(".customSelectInner").text('指定ない');
+                $("#cate_grandson").html("<option value=''>指定ない</option>");
+
+                var cid = $(this).val();
+                // Set to search form
+                $("#form1 #category_id").val(cid);
+                // Set child
+                if (cate_grandson[cid] != "undefined") {
+                    $(cate_grandson[cid]).each(function (key, value) {
+                        var html = "<option value='"+value.id+"'>"+value.name+"</option>";
+                        $("#cate_grandson").append(html);
+                    });
+                }
+            });
+
+            $('#cate_grandson').change(function () {
+                var cid = $(this).val();
+                // Set to search form
+                $("#form1 #category_id").val(cid);
+            });
+
+            // 商品表示BOXの高さを揃える
+            // $(window).load(function() {
+            //     $('.product_item').matchHeight();
+            // });
             $('#radio01').click(function() {
                 if($('#product_img').css('display')==='block'){
                     return false;
@@ -106,6 +106,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 $(_id).show();
                 return false;
             });
+
+            $('.proSearBtn').click(function (e) {
+                e.preventDefault();
+                $('input[name="recommend[\]"]:checked').each(function () {
+                    var html = '<input type="hidden" name="recommend_id[]" value="'+$(this).val()+'"/>';
+                    $('#form1').append(html);
+                });
+
+                $('#form1').submit();
+            });
         })
     </script>
 {% endblock %}
@@ -120,9 +130,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 {% block main %}
     {% if search_form.category_id.vars.errors|length == 0 %}
-        <form name="form1" id="form1" method="get" action="?">
-            {{ form_widget(search_form) }}
-        </form>
         <div class="innerNone">
             <div class="clearfix">
                 <div class="productMain">
@@ -197,122 +204,123 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         </ul>
                     </div>
                     <div class="productSearch visiblePC">
-                        <table class="proSearTable">
-                            <tr>
-                                <th><span class="maru">●</span>商品カテゴリー</th>
-                                <td>
-                                    <ul class="categoryList clearfix">
-                                        <li>
-                                            <div class="selectWrap">
-                                                <select class="customSelect" id="cate_parent">
-                                                    <option>指定ない</option>
-                                                    {% for Category in cate %}
-                                                        <option value="{{ Category.id }}">{{ Category.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="selectWrap">
-                                                <select class="customSelect" id="cate_child">
-                                                    <option>指定ない</option>
-                                                </select>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="selectWrap">
-                                                <select class="customSelect" id="cate_grandson">
-                                                    <option>指定ない</option>
-                                                </select>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th><span class="maru">●</span>価格</th>
-                                <td>
-                                    <ul class="priceList">
-                                        <li>
-                                            <div class="selectWrap">
-                                                <select class="customSelect">
-                                                    <option>指定ない</option>
-                                                </select>
-                                                円(税込)～
-                                            </div>
-
-                                        </li>
-                                        <li>
-                                            <div class="selectWrap">
-                                                <select class="customSelect">
-                                                    <option>指定ない</option>
-                                                </select>
-                                                円(税込)
-                                            </div>
-
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th><span class="maru">●</span>おすすめ</th>
-                                <td>
-                                    <ul class="recomList">
-                                        <li>
-                                            <label id="checkbox">
-                                                <span class="checkbox"><input type="checkbox" id="checkbox" name="checkbox"></span><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_prorecom01.png" alt="">期間限定格
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label id="checkbox">
-                                                <span class="checkbox"><input type="checkbox" id="checkbox" name="checkbox"></span><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_prorecom02.png" alt="">プレイスダワン商品
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label id="checkbox">
-                                                <span class="checkbox"><input type="checkbox" id="checkbox" name="checkbox"></span><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_prorecom03.png" alt="">キャンページ中
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <div class="proSearBox clearfix">
-                            <div class="proSearIn01">
-                                <ul class="proSearList clearfix">
-                                    <li>
-                                        <div class="selectWrap">
-                                            <select class="customSelect">
-                                                <option>すべて</option>
-                                            </select>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <input type="text" id="product" name="product" class="proSearTxt" placeholder="商品名やお申込番号、型番で検索">
-                                    </li>
-                                    <li>
-                                        <input type="button" class="proSearBtn">
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="proSearIn02">
-                                <div class="proConv" data-target=".proConvBox"><span class="search">便利な検索</span>
-                                    <div class="proConvBox">
-                                        <ul class="proConvList">
-                                            <li><a href="#">注文履歴から探す</a></li>
-                                            <li><a href="#">お気に入り商品から探す</a></li>
-                                            <li><a href="#">おすすめ商品から探す</a></li>
-                                            <li><a href="#">お悩みから探す</a></li>
+                        <form name="form1" id="form1" method="post" action="?">
+                            {{ form_widget(search_form.mode) }}
+                            {{ form_widget(search_form.category_id) }}
+                            <table class="proSearTable">
+                                <tr>
+                                    <th><span class="maru">●</span>商品カテゴリー</th>
+                                    <td>
+                                        <ul class="categoryList clearfix">
+                                            <li>
+                                                <div class="selectWrap">
+                                                    <select class="customSelect" id="cate_parent">
+                                                        <option>指定ない</option>
+                                                        {% for Category in cate %}
+                                                            <option value="{{ Category.id }}">{{ Category.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="selectWrap">
+                                                    <select class="customSelect" id="cate_child">
+                                                        <option>指定ない</option>
+                                                    </select>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="selectWrap">
+                                                    <select class="customSelect" id="cate_grandson">
+                                                        <option>指定ない</option>
+                                                    </select>
+                                                </div>
+                                            </li>
                                         </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><span class="maru">●</span>価格</th>
+                                    <td>
+                                        <ul class="priceList">
+                                            <li>
+                                                <div class="selectWrap">
+                                                    {{ form_widget(search_form.price_range_from, {attr: {'class': 'customSelect'}}) }}
+                                                    円(税込)～
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="selectWrap">
+                                                    {{ form_widget(search_form.price_range_to, {attr: {'class': 'customSelect'}}) }}
+                                                    円(税込)
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><span class="maru">●</span>おすすめ</th>
+                                    <td>
+                                        <ul class="recomList">
+                                            {% for key, rec in recommend %}
+                                                <li>
+                                                    <label for="recommend_{{ key }}">
+                                                <span class="checkbox">
+                                                    <input id="recommend_{{ key }}" type="checkbox" name="recommend[]" value="{{ key }}" {% if key in search_form.recommend_id.vars.value %}checked{% endif %}/>
+                                                </span>
+                                                        <img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_prorecom0{{ loop.index }}.png" alt="">{{ rec }}
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div class="proSearBox clearfix">
+                                <div class="proSearIn01">
+                                    <ul class="proSearList clearfix">
+                                        <li>
+                                            <div class="selectWrap">
+                                                <select class="customSelect">
+                                                    <option>すべて</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            {{ form_widget(search_form.name, {attr: {'class': 'proSearTxt'}}) }}
+                                        </li>
+                                        <li>
+                                            <input type="submit" class="proSearBtn" value="">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="proSearIn02">
+                                    <div class="proConv" data-target=".proConvBox"><span class="search">便利な検索</span>
+                                        <div class="proConvBox">
+                                            <ul class="proConvList">
+                                                <li><a href="#">注文履歴から探す</a></li>
+                                                <li><a href="#">お気に入り商品から探す</a></li>
+                                                <li><a href="#">おすすめ商品から探す</a></li>
+                                                <li><a href="#">お悩みから探す</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                        </form>
+
                     </div>
                     <div class="productLabel visiblePC">
                         <p class="proLableTit"><span class="tit">絞り込むタグを追加</span></p>
-                        <p class="proLable"><a href="#">新商品</a><a href="#">お買い得</a><a href="#">ダウンロード商品</a><a href="#">当店限定</a><a href="#">人気商品</a><a href="#">ロングセラー</a></p>
+                        <p class="proLable">
+                            {% for tag in tags %}
+                                <a href="{{ url('product_list', {'tag_id': tag.id}) }}">{{ tag.name }}</a>
+                            {% endfor %}
+                        </p>
                     </div>
                     <div class="visibleTS">
                         <div class="productCond">

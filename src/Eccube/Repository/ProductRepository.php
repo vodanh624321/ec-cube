@@ -27,6 +27,7 @@ namespace Eccube\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Eccube\Application;
+use Eccube\Service\TaxRuleService;
 use Eccube\Util\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -102,7 +103,11 @@ class ProductRepository extends EntityRepository
         // category
         $categoryJoin = false;
         if (!empty($searchData['category_id']) && $searchData['category_id']) {
-            $Categories = $searchData['category_id']->getSelfAndDescendants();
+            $category = $searchData['category_id'];
+            if (is_numeric($category)) {
+                $category = $this->getEntityManager()->getRepository('Eccube\Entity\Category')->find($category);
+            }
+            $Categories = $category->getSelfAndDescendants();
             if ($Categories) {
                 $qb
                     ->innerJoin('p.ProductCategories', 'pct')
@@ -163,6 +168,56 @@ class ProductRepository extends EntityRepository
             }
             $qb
                 ->addOrderBy('p.id', 'DESC');
+        }
+        if (isset($searchData['tag_id']) && !empty($searchData['tag_id'])) {
+            $searchData['recommend_id'][] = $searchData['tag_id'];
+        }
+
+        if (isset($searchData['recommend_id']) && !empty($searchData['recommend_id'])) {
+            $qb->innerJoin('p.ProductTag', 'pt')
+                ->innerJoin('pt.Tag', 't');
+            $qb->andWhere($qb->expr()->in('t.id', ':Tag'));
+            $qb->setParameter('Tag', $searchData['recommend_id']);
+        }
+
+        if (isset($searchData['price_range_from']) || isset($searchData['price_range_to'])) {
+            $priceFrom = $searchData['price_range_from'];
+            $priceTo = $searchData['price_range_to'];
+
+            if (empty($priceFrom) && empty($priceTo)) {
+                return $qb;
+            }
+
+            $isReadyJoinPC = false;
+            if ($qb->getDQLPart('join') && isset($qb->getDQLPart('join')['p'])) {
+                /** @var \Doctrine\ORM\Query\Expr\Join $part */
+                foreach ($qb->getDQLPart('join')['p'] as $part) {
+                    if ($part->getJoin() == 'p.ProductClasses') {
+                        $isReadyJoinPC = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!$isReadyJoinPC) {
+                $qb->innerJoin('p.ProductClasses', 'pc');
+            }
+            /** @var TaxRuleRepository $taxRuleRepository */
+            $taxRuleRepository = $this->app['eccube.repository.tax_rule'];
+            /* @var $TaxRule \Eccube\Entity\TaxRule */
+            $TaxRule = $taxRuleRepository->getByRule();
+            /** @var TaxRuleService $TaxRuleService */
+            $TaxRuleService = $this->app['eccube.service.tax_rule'];
+            if ($priceFrom) {
+                $priceFrom -= $TaxRuleService->calcTax($priceFrom, $TaxRule->getTaxRate(), $TaxRule->getCalcRule()->getId(), $TaxRule->getTaxAdjust());
+                $qb->andWhere('pc.price02 >= :priceForm');
+                $qb->setParameter('priceForm', $priceFrom);
+            }
+            if ($priceTo) {
+                $priceTo -= $TaxRuleService->calcTax($priceFrom, $TaxRule->getTaxRate(), $TaxRule->getCalcRule()->getId(), $TaxRule->getTaxAdjust());
+                $qb->andWhere('pc.price02 <= :priceTo');
+                $qb->setParameter('priceTo', $priceTo);
+            }
         }
 
         return $qb;
