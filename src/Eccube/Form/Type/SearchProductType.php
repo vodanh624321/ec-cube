@@ -117,6 +117,7 @@ class SearchProductType extends AbstractType
         ));
         $builder->add('recommend_id', 'collection', array('type' => 'hidden'));
         $builder->add('tag_id', 'hidden', array());
+        $builder->add('fast_search');
     }
 
     /**

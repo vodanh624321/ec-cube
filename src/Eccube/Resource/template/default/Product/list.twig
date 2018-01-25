@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         $(function(){
             var cate_child = $.parseJSON('{{ cate_child|json_encode|raw }}');
             var cate_grandson = $.parseJSON('{{ cate_grandson|json_encode|raw }}');
+            var cate_path = $.parseJSON('{{ cate_path|json_encode|raw }}');
+
             $('#cate_parent').change(function () {
                 //Reset child + grandson
                 $("#cate_child option:eq(0)").attr('selected', 'selected');
@@ -47,8 +49,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 // Set child
                 if (cate_child[pid] != "undefined") {
                     $(cate_child[pid]).each(function (key, value) {
-                        var html = "<option value='"+value.id+"'>"+value.name+"</option>";
-                        $("#cate_child").append(html);
+                        var html = '<option value="' + value.id + '">' + value.name + '</option>';
+                        if ($.inArray(value.id, cate_path) != -1) {
+                            html = '<option value="' + value.id + '" selected="selected">' + value.name + '</option>';
+                            $("#cate_child").append(html);
+                            $("#cate_child").val(value.id).trigger('change');
+                        } else {
+                            $("#cate_child").append(html);
+                        }
+
                     });
                 }
             });
@@ -56,8 +65,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             $('#cate_child').change(function () {
                 // Reset grandson
                 $("#cate_grandson option:eq(0)").attr('selected', 'selected');
-                $("#cate_grandson").parent(".selectWrap").find(".customSelectInner").text('指定ない');
-                $("#cate_grandson").html("<option value=''>指定ない</option>");
+                var $cateGrandson = $("#cate_grandson");
+                $cateGrandson.parent(".selectWrap").find(".customSelectInner").text('指定ない');
+                $cateGrandson.html("<option value=''>指定ない</option>");
 
                 var cid = $(this).val();
                 // Set to search form
@@ -65,8 +75,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 // Set child
                 if (cate_grandson[cid] != "undefined") {
                     $(cate_grandson[cid]).each(function (key, value) {
-                        var html = "<option value='"+value.id+"'>"+value.name+"</option>";
-                        $("#cate_grandson").append(html);
+                        var html = '<option value="' + value.id + '">' + value.name + '</option>';
+                        if ($.inArray(value.id, cate_path) != -1) {
+                            html = '<option value="' + value.id + '" selected="selected">' + value.name + '</option>';
+                            $cateGrandson.append(html);
+                            $cateGrandson.val(value.id).trigger('change');
+                        } else {
+                            $cateGrandson.append(html);
+                        }
                     });
                 }
             });
@@ -76,6 +92,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 // Set to search form
                 $("#form1 #category_id").val(cid);
             });
+            // init data
+            var cate_id = '{{ category_id }}';
+            if (cate_id) {
+                $('#cate_parent').trigger('change');
+            }
 
             // 商品表示BOXの高さを揃える
             // $(window).load(function() {
@@ -217,7 +238,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                                     <select class="customSelect" id="cate_parent">
                                                         <option>指定ない</option>
                                                         {% for Category in cate %}
-                                                            <option value="{{ Category.id }}">{{ Category.name }}</option>
+                                                            <option value="{{ Category.id }}" {% if Category.id in cate_path %}selected="selected"{% endif %}>{{ Category.name }}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -301,10 +322,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                     <div class="proConv" data-target=".proConvBox"><span class="search">便利な検索</span>
                                         <div class="proConvBox">
                                             <ul class="proConvList">
-                                                <li><a href="#">注文履歴から探す</a></li>
-                                                <li><a href="#">お気に入り商品から探す</a></li>
-                                                <li><a href="#">おすすめ商品から探す</a></li>
-                                                <li><a href="#">お悩みから探す</a></li>
+                                                <li><a href="{{ url('product_list', {'fast_search': 1}) }}">注文履歴から探す</a></li>
+                                                <li><a href="{{ url('product_list', {'fast_search': 2}) }}">お気に入り商品から探す</a></li>
+                                                <li><a href="{{ url('product_list', {'fast_search': 3}) }}">おすすめ商品から探す</a></li>
+                                                <li><a href="{{ url('product_list', {'fast_search': 4}) }}">お悩みから探す</a></li>
                                             </ul>
                                         </div>
                                     </div>

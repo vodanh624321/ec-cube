@@ -3263,39 +3263,10 @@
 	border:1px solid #1c72eb;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.selectWrap span.form-control {
+	height: auto !important;
+}
+.selectWrap select.form-control {
+	height: auto !important;
+	padding: 0 !important;
+}

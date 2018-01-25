@@ -83,7 +83,6 @@ class ProductController
         $searchForm->get('disp_number')->setData(10);
         $searchForm->handleRequest($request);
 
-        // paginator
         $searchData = $searchForm->getData();
         $searchData['disp_number'] = 10;
         /** @var ProductRepository $productRepo */
@@ -97,11 +96,10 @@ class ProductController
             ),
             $request
         );
-//        dump($searchData);
         $app['eccube.event.dispatcher']->dispatch(EccubeEvents::FRONT_PRODUCT_INDEX_SEARCH, $event);
         $searchData = $event->getArgument('searchData');
 
-//        dump($searchData);
+        // paginator
         $pagination = $app['paginator']()->paginate(
             $qb,
             !empty($searchData['pageno']) ? $searchData['pageno'] : 1,
@@ -150,15 +148,29 @@ class ProductController
             $forms[$Product->getId()] = $addCartForm->createView();
         }
 
-        $Category = $searchForm->get('category_id')->getData();
-        /** @var CategoryRepository $CateRepo */
-        $CateRepo = $app['eccube.repository.category'];
-        $categories = $CateRepo->getList();
+        $categoryId = $searchForm->get('category_id')->getData();
+        /** @var CategoryRepository $cateRepo */
+        $cateRepo = $app['eccube.repository.category'];
+        $categoryPath = array();
+        if (is_numeric($categoryId)) {
+            /** @var Category $categorySelected */
+            $categorySelected = $cateRepo->find($categoryId);
+            /** @var Category[] $parents */
+            $parents = $categorySelected->getParents();
+            if (count($parents) > 0) {
+                foreach ($parents as $cat) {
+                    $categoryPath[] = $cat->getId();
+                }
+            }
+            $categoryPath[] = (int) $categoryId;
+        }
+
+        $categories = $cateRepo->getList();
         $arrCateC = array();
         $arrCateG = array();
-        $cates = array();
+        $arrCate = array();
         foreach ($categories as $cate) {
-            $cates[$cate->getId()] = $cate->toArray();
+            $arrCate[$cate->getId()] = $cate->toArray();
             if ($cate->getChildren()->count() > 0) {
                 $childs = $cate->getChildren();
                 /** @var Category $child */
@@ -175,17 +187,18 @@ class ProductController
         $Tag = $app['eccube.repository.master.tag']->findBy(array(), array('rank' => 'ASC'));
 
         return $app->render('Product/list.twig', array(
-            'subtitle' => $this->getPageTitle($searchData),
+            'subtitle' => $this->getPageTitle($searchData, $app),
             'pagination' => $pagination,
             'search_form' => $searchForm->createView(),
             'forms' => $forms,
-            'Category' => $Category,
-            'cate' => $cates,
+            'category_id' => $categoryId,
+            'cate' => $arrCate,
             'cate_child' => $arrCateC,
             'cate_grandson' => $arrCateG,
             'breadcrumb' => '商品一覧',
             'recommend' =>  Tag::Recommend,
-            'tags' => $Tag
+            'tags' => $Tag,
+            'cate_path' => $categoryPath
         ));
     }
 
@@ -315,14 +328,19 @@ class ProductController
      * ページタイトルの設定
      *
      * @param  null|array $searchData
-     * @return str
+     * @return string
      */
-    private function getPageTitle($searchData)
+    private function getPageTitle($searchData, $app)
     {
         if (isset($searchData['name']) && !empty($searchData['name'])) {
             return '検索結果';
         } elseif (isset($searchData['category_id']) && $searchData['category_id']) {
-            return $searchData['category_id']->getName();
+            $category = $searchData['category_id'];
+            if (is_numeric($category)) {
+                $category = $app['eccube.repository.category']->find($category);
+            }
+
+            return $category->getName();
         } else {
             return '全商品';
         }
