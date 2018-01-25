@@ -80,11 +80,9 @@ class ProductController
         /* @var $searchForm \Symfony\Component\Form\FormInterface */
         $searchForm = $builder->getForm();
         $searchForm->get('recommend_id')->setData($request->get('recommend_id'));
-        $searchForm->get('disp_number')->setData(10);
         $searchForm->handleRequest($request);
 
         $searchData = $searchForm->getData();
-        $searchData['disp_number'] = 10;
         /** @var ProductRepository $productRepo */
         $productRepo = $app['eccube.repository.product'];
         $qb = $productRepo->getQueryBuilderBySearchData($searchData);
@@ -103,7 +101,7 @@ class ProductController
         $pagination = $app['paginator']()->paginate(
             $qb,
             !empty($searchData['pageno']) ? $searchData['pageno'] : 1,
-            !empty($searchData['disp_number']) ? $searchData['disp_number'] : 10
+            !empty($searchData['disp_number']) ? $searchData['disp_number']->getId() : 10
         );
 
         // addCart form
@@ -190,13 +188,13 @@ class ProductController
             'subtitle' => $this->getPageTitle($searchData, $app),
             'pagination' => $pagination,
             'search_form' => $searchForm->createView(),
-            'forms' => $forms,
+            'forms' => $forms, // cart form
             'category_id' => $categoryId,
             'cate' => $arrCate,
             'cate_child' => $arrCateC,
             'cate_grandson' => $arrCateG,
             'breadcrumb' => '商品一覧',
-            'recommend' =>  Tag::Recommend,
+            'recommend' =>  Tag::getRecommend(),
             'tags' => $Tag,
             'cate_path' => $categoryPath
         ));

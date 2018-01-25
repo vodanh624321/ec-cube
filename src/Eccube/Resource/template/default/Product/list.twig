@@ -137,7 +137,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                 $('#form1').submit();
             });
-        })
+        });
     </script>
 {% endblock %}
 
@@ -150,223 +150,224 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% endblock %}
 
 {% block main %}
-    {% if search_form.category_id.vars.errors|length == 0 %}
-        <div class="innerNone">
-            <div class="clearfix">
-                <div class="productMain">
-                    <div class="productTop visiblePC">
-                        <ul class="productTopList">
-                            <li>
-                                <p class="productAllTit">商品は全部で<span class="tit">{{ pagination.totalItemCount|number_format }}</span>件あります</p>
-                            </li>
-                            <li>
-                                <div class="productTab">
-                                    <label for="radio01">
-                                        <span class="input"><input type="radio" id="radio01" name="radio" class="productRadio" checked></span><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_imges.png" alt="">画像
-                                    </label>
-                                    <label for="radio02">
-                                        <span class="input"><input type="radio" id="radio02" name="radio" class="productRadio"></span><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_list.png" alt="">リスト
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                {# Sub pagination start #}
-                                {% set pages = pagination.paginationData %}
-                                {% if app.config.pageinrange  is defined %}
-                                    {% set pageinrange  = app.config.pageinrange %}
-                                {% else  %}
-                                    {% set pageinrange  = false %}
-                                {% endif %}
-                                {% if pages.pageCount > 1 %}
-                                    <p class="productPageNavi">
-                                        {% if pages.previous is defined %}
-                                            {% set page_num = pages.previous - 5 %}
-                                            {% if page_num <= 1 %}
-                                                {% set page_num = 1 %}
-                                            {% endif %}
-                                            <span class="navi">
+    <div class="innerNone">
+        <div class="clearfix">
+            <div class="productMain">
+                <div class="productTop visiblePC">
+                    <ul class="productTopList">
+                        <li>
+                            <p class="productAllTit">商品は全部で<span class="tit">{{ pagination.totalItemCount|number_format }}</span>件あります</p>
+                        </li>
+                        <li>
+                            <div class="productTab">
+                                <label for="radio01">
+                                    <span class="input"><input type="radio" id="radio01" name="radio" class="productRadio" checked></span><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_imges.png" alt="">画像
+                                </label>
+                                <label for="radio02">
+                                    <span class="input"><input type="radio" id="radio02" name="radio" class="productRadio"></span><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_list.png" alt="">リスト
+                                </label>
+                            </div>
+                        </li>
+                        {#Sub pagination#}
+                        <li>
+                            {# Sub pagination start #}
+                            {% set pages = pagination.paginationData %}
+                            {% if app.config.pageinrange  is defined %}
+                                {% set pageinrange  = app.config.pageinrange %}
+                            {% else  %}
+                                {% set pageinrange  = false %}
+                            {% endif %}
+                            {% if pages.pageCount > 1 %}
+                                <p class="productPageNavi">
+                                    {% if pages.previous is defined %}
+                                        {% set page_num = pages.previous - 5 %}
+                                        {% if page_num <= 1 %}
+                                            {% set page_num = 1 %}
+                                        {% endif %}
+                                        <span class="navi">
                                                 <a class="link01" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page_num})) }}"
                                                    aria-label="Previous"><span aria-hidden="true">過去5件</span></a>
                                             </span>
-                                        {% endif %}
+                                    {% endif %}
 
-                                        {% if pageinrange and pages.firstPageInRange != 1 %}
-                                            <span class="navi">...</span>
-                                        {% endif %}
+                                    {% if pageinrange and pages.firstPageInRange != 1 %}
+                                        <span class="navi">...</span>
+                                    {% endif %}
 
-                                        {% for page in pages.pagesInRange %}
-                                            <span class="navi">
+                                    {% for page in pages.pagesInRange %}
+                                        <span class="navi">
                                     {% if page == pages.current %}
                                         <a class="link01 on" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page})) }}"> {{ page }} </a>
                                     {% else %}
                                         <a class="link01" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page})) }}"> {{ page }} </a>
                                     {% endif %}
                                     </span>
-                                        {% endfor %}
+                                    {% endfor %}
 
-                                        {% if pageinrange and pages.last != pages.lastPageInRange %}
-                                            <span class="navi">...</span>
+                                    {% if pageinrange and pages.last != pages.lastPageInRange %}
+                                        <span class="navi">...</span>
+                                    {% endif %}
+
+                                    {% if pageinrange and pages.last != pages.lastPageInRange %}
+                                        {% set page_num = pages.current + 5 %}
+                                        {% if page_num > pages.last %}
+                                            {% set page_num = pages.last %}
                                         {% endif %}
-
-                                        {% if pageinrange and pages.last != pages.lastPageInRange %}
-                                            {% set page_num = pages.current + 5 %}
-                                            {% if page_num > pages.last %}
-                                                {% set page_num = pages.last %}
-                                            {% endif %}
-                                            <span class="navi">
+                                        <span class="navi">
                                     <a class="link02" href="{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'pageno': page_num})) }}"
                                        aria-label="Last"><span aria-hidden="true">次の5件</span></a>
                                     </span>
-                                        {% endif %}
-                                    </p>
-                                {% endif %}
-                                {# Sub pagination end #}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="productSearch visiblePC">
-                        <form name="form1" id="form1" method="post" action="?">
-                            {{ form_widget(search_form.mode) }}
-                            {{ form_widget(search_form.category_id) }}
-                            <table class="proSearTable">
-                                <tr>
-                                    <th><span class="maru">●</span>商品カテゴリー</th>
-                                    <td>
-                                        <ul class="categoryList clearfix">
-                                            <li>
-                                                <div class="selectWrap">
-                                                    <select class="customSelect" id="cate_parent">
-                                                        <option>指定ない</option>
-                                                        {% for Category in cate %}
-                                                            <option value="{{ Category.id }}" {% if Category.id in cate_path %}selected="selected"{% endif %}>{{ Category.name }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="selectWrap">
-                                                    <select class="customSelect" id="cate_child">
-                                                        <option>指定ない</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="selectWrap">
-                                                    <select class="customSelect" id="cate_grandson">
-                                                        <option>指定ない</option>
-                                                    </select>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><span class="maru">●</span>価格</th>
-                                    <td>
-                                        <ul class="priceList">
-                                            <li>
-                                                <div class="selectWrap">
-                                                    {{ form_widget(search_form.price_range_from, {attr: {'class': 'customSelect'}}) }}
-                                                    円(税込)～
-                                                </div>
-
-                                            </li>
-                                            <li>
-                                                <div class="selectWrap">
-                                                    {{ form_widget(search_form.price_range_to, {attr: {'class': 'customSelect'}}) }}
-                                                    円(税込)
-                                                </div>
-
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><span class="maru">●</span>おすすめ</th>
-                                    <td>
-                                        <ul class="recomList">
-                                            {% for key, rec in recommend %}
-                                                <li>
-                                                    <label for="recommend_{{ key }}">
-                                                <span class="checkbox">
-                                                    <input id="recommend_{{ key }}" type="checkbox" name="recommend[]" value="{{ key }}" {% if key in search_form.recommend_id.vars.value %}checked{% endif %}/>
-                                                </span>
-                                                        <img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_prorecom0{{ loop.index }}.png" alt="">{{ rec }}
-                                                    </label>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <div class="proSearBox clearfix">
-                                <div class="proSearIn01">
-                                    <ul class="proSearList clearfix">
+                                    {% endif %}
+                                </p>
+                            {% endif %}
+                            {# Sub pagination end #}
+                        </li>
+                    </ul>
+                </div>
+                <div class="productSearch visiblePC">
+                    <form name="form1" id="form1" method="post" action="?">
+                        {{ form_widget(search_form.mode) }}
+                        {{ form_widget(search_form.category_id) }}
+                        <table class="proSearTable">
+                            <tr>
+                                <th><span class="maru">●</span>商品カテゴリー</th>
+                                <td>
+                                    <ul class="categoryList clearfix">
                                         <li>
                                             <div class="selectWrap">
-                                                <select class="customSelect">
-                                                    <option>すべて</option>
+                                                <select class="customSelect" id="cate_parent">
+                                                    <option>指定ない</option>
+                                                    {% for Category in cate %}
+                                                        <option value="{{ Category.id }}" {% if Category.id in cate_path %}selected="selected"{% endif %}>{{ Category.name }}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </li>
                                         <li>
-                                            {{ form_widget(search_form.name, {attr: {'class': 'proSearTxt'}}) }}
+                                            <div class="selectWrap">
+                                                <select class="customSelect" id="cate_child">
+                                                    <option>指定ない</option>
+                                                </select>
+                                            </div>
                                         </li>
                                         <li>
-                                            <input type="submit" class="proSearBtn" value="">
+                                            <div class="selectWrap">
+                                                <select class="customSelect" id="cate_grandson">
+                                                    <option>指定ない</option>
+                                                </select>
+                                            </div>
                                         </li>
                                     </ul>
-                                </div>
-                                <div class="proSearIn02">
-                                    <div class="proConv" data-target=".proConvBox"><span class="search">便利な検索</span>
-                                        <div class="proConvBox">
-                                            <ul class="proConvList">
-                                                <li><a href="{{ url('product_list', {'fast_search': 1}) }}">注文履歴から探す</a></li>
-                                                <li><a href="{{ url('product_list', {'fast_search': 2}) }}">お気に入り商品から探す</a></li>
-                                                <li><a href="{{ url('product_list', {'fast_search': 3}) }}">おすすめ商品から探す</a></li>
-                                                <li><a href="{{ url('product_list', {'fast_search': 4}) }}">お悩みから探す</a></li>
-                                            </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="maru">●</span>価格</th>
+                                <td>
+                                    <ul class="priceList">
+                                        <li>
+                                            <div class="selectWrap">
+                                                {{ form_widget(search_form.price_range_from, {attr: {'class': 'customSelect'}}) }}
+                                                円(税込)～
+                                            </div>
+
+                                        </li>
+                                        <li>
+                                            <div class="selectWrap">
+                                                {{ form_widget(search_form.price_range_to, {attr: {'class': 'customSelect'}}) }}
+                                                円(税込)
+                                            </div>
+
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="maru">●</span>おすすめ</th>
+                                <td>
+                                    <ul class="recomList">
+                                        {% for key, rec in recommend %}
+                                            <li>
+                                                <label for="recommend_{{ key }}">
+                                                <span class="checkbox">
+                                                    <input id="recommend_{{ key }}" type="checkbox" name="recommend[]" value="{{ key }}" {% if key in search_form.recommend_id.vars.value %}checked{% endif %}/>
+                                                </span>
+                                                    <img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_prorecom0{{ loop.index }}.png" alt="">{{ rec }}
+                                                </label>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="proSearBox clearfix">
+                            <div class="proSearIn01">
+                                <ul class="proSearList clearfix">
+                                    <li>
+                                        <div class="selectWrap">
+                                            <select class="customSelect">
+                                                <option>すべて</option>
+                                            </select>
                                         </div>
+                                    </li>
+                                    <li>
+                                        {{ form_widget(search_form.name, {attr: {'class': 'proSearTxt'}}) }}
+                                    </li>
+                                    <li>
+                                        <input type="submit" class="proSearBtn" value="">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="proSearIn02">
+                                <div class="proConv" data-target=".proConvBox"><span class="search">便利な検索</span>
+                                    <div class="proConvBox">
+                                        <ul class="proConvList">
+                                            <li><a href="{{ url('product_list', {'fast_search': 1}) }}">注文履歴から探す</a></li>
+                                            <li><a href="{{ url('product_list', {'fast_search': 2}) }}">お気に入り商品から探す</a></li>
+                                            <li><a href="{{ url('product_list', {'fast_search': 3}) }}">おすすめ商品から探す</a></li>
+                                            <li><a href="{{ url('product_list', {'fast_search': 4}) }}">お悩みから探す</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </form>
+                </div>
 
-                        </form>
-
-                    </div>
-                    <div class="productLabel visiblePC">
-                        <p class="proLableTit"><span class="tit">絞り込むタグを追加</span></p>
-                        <p class="proLable">
-                            {% for tag in tags %}
-                                <a href="{{ url('product_list', {'tag_id': tag.id}) }}">{{ tag.name }}</a>
-                            {% endfor %}
-                        </p>
-                    </div>
-                    <div class="visibleTS">
-                        <div class="productCond">
-                            <p class="productCondBtn">条件で絞り込む</p>
-                            <div class="productCondBox">
-                                <ul class="productCondList clearfix">
-                                    <li><a href="#">カテゴリー</a></li>
-                                    <li><a href="#">スベック</a></li>
-                                    <li><a href="#">価格・メーカー名</a></li>
-                                    <li><a href="#">お届け日・他</a></li>
-                                </ul>
-                                <p class="productCondTxt">選択中の絞り込み条件</p>
-                                <p class="productCondRele"><a href="#">全ての絞込みを解除</a></p>
-                            </div>
+                <div class="productLabel visiblePC">
+                    <p class="proLableTit"><span class="tit">絞り込むタグを追加</span></p>
+                    <p class="proLable">
+                        {% for tag in tags %}
+                            <a href="{{ url('product_list', {'tag_id': tag.id}) }}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="visibleTS">
+                    <div class="productCond">
+                        <p class="productCondBtn">条件で絞り込む</p>
+                        <div class="productCondBox">
+                            <ul class="productCondList clearfix">
+                                <li><a href="#">カテゴリー</a></li>
+                                <li><a href="#">スベック</a></li>
+                                <li><a href="#">価格・メーカー名</a></li>
+                                <li><a href="#">お届け日・他</a></li>
+                            </ul>
+                            <p class="productCondTxt">選択中の絞り込み条件</p>
+                            <p class="productCondRele"><a href="#">全ての絞込みを解除</a></p>
                         </div>
                     </div>
-                    <div class="visibleTS">
-                        <div class="productView clearfix">
-                            <p class="productAllTit">商品は全部で<span class="tit">5,000</span>件あります</p>
-                            <div class="productViewBox">
-                                <p class="img"><a href="#product_img" class="on">img</a></p>
-                                <p class="list"><a href="#product_list">list</a></p>
-                            </div>
+                </div>
+                <div class="visibleTS">
+                    <div class="productView clearfix">
+                        <p class="productAllTit">商品は全部で<span class="tit">{{ pagination.totalItemCount|number_format }}</span>件あります</p>
+                        <div class="productViewBox">
+                            <p class="img"><a href="#product_img" class="on">img</a></p>
+                            <p class="list"><a href="#product_list">list</a></p>
                         </div>
                     </div>
+                </div>
+
+                {% if pagination|length > 0 %}
                     <div class="productIn">
                         <div class="productIn_img tabBox" id="product_img">
                             <ul class="productList01 clearfix">
@@ -395,7 +396,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                             <dl class="clearfix">
                                                 <dt><a href="{{ url('product_detail', {'id': Product.id}) }}"><img src="{{ app.config.image_save_urlpath }}/{{ Product.main_list_image|no_image_product }}" alt=""></a></dt>
                                                 <dd>
-                                                    <p class="productName02"><a href="{{ url('product_detail', {'id': Product.id}) }}">パイロット ホワイトボードマーカー ボードマスター専用カートリッジ P-WMRF8-B 黒 </a></p>
+                                                    <p class="productName02"><a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a></p>
                                                     <p class="productNote02 visiblePC">型番：{{ Product.getCodeMin }}</p>
                                                     <p class="productPrice02">販売価格：<span class="txt">{{ Product.getPrice02IncTaxMin|price }}〜</span>（税抜き）</p>
                                                     <p class="productDesc">{{ Product.description_list|raw|nl2br }}</p>
@@ -412,11 +413,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                             {% include "pagination.twig" with { 'pages' : pagination.paginationData } %}
                         {% endif %}
                     </div>
-                </div>
+                    <!-- ▲item_list▲ -->
+                {% else %}
+                    <p class="errormsg text-danger">ご指定のカテゴリは存在しません。</p>
+                {% endif %}
             </div>
         </div>
-        <!-- ▲item_list▲ -->
-    {% else %}
-        <p class="errormsg text-danger">ご指定のカテゴリは存在しません。</p>
-    {% endif %}
+    </div>
 {% endblock %}

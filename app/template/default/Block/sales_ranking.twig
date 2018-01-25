@@ -1,0 +1,30 @@
+{#
+* Plugin Name : SalesRanking
+*
+* Copyright (C) 2015 BraTech Co., Ltd. All Rights Reserved.
+* http://www.bratech.co.jp/
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+#}
+
+<!--売上ランキング-->
+{% if ItemList %}
+    <div class="productSide visiblePC">
+        <div class="prodSideMain">
+            <p class="prodSideTit prodSideBg01">売れ筋ランキング</p>
+            <ul class="prodSideList clearfix">
+                {% for Item in ItemList|slice(0,5) %}
+                    <li>
+                        <div class="prodSideBox biggerlink">
+                            <p class="img"><img src="{{ app.config.image_save_urlpath }}/{{ Item.main_list_image|no_image_product }}" alt=""></p>
+                            <p class="tit"><a href="{{ url('product_detail', {'id': Item.id}) }}">{{Item.name}}</a></p>
+                            <p class="price"><span class="txt">{{ Item.getPrice02IncTaxMin|price }}～</span>(税抜き)</p>
+                            <p class="ico"><img src="{{ app.config.front_urlpath }}/bihin-com/img/product/ico_rank_{{ loop.index }}.png" alt=""></p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

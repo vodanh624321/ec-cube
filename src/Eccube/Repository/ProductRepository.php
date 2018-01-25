@@ -183,16 +183,20 @@ class ProductRepository extends EntityRepository
         if (isset($searchData['fast_search']) && $searchData['fast_search']) {
             switch ($searchData['fast_search']) {
                 case 1:
-                    $qb->innerJoin('Eccube\Entity\OrderDetail', 'od', 'WITH', 'od.Product = p');
-                    $Customer = $this->app->user();
-                    if ($Customer) {
-                        $qb->innerJoin('od.Order', 'o');
-                        $qb->andWhere('o.Customer = :Customer');
-                        $qb->setParameter('Customer', $Customer);
+                    if ($this->app->isGranted('ROLE_USER')) {
+                        $Customer = $this->app->user();
+                        if ($Customer) {
+                            $qb->innerJoin('Eccube\Entity\OrderDetail', 'od', 'WITH', 'od.Product = p');
+                            $qb->innerJoin('od.Order', 'o');
+                            $qb->andWhere('o.Customer = :Customer');
+                            $qb->setParameter('Customer', $Customer);
+                        }
                     }
                     break;
                 case 2:
-                    $qb->innerJoin('p.CustomerFavoriteProducts', 'cfp');
+                    if ($this->app->isGranted('ROLE_USER')) {
+                        $qb->innerJoin('p.CustomerFavoriteProducts', 'cfp');
+                    }
                     break;
                 case 3:
                     if (isset($this->app['eccube.plugin.recommend.repository.recommend_product'])) {
@@ -200,9 +204,14 @@ class ProductRepository extends EntityRepository
                     }
                     break;
                 case 4:
-//                    if (isset($this->app['eccube.plugin.recommend.repository.recommend_product'])) {
-//                        $qb->innerJoin('Plugin\Recommend\Entity\RecommendProduct', 'rp', 'WITH', 'rp.Product = p');
-//                    }
+                    if (isset($this->app['eccube.checkeditem.service.util'])) {
+                        $checkedItems = $this->app['eccube.checkeditem.service.util']->getCheckedItem($this->app['request']);
+                        if (!$checkedItems) {
+                            $checkedItems = array(999999); // empty when not
+                        }
+                        $qb->andWhere($qb->expr()->in('p.id', ':items'));
+                        $qb->setParameter('items', implode(',', $checkedItems));
+                    }
                     break;
             }
         }

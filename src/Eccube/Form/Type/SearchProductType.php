@@ -54,7 +54,7 @@ class SearchProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
+        // default range
         $priceRange = array(100, 500, 1000, 5000, 10000, 20000);
         $searchPlaceHolderMessage = '製品名とキーワードで検索します';
         // if has install plugin, get it
@@ -99,8 +99,12 @@ class SearchProductType extends AbstractType
             ),
         ));
         $builder->add('pageno', 'hidden', array());
-        $builder->add('disp_number', 'hidden', array());
-        $builder->add('orderby', 'hidden', array());
+        $builder->add('disp_number', 'product_list_max', array(
+            'label' => '表示件数',
+        ));
+        $builder->add('orderby', 'product_list_order_by', array(
+            'label' => '表示順',
+        ));
         $builder->add('price_range_from', 'choice', array(
             'choices' => array_combine($priceRange, $priceRange),
             'empty_value' => '指定ない',
