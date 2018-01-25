@@ -313,12 +313,17 @@ class ProductController
             $is_favorite = $app['eccube.repository.customer_favorite_product']->isFavorite($Customer, $Product);
         }
 
+        $url = $app->url('product_list');
+        $breadcrumb = "<a href=\"{$url}\">商品一覧</a>";
+        $breadcrumb .= $Product->getName();
+
         return $app->render('Product/detail.twig', array(
             'title' => $this->title,
             'subtitle' => $Product->getName(),
             'form' => $form->createView(),
             'Product' => $Product,
             'is_favorite' => $is_favorite,
+            'breadcrumb' => $breadcrumb,
         ));
     }
 

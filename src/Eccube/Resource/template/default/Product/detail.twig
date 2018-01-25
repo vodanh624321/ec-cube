@@ -22,6 +22,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% extends 'default_frame.twig' %}
 
 {% set body_class = 'product_page' %}
+{% set bihin_contents = ' ' %}
+{% block main_title %}
+{% endblock %}
 
 {% block javascript %}
 <script>
@@ -94,20 +97,188 @@ $(function(){
 {% endblock %}
 
 {% block main %}
-    {# todo ブロック化}
-    <div id="topicpath" class="row">
-        {% for ProductCategory in Product.ProductCategories %}
-        <ol>
-            <li><a href="{{ url('product_list') }}">全商品</a></li>
-            {% for Category in ProductCategory.Category.path %}
-                <li><a href="{{ url('product_list') }}?category_id={{ Category.id }}">{{ Category.name }}</a></li>
-            {% endfor %}
-            <li>{{ Product.name }}</li>
-        </ol>
-        {% endfor %}
-    </div>
-    #}
+<div class="proDetailMain">
+    <div class="inner">
+        <div class="proDetailWrap clearfix">
+            <div class="proDetaBox01">
+                <div class="proDetailSlider visiblePC">
+                    <div id="mouseoverbox">
+                        <ul>
+                            {% if Product.ProductImage|length > 0 %}
+                                <li><a href="#1" data-target="#popup01"><img src="{{ app.config.image_save_urlpath }}/{{ Product.ProductImage[0]|no_image_product }}"/></a></li>
+                            {% else %}
+                                <li><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="mouseover clearfix">
+                        <ul class="mouseroverList">
+                            {% if Product.ProductImage|length > 0 %}
+                                {% for ProductImage in Product.ProductImage %}
+                                    <li><a href="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" {% if loop.index == 1 %}class="on"{% endif %} data-target="#popup0{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></a><span class="txt">BLACK</span></li>
+                                {% endfor %}
+                            {% else %}
+                                <li><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a><span class="txt">BLACK</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                {% if Product.freearea %}
+                <div class="detailNorm visiblePC">
+                    {{ include(template_from_string(Product.freearea|nl2br)) }}
+                    <p class="detailLink01"><a href="#">すべての詳細情報を見る</a></p>
+                </div>
+                {% endif %}
 
+
+                <p class="proDetailTit visibleTS">{{ Product.name }}</p>
+                <div class="detailIn visibleTS">
+                    <ul class="detailSlider">
+                        {% if Product.ProductImage|length > 0 %}
+                            {% for ProductImage in Product.ProductImage %}
+                                <li><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></li>
+                            {% endfor %}
+                        {% else %}
+                            <li><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="proDetaBox02">
+                <p class="proDetailTit visiblePC">{{ Product.name }}</p>
+                <p class="proDetailTxt01">{{ Product.description_detail|raw|nl2br }}</p>
+                <p class="proDetailTxt02"><span class="txt01">型番：{{ Product.code_min }}
+                        {% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}</span>
+                    <span class="txt01">JANコード：4901683062346</span></p>
+                <div class="proPriceBox">
+                    <table class="proPriceTable">
+                        <p>会員価格</p>
+                        <!--member_price-->
+                        {#<td><span class="price01">￥1,639</span><span class="txt">（税抜き）</span></td>#}
+                        {#<td>通常価格<span class="price02"> ￥1,800</span><span class="txt">（税抜き）</span></td>#}
+                        {% if Product.hasProductClass -%}
+                            {% if Product.getPrice02IncTaxMin == Product.getPrice02IncTaxMax %}
+                                <td>通常価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }}</span><span class="txt">（税抜き）</span></td>
+                            {% else %}
+                                <td>通常価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }} ～ {{  Product.getPrice02IncTaxMax|price }}</span><span class="txt">（税抜き）</span></td>
+                            {% endif %}
+                        {% else -%}
+                            <td>通常価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }}</span><span class="txt">（税抜き）</span></td>
+                        {% endif -%}
+                    </table>
+                    <p>販売単位：1セット（25枚：5枚入×5袋）</p>
+                </div>
+                <div class="proDetailSelec">
+                    {% if form.classcategory_id1 is defined %}
+                        {#<ul id="detail_cart_box__cart_class_category_id" class="classcategory_list">#}
+                        <ul id="detail_cart_box__cart_class_category_id" class="proSeleclist clearfix">
+                            {# 規格1 #}
+                            <li>
+                                <div class="protable">
+                                    <p class="tit">{{ form_label(form.classcategory_id1) }}</p>
+                                    <div class="txt">
+                                        <div class="selectWrap">
+                                {{ form_widget(form.classcategory_id1, {attr: {'class': 'customSelect'}}) }}
+                                {{ form_errors(form.classcategory_id1) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {# 規格2 #}
+                            {% if form.classcategory_id2 is defined %}
+                                <li>
+                                    <div class="protable">
+                                        <p class="tit">{{ form_label(form.classcategory_id2) }}</p>
+                                        <div class="txt">
+                                            <div class="selectWrap">
+                                    {{ form_widget(form.classcategory_id2, {attr: {'class': 'customSelect'}}) }}
+                                    {{ form_errors(form.classcategory_id2) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <p class="proDetailStock">在庫：<span class="txt">あり</span></p>
+                <div class="proDetailBuy">
+                    <table class="detailBuy">
+                        <tr>
+                            <th>
+                                <span class="txt">数量</span>
+                                <select class="buyQuan">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select>
+                            </th>
+                            <td>
+                                <input type="button" class="buyCard01">
+                            </td>
+                        </tr>
+                    </table>
+                    <p class="detailColle"><a href="#"><span class="txt">お気に入りリストへ追加する</span></a></p>
+                    <p class="detailCont"><a href="#">この商品へのお問い合わせ</a></p>
+                </div>
+
+
+                <div class="detailBox visiblePC">
+                    <p class="detialTit">関連商品</p>
+                    <ul class="proDetailList01 clearfix">
+                        <li>
+                            <div class="proDetailPanel">
+                                <div class="biggerlink">
+                                    <p><img src="html/template/default/bihin-com/img/product/img_product19.png" alt=""></p>
+                                    <p class="hlg01 tit"><a href="#">目玉クリップ 大</a></p>
+                                </div>
+                                <p>型番：商品コード</p>
+                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="proDetailPanel">
+                                <div class="biggerlink">
+                                    <p><img src="html/template/default/bihin-com/img/product/img_product20.png" alt=""></p>
+                                    <p class="hlg01 tit"><a href="#">8RZ166SR03 電波目覚まし時計 「フィットウ...</a></p>
+                                </div>
+                                <p>型番：商品コード</p>
+                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="proDetailPanel">
+                                <div class="biggerlink">
+                                    <p><img src="html/template/default/bihin-com/img/product/img_product21.png" alt=""></p>
+                                    <p class="hlg01 tit"><a href="#">吸殻入れ</a></p>
+                                </div>
+                                <p>型番：商品コード</p>
+                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="proDetailPanel">
+                                <div class="biggerlink">
+                                    <p><img src="html/template/default/bihin-com/img/product/img_product22.png" alt=""></p>
+                                    <p class="hlg01 tit"><a href="#">ハンディクリーナー IC-HN40</a></p>
+                                </div>
+                                <p>型番：商品コード</p>
+                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- ▼item_detail▼ -->
     <div id="item_detail">
         <div id="detail_wrap" class="row">
