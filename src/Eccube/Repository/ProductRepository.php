@@ -180,6 +180,33 @@ class ProductRepository extends EntityRepository
             $qb->setParameter('Tag', $searchData['recommend_id']);
         }
 
+        if (isset($searchData['fast_search']) && $searchData['fast_search']) {
+            switch ($searchData['fast_search']) {
+                case 1:
+                    $qb->innerJoin('Eccube\Entity\OrderDetail', 'od', 'WITH', 'od.Product = p');
+                    $Customer = $this->app->user();
+                    if ($Customer) {
+                        $qb->innerJoin('od.Order', 'o');
+                        $qb->andWhere('o.Customer = :Customer');
+                        $qb->setParameter('Customer', $Customer);
+                    }
+                    break;
+                case 2:
+                    $qb->innerJoin('p.CustomerFavoriteProducts', 'cfp');
+                    break;
+                case 3:
+                    if (isset($this->app['eccube.plugin.recommend.repository.recommend_product'])) {
+                        $qb->innerJoin('Plugin\Recommend\Entity\RecommendProduct', 'rp', 'WITH', 'rp.Product = p');
+                    }
+                    break;
+                case 4:
+//                    if (isset($this->app['eccube.plugin.recommend.repository.recommend_product'])) {
+//                        $qb->innerJoin('Plugin\Recommend\Entity\RecommendProduct', 'rp', 'WITH', 'rp.Product = p');
+//                    }
+                    break;
+            }
+        }
+
         if (isset($searchData['price_range_from']) || isset($searchData['price_range_to'])) {
             $priceFrom = $searchData['price_range_from'];
             $priceTo = $searchData['price_range_to'];
