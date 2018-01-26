@@ -447,6 +447,9 @@
                 }
                 eccube.checkStock($form, product_id, $sele1.val() ? $sele1.val() : '__unselected2',
                 $sele2.val() ? $sele2.val() : '');
+
+                // reload select 2 because customSelector.js
+                $sele2.val('').trigger('change');
             }
         }
     };
