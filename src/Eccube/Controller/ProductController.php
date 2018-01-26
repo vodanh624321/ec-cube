@@ -24,10 +24,12 @@
 
 namespace Eccube\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Eccube\Application;
 use Eccube\Common\Constant;
 use Eccube\Entity\Category;
 use Eccube\Entity\Master\Tag;
+use Eccube\Entity\ProductClass;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Eccube\Exception\CartException;
@@ -317,6 +319,19 @@ class ProductController
         $breadcrumb = "<a href=\"{$url}\">商品一覧</a>";
         $breadcrumb .= $Product->getName();
 
+        $productJan = new ArrayCollection;
+        if (isset($app['eccube.plugin.productjan.repository.productjan'])) {
+            /** @var \Plugin\ProductJan\Repository\ProductJanRepository $productJan */
+            $productJanRepo = $app['eccube.plugin.productjan.repository.productjan'];
+            /** @var ProductClass $class */
+            foreach ($Product->getProductClasses() as $class) {
+                $Jan = $productJanRepo->find($class->getId());
+                if ($Jan) {
+                    $productJan->add($Jan);
+                }
+            }
+        }
+
         return $app->render('Product/detail.twig', array(
             'title' => $this->title,
             'subtitle' => $Product->getName(),
@@ -324,6 +339,7 @@ class ProductController
             'Product' => $Product,
             'is_favorite' => $is_favorite,
             'breadcrumb' => $breadcrumb,
+            'product_jan' => $productJan
         ));
     }
 

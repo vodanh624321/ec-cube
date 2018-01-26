@@ -149,7 +149,9 @@ $(function(){
                 <p class="proDetailTxt01">{{ Product.description_detail|raw|nl2br }}</p>
                 <p class="proDetailTxt02"><span class="txt01">型番：{{ Product.code_min }}
                         {% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}</span>
-                    <span class="txt01">JANコード：4901683062346</span></p>
+                    {% if product_jan %}<span class="txt01">JANコード：{{ product_jan.first.jan }}
+                        {% if product_jan.first.jan != product_jan.last.jan %} ～ {{ product_jan.last.jan }}{% endif %}{% endif %}</span>
+                </p>
                 <div class="proPriceBox">
                     <table class="proPriceTable">
                         <p>会員価格</p>
