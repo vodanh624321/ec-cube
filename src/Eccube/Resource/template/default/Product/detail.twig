@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% endblock %}
 
 {% block javascript %}
-<script>
+<script type="text/javascript">
     eccube.classCategories = {{ Product.class_categories|json_encode|raw }};
 
     // 規格2に選択肢を割り当てる。
@@ -46,37 +46,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
     {% elseif form.classcategory_id1 is defined %}
           eccube.checkStock(document.form1, {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);
     {% endif %}
-</script>
 
-<script>
 $(function(){
-    $('.carousel').slick({
-        infinite: false,
-        speed: 300,
-        prevArrow:'<button type="button" class="slick-prev"><span class="angle-circle"><svg class="cb cb-angle-right"><use xlink:href="#cb-angle-right" /></svg></span></button>',
-        nextArrow:'<button type="button" class="slick-next"><span class="angle-circle"><svg class="cb cb-angle-right"><use xlink:href="#cb-angle-right" /></svg></span></button>',
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3
-                }
-            }
-        ]
-    });
-
-    $('.slides').slick({
-        dots: true,
-        arrows: false,
-        speed: 300,
-        customPaging: function(slider, i) {
-            return '<button class="thumbnail">' + $(slider.$slides[i]).find('img').prop('outerHTML') + '</button>';
-        }
-    });
-
     $('#favorite').click(function(e) {
         e.preventDefault();
         $('#mode').val('add_favorite');
@@ -88,18 +59,85 @@ $(function(){
     });
 
     // bfcache無効化
-    $(window).bind('pageshow', function(event) {
-        if (event.originalEvent.persisted) {
-            location.reload(true);
+    // $(window).bind('pageshow', function(event) {
+    //     if (event.originalEvent.persisted) {
+    //         location.reload(true);
+    //     }
+    // });
+
+    $('.detailLink01').click(function(e){
+        e.preventDefault();
+        if($(this).hasClass('on')){
+            $(this).removeClass('on');
+            $(this).find('a').text('すべての詳細情報を見る');
+            $(this).prev().removeClass('on');
+        }else{
+            $(this).addClass('on');
+            $(this).find('a').text('すべての詳細情報を閉じる');
+            $(this).prev().addClass('on');
         }
+    });
+
+    $('.detailSlider').bxSlider({
+        mode: 'horizontal',
+        speed: 2000,
+        pause: 5000,
+        auto:true,
+        controls:false,
+        pager:true,
+        slideMargin:10  //每个单元间距
+    });
+    $('.mouseover a').mouseenter(function(){
+        var src1 = $(this).attr('href');
+        $('.mouseover a').removeClass('on');
+        $(this).addClass('on');
+        $('#mouseoverbox img').attr('src',src1);
+    });
+    $('.popMouse a').mouseenter(function(){
+        var src1 = $(this).attr('data-target');
+        $('.popMouse a').removeClass('on');
+        $(this).addClass('on');
+        $('.popContBox img').attr('src',src1);
+    });
+    $(window).on('load resize',function(){
+        $('.mouseroverList li a').click(function(e){
+            e.preventDefault();
+            var target=$(this).data('target');
+            $(target).fadeIn(200);
+        });
+        $('#mouseoverbox li a').click(function(e){
+            e.preventDefault();
+            var target=$(this).data('target');
+            $(target).fadeIn(200);
+        });
+        $('.popClose a').click(function(){
+            var target=$(this).data('target');
+            $(target).fadeOut(200);
+        });
+        $('.popBg').click(function(e){
+            var clickTarget=$(this).find('.popupblockin');
+            if(e.target!=clickTarget&&$(e.target).closest(".popupblockin").length==0){
+                $(this).fadeOut(200);
+            }
+        });
     });
 });
 </script>
+{% endblock %}
 
+{% block stylesheet %}
+    <style type="text/css">
+        .mouseroverList a img, .popMouse a img {
+            width: 66px !important;
+        }
+        .popBg .popContBox a img {
+            width: 510px;
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
-<div class="proDetailMain">
+<div class="proDetailMain" style="padding-bottom: 60px">
     <div class="inner">
         <div class="proDetailWrap clearfix">
             <div class="proDetaBox01">
@@ -132,7 +170,6 @@ $(function(){
                 </div>
                 {% endif %}
 
-
                 <p class="proDetailTit visibleTS">{{ Product.name }}</p>
                 <div class="detailIn visibleTS">
                     <ul class="detailSlider">
@@ -151,7 +188,7 @@ $(function(){
                 <p class="proDetailTxt01">{{ Product.description_detail|raw|nl2br }}</p>
                 <p class="proDetailTxt02"><span class="txt01">型番：{{ Product.code_min }}
                         {% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}</span>
-                    {% if product_jan %}<span class="txt01">JANコード：{{ product_jan.first.jan }}
+                    {% if product_jan|length > 0 %}<span class="txt01">JANコード：{{ product_jan.first.jan }}
                         {% if product_jan.first.jan != product_jan.last.jan %} ～ {{ product_jan.last.jan }}{% endif %}{% endif %}</span>
                 </p>
                 <div class="proPriceBox">
@@ -249,52 +286,57 @@ $(function(){
                 </form>
 
                 <div class="detailBox visiblePC">
-                    <p class="detialTit">関連商品</p>
-                    <ul class="proDetailList01 clearfix">
-                        <li>
-                            <div class="proDetailPanel">
-                                <div class="biggerlink">
-                                    <p><img src="html/template/default/bihin-com/img/product/img_product19.png" alt=""></p>
-                                    <p class="hlg01 tit"><a href="#">目玉クリップ 大</a></p>
-                                </div>
-                                <p>型番：商品コード</p>
-                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="proDetailPanel">
-                                <div class="biggerlink">
-                                    <p><img src="html/template/default/bihin-com/img/product/img_product20.png" alt=""></p>
-                                    <p class="hlg01 tit"><a href="#">8RZ166SR03 電波目覚まし時計 「フィットウ...</a></p>
-                                </div>
-                                <p>型番：商品コード</p>
-                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="proDetailPanel">
-                                <div class="biggerlink">
-                                    <p><img src="html/template/default/bihin-com/img/product/img_product21.png" alt=""></p>
-                                    <p class="hlg01 tit"><a href="#">吸殻入れ</a></p>
-                                </div>
-                                <p>型番：商品コード</p>
-                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="proDetailPanel">
-                                <div class="biggerlink">
-                                    <p><img src="html/template/default/bihin-com/img/product/img_product22.png" alt=""></p>
-                                    <p class="hlg01 tit"><a href="#">ハンディクリーナー IC-HN40</a></p>
-                                </div>
-                                <p>型番：商品コード</p>
-                                <p class="price"><span class="txt">￥0000〜</span>（税抜き）</p>
-                            </div>
-                        </li>
-                    </ul>
+                    <!--# related-product-plugin-tag #-->
                 </div>
             </div>
         </div>
+        {% if Product.freearea %}
+            <div class="detailNorm visibleTS">
+                {{ include(template_from_string(Product.freearea|nl2br)) }}
+                <p class="detailLink01"><a href="#">すべての詳細情報を見る</a></p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="innerNone">
+        <div class="detailBox visibleTS">
+            <!--# related-product-plugin-tag #-->
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block modal %}
+    <div class="visiblePC">
+        {% if Product.ProductImage|length > 0 %}
+        {% for ProductImage in Product.ProductImage %}
+            <div class="popBg" id="popup0{{ loop.index }}">
+            <div class="popupmain">
+                <div class="popuppanel">
+                    <div class="popupblockin">
+                        <div class="popcont clearfix">
+                            <div class="popContBox">
+                                <ul>
+                                    <li><a href="#1"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" alt=""></a></li>
+                                </ul>
+                                <p class="popClose"><a href="javascript:void(0)" data-target="#popup0{{ loop.index }}">閉じる</a></p>
+                            </div>
+                            <div class="popMouse">
+                                <ul>
+                                    {% for ProductImageS in Product.ProductImage %}
+                                    <li><a href="javascript:void(0)" {% if loop.index == 1 %}class="on"{% endif %} data-target="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}">
+                                            <img src="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}" alt="">
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
 {% endblock %}

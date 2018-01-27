@@ -1,0 +1,66 @@
+{#
+* Plugin Name : CheckedItem
+*
+* Copyright (C) 2015 BraTech Co., Ltd. All Rights Reserved.
+* http://www.bratech.co.jp/
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+#}
+
+<!--最近チェックした商品-->
+{% if checkedItems %}
+    <style type="text/css">
+        #checkeditem .heading{
+            background: #f8f8f8;
+            padding: 16px;
+        }
+        #checkeditem .heading01 {
+            background: transparent;
+            float:left;
+            font-size: 100%;
+            text-align: left;
+            padding: 0;
+            margin: 0;
+            line-height: 39px;
+        }
+        #checkeditem .heading02 {
+            background: transparent;
+            font-size: 60%;
+            text-align: right;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <div class="proDetailMain innerNone" id="checkeditem">
+        <div class="detailBox" style="margin: 50px 0 0 0;">
+            {% if delete == 0 %}
+                <h2 class="detialTit">
+                    <p class="heading01"><span class="tit02">最近チェックした商品</span></p>
+
+                    <p class="heading02">
+                        <a href="{{ url('block_checkeditem_delete')}}" class="btn btn-info btn-sm">履歴を削除</a>
+                    </p>
+                </h2>
+            {% else %}
+                <p class="detialTit"><span class="tit02">最近チェックした商品</span></p>
+            {% endif %}
+            <div class="pageScroll">
+                <ul class="proDetailList02 clearfix">
+                    {% for checkedItem in checkedItems|slice(0,displayNum)  %}
+                        <li>
+                            <div class="proDetailPanel">
+                                <div class="biggerlink">
+                                    <p><img src="{{ app.config.image_save_urlpath }}/{{ checkedItem.main_list_image|no_image_product }}" alt=""></p>
+                                    <p class="hlg01 tit"><a href="{{ url('product_detail', {'id': checkedItem.id}) }}">{{checkedItem.name}}</a></p>
+                                </div>
+                                <p>型番：{{ checkedItem.getCodeMin }}</p>
+                                <p class="price"><span class="txt">{{ checkedItem.getPrice02IncTaxMin|price }}〜</span>（税抜き）</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}
