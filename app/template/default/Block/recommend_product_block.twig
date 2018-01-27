@@ -6,6 +6,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
 #}
+{% if recommend_products is defined and recommend_products is not empty %}
+
 {% block javascript %}
     <script type="text/javascript">
         $(function(){
@@ -26,7 +28,6 @@
     </script>
 {% endblock %}
 
-{% if recommend_products is defined %}
     <!-- ▼item_list▼ -->
     <p class="topTit">閲覧履歴からのおすすめ商品</p>
     <div class="topIn">

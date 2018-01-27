@@ -27,6 +27,9 @@ namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\ORM\EntityManagerInterface;
+use Eccube\Entity\Block;
+use Eccube\Entity\PageLayout;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -38,44 +41,240 @@ class Version20180121222000 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'TOPページ B', 'homepage_b', 'index_b', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
-        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'TOPページ C', 'homepage_c', 'index_c', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
-        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, '初めての方へ', 'help_recommend', 'Help/recommend', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
-        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'News', 'news_list', 'News/list', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
-        $this->addSql("INSERT INTO dtb_page_layout (device_type_id, page_name, url, file_name, edit_flg, author, description, keyword, update_url, create_date, update_date, meta_robots, meta_tags) VALUES (10, 'News detail', 'news_detail', 'News/detail', 2, NULL, NULL, NULL, NULL, '2018-01-21 14:18:31', '2018-01-21 14:18:31', NULL, NULL);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'Header In', 'header_in', '2018-01-21 16:45:14', '2018-01-21 16:45:14', 1, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'tool bar', 'tool_bar', '2018-01-21 16:46:35', '2018-01-21 16:46:35', 1, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'navi', 'navi', '2018-01-21 16:47:14', '2018-01-21 16:47:14', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'mainimg', 'mainimg', '2018-01-21 16:48:43', '2018-01-21 16:48:43', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'page pick', 'page_pick', '2018-01-21 16:49:29', '2018-01-21 16:49:29', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'slider main', 'slider_main', '2018-01-21 16:50:55', '2018-01-21 16:50:55', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'Main panel', 'main_panel', '2018-01-21 16:51:48', '2018-01-21 16:51:48', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'top side', 'top_side', '2018-01-21 16:52:43', '2018-01-21 16:52:43', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'top link', 'top_link', '2018-01-21 16:53:39', '2018-01-21 16:53:39', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'breadcrumb', 'breadcrumb', '2018-01-21 19:39:44', '2018-01-21 23:38:56', 0, 1);");
+        if ($this->connection->getDatabasePlatform()->getName() == "mysql") {
+            $this->addSql("SET FOREIGN_KEY_CHECKS=0;");
+            $this->addSql("SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';");
+        }
+        $app = \Eccube\Application::getInstance();
+        /** @var EntityManagerInterface $em */
+        $em = $app["orm.em"];
+        $DeviceType = $app['eccube.repository.master.device_type']->find(10);
+        // top index b page
+        $pageB = $app['eccube.repository.page_layout']->findOneBy(array('file_name' => 'index_b'));
+        if (!$pageB) {
+            $pageB = new PageLayout();
+            $pageB->setDeviceType($DeviceType)
+                ->setName('TOPページ B')
+                ->setUrl('homepage_b')
+                ->setFileName('index_b')
+                ->setEditFlg(2);
+            $em->persist($pageB);
+            $em->flush();
+        }
 
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'bottom main type b', 'bottom_main_type_b', '2018-01-23 15:48:51', '2018-01-23 15:48:51', 0, 1);");
-        $this->addSql("INSERT INTO dtb_block (device_type_id, block_name, file_name, create_date, update_date, logic_flg, deletable_flg) VALUES (10, 'sale ranking', 'sale_ranking', '2018-01-23 22:50:27', '2018-01-23 22:50:27', 0, 1);");
-        
+        // top index c page
+        $pageC = $app['eccube.repository.page_layout']->findOneBy(array('file_name' => 'index_c'));
+        if (!$pageC) {
+            $pageC = new PageLayout();
+            $pageC->setDeviceType($DeviceType)
+                ->setName('TOPページ C')
+                ->setUrl('homepage_c')
+                ->setFileName('index_c')
+                ->setEditFlg(2);
+            $em->persist($pageC);
+            $em->flush();
+        }
+
+        // help recommend page
+        $pageH = $app['eccube.repository.page_layout']->findOneBy(array('file_name' => 'Help/recommend'));
+        if (!$pageH) {
+            $pageH = new PageLayout();
+            $pageH->setDeviceType($DeviceType)
+                ->setName('初めての方へ')
+                ->setUrl('help_recommend')
+                ->setFileName('Help/recommend')
+                ->setEditFlg(2);
+            $em->persist($pageH);
+            $em->flush();
+        }
+
+        // news page
+        $pageN = $app['eccube.repository.page_layout']->findOneBy(array('file_name' => 'News/list'));
+        if (!$pageN) {
+            $pageN = new PageLayout();
+            $pageN->setDeviceType($DeviceType)
+                ->setName('News')
+                ->setUrl('news_list')
+                ->setFileName('News/list')
+                ->setEditFlg(2);
+            $em->persist($pageN);
+            $em->flush();
+        }
+
+        // news detail page
+        $pageND = $app['eccube.repository.page_layout']->findOneBy(array('file_name' => 'News/detail'));
+        if (!$pageND) {
+            $pageND = new PageLayout();
+            $pageND->setDeviceType($DeviceType)
+                ->setName('News Detail')
+                ->setUrl('news_detail')
+                ->setFileName('News/detail')
+                ->setEditFlg(2);
+            $em->persist($pageND);
+            $em->flush();
+        }
+
+        $blockHeaderIn = $app['eccube.repository.block']->findOneBy(array('file_name' => 'header_in'));
+        if (!$blockHeaderIn) {
+            $block = new Block();
+            $block->setDeviceType($DeviceType);
+            $block->setFileName('header_in')
+                ->setName('Header In')
+                ->setLogicFlg(1)
+                ->setDeletableFlg(1);
+            $em->persist($block);
+            $em->flush();
+        }
+
+        $blockToolBar = $app['eccube.repository.block']->findOneBy(array('file_name' => 'tool_bar'));
+        if (!$blockToolBar) {
+            $blockToolBar = new Block();
+            $blockToolBar->setDeviceType($DeviceType)
+                ->setFileName('tool_bar')
+                ->setName('Tool Bar')
+                ->setLogicFlg(1)
+                ->setDeletableFlg(1);
+            $em->persist($blockToolBar);
+            $em->flush();
+        }
+//
+//        $blockNavi = $app['eccube.repository.block']->findOneBy(array('file_name' => 'navi'));
+//        if (!$blockNavi) {
+//            $blockNavi = new Block();
+//            $blockNavi->setDeviceType($DeviceType)
+//                ->setFileName('navi')
+//                ->setName('Navi Bar')
+//                ->setLogicFlg(0)
+//                ->setDeletableFlg(1);
+//            $em->persist($blockNavi);
+//            $em->flush();
+//        }
+
+        $blockMainimg = $app['eccube.repository.block']->findOneBy(array('file_name' => 'mainimg'));
+        if (!$blockMainimg) {
+            $blockMainimg = new Block();
+            $blockMainimg->setDeviceType($DeviceType)
+                ->setFileName('mainimg')
+                ->setName('Main Image')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($blockMainimg);
+            $em->flush();
+        }
+
+        $blockPagePick = $app['eccube.repository.block']->findOneBy(array('file_name' => 'page_pick'));
+        if (!$blockPagePick) {
+            $blockPagePick = new Block();
+            $blockPagePick->setDeviceType($DeviceType)
+                ->setFileName('page_pick')
+                ->setName('Page Pick')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($blockPagePick);
+            $em->flush();
+        }
+
+        $blockSliderMain = $app['eccube.repository.block']->findOneBy(array('file_name' => 'slider_main'));
+        if (!$blockSliderMain) {
+            $blockSliderMain = new Block();
+            $blockSliderMain->setDeviceType($DeviceType)
+                ->setFileName('slider_main')
+                ->setName('Slider Main')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($blockSliderMain);
+            $em->flush();
+        }
+
+        $blockMainPanel = $app['eccube.repository.block']->findOneBy(array('file_name' => 'main_panel'));
+        if (!$blockMainPanel) {
+            $blockMainPanel = new Block();
+            $blockMainPanel->setDeviceType($DeviceType)
+                ->setFileName('main_panel')
+                ->setName('Main panel')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($blockMainPanel);
+            $em->flush();
+        }
+
+        $blockTopSide = $app['eccube.repository.block']->findOneBy(array('file_name' => 'top_side'));
+        if (!$blockTopSide) {
+            $blockTopSide = new Block();
+            $blockTopSide->setDeviceType($DeviceType)
+                ->setFileName('top_side')
+                ->setName('Top Side')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($blockTopSide);
+            $em->flush();
+        }
+
+        $blockTopLink = $app['eccube.repository.block']->findOneBy(array('file_name' => 'top_link'));
+        if (!$blockTopLink) {
+            $blockTopLink = new Block();
+            $blockTopLink->setDeviceType($DeviceType)
+                ->setFileName('top_link')
+                ->setName('Top Link')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($blockTopLink);
+            $em->flush();
+        }
+
+        $breadcrumb = $app['eccube.repository.block']->findOneBy(array('file_name' => 'breadcrumb'));
+        if (!$breadcrumb) {
+            $breadcrumb = new Block();
+            $breadcrumb->setDeviceType($DeviceType)
+                ->setFileName('breadcrumb')
+                ->setName('Breadcrumb')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($breadcrumb);
+            $em->flush();
+        }
+
+        $bottomMainB = $app['eccube.repository.block']->findOneBy(array('file_name' => 'bottom_main_type_b'));
+        if (!$bottomMainB) {
+            $bottomMainB = new Block();
+            $bottomMainB->setDeviceType($DeviceType)
+                ->setFileName('bottom_main_type_b')
+                ->setName('Bottom Main Type B')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($bottomMainB);
+            $em->flush();
+        }
+
+        $topSaleC = $app['eccube.repository.block']->findOneBy(array('file_name' => 'top_sale_slider_c'));
+        if (!$topSaleC) {
+            $topSaleC = new Block();
+            $topSaleC->setDeviceType($DeviceType)
+                ->setFileName('top_sale_slider_c')
+                ->setName('Top sale slider Type C')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($topSaleC);
+            $em->flush();
+        }
+
+        $mainC = $app['eccube.repository.block']->findOneBy(array('file_name' => 'main_c'));
+        if (!$mainC) {
+            $mainC = new Block();
+            $mainC->setDeviceType($DeviceType)
+                ->setFileName('main_c')
+                ->setName('Main C')
+                ->setLogicFlg(0)
+                ->setDeletableFlg(1);
+            $em->persist($mainC);
+            $em->flush();
+        }
+
+        // Remove all block
         $this->addSql("DELETE FROM dtb_block_position");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 1, 3, 1);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 9, 7, 1, 1);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 11, 1, 1);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 12, 2, 1);");
-//        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 2, 13, 3, 1);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 14, 2, 0);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 15, 3, 0);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 16, 4, 0);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 5, 17, 1, 0);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 7, 18, 1, 0);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 8, 19, 1, 0);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (1, 3, 20, 1, 1);");
-        $this->addSql("INSERT INTO dtb_block_position (page_id, target_id, block_id, block_row, anywhere) VALUES (2, 4, 23, 1, 0);");
 
         // Update display item
-        $this->addSql("REPLACE INTO mtb_product_list_max (id, name, rank) VALUES (10, '10件', 0);");
-        
-
+        $this->addSql("REPLACE INTO mtb_product_list_max (id, name, rank) VALUES (40, '10件', 0);");
     }
 
     /**
