@@ -1,19 +1,14 @@
-<script type="text/javascript">
-    // $(function() {
-    //     $('.customList li .customImg a').click(function() {
-    //
-    //         $('.customList li .customImg a').removeClass('active');
-    //     });
-    // });
-</script>
 <div id="headerIn" class="clearfix">
 	<h1 id="headerLogo"><a href="{{ url('index') }}">
         <img src="{{ app.config.front_urlpath }}/bihin-com/common/img/logo.png" alt=""></a>
     </h1>
-	<ul class="hdLog visibleTS">
-		<li><a href="#" class="loginBtn01">会員登録</a></li>
-		<li><a href="#" class="loginBtn02">ログイン</a></li>
-	</ul>
+	{% if is_granted('ROLE_USER') == false %}
+		<ul class="hdLog visibleTS">
+			<li><a href="{{ url('entry') }}" class="loginBtn01">会員登録</a></li>
+			<li><a href="{{ url('mypage_login') }}" class="loginBtn02">ログイン</a></li>
+		</ul>
+	{% endif %}
+
 	<div class="hdMain">
 		<div class="visiblePC">
 			<div class="hdmenu clearfix">
@@ -48,7 +43,7 @@
 					</div>
 				</div>
 				<ul class="hdMemberLink">
-					<li><a href="{{ url('mypage') }}">ログイン</a></li>
+					<li><a href="{{ url('mypage_login') }}">ログイン</a></li>
 					<li><a href="{{ url('entry') }}">新規会員登録</a></li>
 					<li><a href="{{ url('mypage') }}">マイページ</a></li>
 					<li><a href="{{ url('mypage') }}">会員サービス</a></li>

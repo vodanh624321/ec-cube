@@ -25,12 +25,12 @@
                     </form>
                 </td>
                 <td class="tdW02">
-                    <span class="favor"><a href="{{ url('cart') }}">お気に入り<br>リスト</a></span>
+                    <span class="favor"><a href="{{ url('mypage_favorite') }}">お気に入り<br>リスト</a></span>
                 </td>
                 <td class="tdW03">
                     <div class="clearfix toolBox">
                         <p class="shopCart"><a href="{{ url('cart') }}">カート</a></p>
-                        <p class="shopPrice"><a href="{{ url('cart') }}"><span class="txt01"><i>{{ Cart.total_price|price }}</i>点</span><span class="txt02">小計<i>0</i>円</span></a></p>
+                        <p class="shopPrice"><a href="{{ url('cart') }}"><span class="txt01"><i>0</i>点</span><span class="txt02">小計<i>{{ Cart.total_price|price }}</i>円</span></a></p>
                     </div>
                 </td>
                 <td class="tdW04">
@@ -40,9 +40,13 @@
         </table>
     </div>
     <div class="visibleTS">
+        <form method="get" id="searchform" action="{{ path('product_list') }}">
         <div class="clearfix">
-            <p class="spSearch"><input type="text" id="search" name="search" class="hdSearch" placeholder="このカテゴリ内で探す"></p>
-            <p class="spSearchBtn"><input type="button" value="検索" class="hdSearchBtn"></p>
+            <p class="spSearch">
+                <input type="text" id="name" name="name" class="hdSearch" placeholder="このカテゴリ内で探す">
+            </p>
+            <p class="spSearchBtn"><input type="submit" value="検索" class="hdSearchBtn"></p>
         </div>
+        </form>
     </div>
 </div>

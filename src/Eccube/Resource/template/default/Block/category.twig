@@ -51,9 +51,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 <div class="naviSp visibleTS">
     <ul class="naviList clearfix">
         <li class="navbarToggle hlg01" data-target=".navbarCollapse"><span class="txt01">カテゴリ</span></li>
-        <li class="hlg01"><a href="#"><span class="txt02"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/menu_favor.png" alt=""></span><span class="txt03">お気に入り</span></a></li>
-        <li class="hlg01"><a href="#"><span class="txt02"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/menu_cart.png" alt=""></span><span class="txt03">カート</span></a></li>
-        <li class="hlg01"><a href="#"><span class="txt02"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/menu_order.png" alt=""></span><span class="txt03">ご注文履歴</span></a></li>
+        <li class="hlg01"><a href="{{ url('mypage_favorite') }}"><span class="txt02"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/menu_favor.png" alt=""></span><span class="txt03">お気に入り</span></a></li>
+        <li class="hlg01"><a href="{{ url('cart') }}"><span class="txt02"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/menu_cart.png" alt=""></span><span class="txt03">カート</span></a></li>
+        <li class="hlg01"><a href="{{ url('mypage') }}"><span class="txt02"><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/menu_order.png" alt=""></span><span class="txt03">ご注文履歴</span></a></li>
         <li class="navInst hlg01" data-target=".customBox"><span class="txt01">カスタマイズ</span></li>
     </ul>
 

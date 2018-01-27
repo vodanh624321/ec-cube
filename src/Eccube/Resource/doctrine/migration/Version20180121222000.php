@@ -29,6 +29,7 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Block;
+use Eccube\Entity\Master\ProductListMax;
 use Eccube\Entity\PageLayout;
 
 /**
@@ -274,7 +275,18 @@ class Version20180121222000 extends AbstractMigration
         $this->addSql("DELETE FROM dtb_block_position");
 
         // Update display item
-        $this->addSql("REPLACE INTO mtb_product_list_max (id, name, rank) VALUES (40, '10件', 0);");
+        /** @var ProductListMax $num */
+        $num = $app['eccube.repository.master.product_list_max']->find(15);
+        $num->setId(40)
+            ->setName('40件');
+        $em->persist($num);
+        $em->flush();
+
+        $num = $app['eccube.repository.master.product_list_max']->find(30);
+        $num->setId(100)
+            ->setName('100件');
+        $em->persist($num);
+        $em->flush();
     }
 
     /**

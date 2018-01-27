@@ -53,9 +53,9 @@ class Version20180127222000 extends AbstractMigration
         // Target 2
         $block = $app['eccube.repository.block']->find(1);
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(2)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(3)
             ->setAnywhere(1);
         $em->persist($blockPosition);
@@ -64,9 +64,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'header_in'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(2)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(1)
             ->setAnywhere(1);
         $em->persist($blockPosition);
@@ -75,9 +75,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'tool_bar'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(2)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(2)
             ->setAnywhere(1);
         $em->persist($blockPosition);
@@ -88,9 +88,9 @@ class Version20180127222000 extends AbstractMigration
         // Target 3
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'mainimg'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(3)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(2)
             ->setAnywhere(0);
         $em->persist($blockPosition);
@@ -99,9 +99,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'page_pick'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(3)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(3)
             ->setAnywhere(0);
         $em->persist($blockPosition);
@@ -110,9 +110,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'slider_main'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(3)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(4)
             ->setAnywhere(0);
         $em->persist($blockPosition);
@@ -121,9 +121,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'breadcrumb'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(3)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(1)
             ->setAnywhere(1);
         $em->persist($blockPosition);
@@ -134,9 +134,9 @@ class Version20180127222000 extends AbstractMigration
         // Target 5
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'main_panel'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(5)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(2)
             ->setAnywhere(0);
         $em->persist($blockPosition);
@@ -146,9 +146,9 @@ class Version20180127222000 extends AbstractMigration
         $blockR = $app['eccube.repository.block']->findOneBy(array('file_name' => 'recommend_product_block'));
         if ($blockR) {
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($page)
+            $blockPosition->setPageLayout($page)->setPageId($page->getId())
                 ->setTargetId(5)
-                ->setBlock($blockR)
+                ->setBlock($blockR)->setBlockId($blockR->getId())
                 ->setBlockRow(1)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -159,9 +159,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'top_side'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(7)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(1)
             ->setAnywhere(0);
         $em->persist($blockPosition);
@@ -171,9 +171,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'top_link'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(8)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(1)
             ->setAnywhere(0);
         $em->persist($blockPosition);
@@ -183,9 +183,9 @@ class Version20180127222000 extends AbstractMigration
 
         $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'footer'));
         $blockPosition = new BlockPosition();
-        $blockPosition->setPageLayout($page)
+        $blockPosition->setPageLayout($page)->setPageId($page->getId())
             ->setTargetId(9)
-            ->setBlock($block)
+            ->setBlock($block)->setBlockId($block->getId())
             ->setBlockRow(1)
             ->setAnywhere(1);
         $em->persist($blockPosition);
@@ -199,9 +199,9 @@ class Version20180127222000 extends AbstractMigration
         $blockSale = $app['eccube.repository.block']->findOneBy(array('file_name' => 'sales_ranking'));
         if ($blockSale) {
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($pageList)
+            $blockPosition->setPageLayout($pageList)->setPageId($pageList->getId())
                 ->setTargetId(4)
-                ->setBlock($blockSale)
+                ->setBlock($blockSale)->setBlockId($blockSale->getId())
                 ->setBlockRow(1)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -212,9 +212,9 @@ class Version20180127222000 extends AbstractMigration
         $blockPR = $app['eccube.repository.block']->findOneBy(array('file_name' => 'plg_product_list_recommend'));
         if ($blockPR) {
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($pageList)
+            $blockPosition->setPageLayout($pageList)->setPageId($pageList->getId())
                 ->setTargetId(4)
-                ->setBlock($blockPR)
+                ->setBlock($blockPR)->setBlockId($blockPR->getId())
                 ->setBlockRow(2)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -229,9 +229,9 @@ class Version20180127222000 extends AbstractMigration
         $blockChecked = $app['eccube.repository.block']->findOneBy(array('file_name' => 'checkeditem'));
         if ($blockChecked) {
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($pageDetail)
+            $blockPosition->setPageLayout($pageDetail)->setPageId($pageDetail->getId())
                 ->setTargetId(6)
-                ->setBlock($blockChecked)
+                ->setBlock($blockChecked)->setBlockId($blockChecked->getId())
                 ->setBlockRow(2)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -242,9 +242,9 @@ class Version20180127222000 extends AbstractMigration
         $blockHSD = $app['eccube.repository.block']->findOneBy(array('file_name' => 'hsd_related_product'));
         if ($blockHSD) {
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($pageDetail)
+            $blockPosition->setPageLayout($pageDetail)->setPageId($pageDetail->getId())
                 ->setTargetId(6)
-                ->setBlock($blockHSD)
+                ->setBlock($blockHSD)->setBlockId($blockHSD->getId())
                 ->setBlockRow(1)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -258,9 +258,9 @@ class Version20180127222000 extends AbstractMigration
         if ($pageB) {
             $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'bottom_main_type_b'));
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($pageB)
+            $blockPosition->setPageLayout($pageB)->setPageId($pageB->getId())
                 ->setTargetId(6)
-                ->setBlock($block)
+                ->setBlock($block)->setBlockId($block->getId())
                 ->setBlockRow(1)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -274,9 +274,9 @@ class Version20180127222000 extends AbstractMigration
         if ($pageC) {
             $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'top_sale_slider_c'));
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($pageC)
+            $blockPosition->setPageLayout($pageC)->setPageId($pageC->getId())
                 ->setTargetId(6)
-                ->setBlock($block)
+                ->setBlock($block)->setBlockId($block->getId())
                 ->setBlockRow(1)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -285,9 +285,9 @@ class Version20180127222000 extends AbstractMigration
 
             $block = $app['eccube.repository.block']->findOneBy(array('file_name' => 'main_c'));
             $blockPosition = new BlockPosition();
-            $blockPosition->setPageLayout($pageC)
+            $blockPosition->setPageLayout($pageC)->setPageId($pageC->getId())
                 ->setTargetId(6)
-                ->setBlock($block)
+                ->setBlock($block)->setBlockId($block->getId())
                 ->setBlockRow(2)
                 ->setAnywhere(0);
             $em->persist($blockPosition);
@@ -299,17 +299,17 @@ class Version20180127222000 extends AbstractMigration
         $app['eccube.repository.master.tag'];
 
         $tag = new Tag();
-        $tag->setName('期間限定格')->setRank(4);
+        $tag->setId(4)->setName('期間限定格')->setRank(4);
         $em->persist($tag);
         $em->flush();
 
         $tag = new Tag();
-        $tag->setName('プレイスダワン商品')->setRank(5);
+        $tag->setId(5)->setName('プレイスダワン商品')->setRank(5);
         $em->persist($tag);
         $em->flush();
 
         $tag = new Tag();
-        $tag->setName('キャンページ中')->setRank(6);
+        $tag->setId(6)->setName('キャンページ中')->setRank(6);
         $em->persist($tag);
         $em->flush();
     }
