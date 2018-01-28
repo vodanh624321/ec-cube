@@ -175,9 +175,9 @@ class ProductRepository extends EntityRepository
 
         if (isset($searchData['recommend_id']) && !empty($searchData['recommend_id'])) {
             $qb->innerJoin('p.ProductTag', 'pt')
-                ->innerJoin('pt.Tag', 't');
-            $qb->andWhere($qb->expr()->in('t.id', ':Tag'));
-            $qb->setParameter('Tag', $searchData['recommend_id']);
+                ->innerJoin('pt.Tag', 'tg');
+            $qb->andWhere($qb->expr()->in('tg.id', ':TagTmp'));
+            $qb->setParameter('TagTmp', $searchData['recommend_id']);
         }
 
         if (isset($searchData['fast_search']) && $searchData['fast_search']) {

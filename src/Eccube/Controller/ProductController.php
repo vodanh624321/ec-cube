@@ -148,10 +148,57 @@ class ProductController
             $forms[$Product->getId()] = $addCartForm->createView();
         }
 
+        // 表示件数
+        $builder = $app['form.factory']->createNamedBuilder('disp_number', 'product_list_max', null, array(
+            'empty_data' => null,
+            'required' => false,
+            'label' => '表示件数',
+            'allow_extra_fields' => true,
+        ));
+        if ($request->getMethod() === 'GET') {
+            $builder->setMethod('GET');
+        }
+
+        $event = new EventArgs(
+            array(
+                'builder' => $builder,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::FRONT_PRODUCT_INDEX_DISP, $event);
+
+        $dispNumberForm = $builder->getForm();
+
+        $dispNumberForm->handleRequest($request);
+
+        // ソート順
+        $builder = $app['form.factory']->createNamedBuilder('orderby', 'product_list_order_by', null, array(
+            'empty_data' => null,
+            'required' => false,
+            'label' => '表示順',
+            'allow_extra_fields' => true,
+        ));
+        if ($request->getMethod() === 'GET') {
+            $builder->setMethod('GET');
+        }
+
+        $event = new EventArgs(
+            array(
+                'builder' => $builder,
+            ),
+            $request
+        );
+        $app['eccube.event.dispatcher']->dispatch(EccubeEvents::FRONT_PRODUCT_INDEX_ORDER, $event);
+
+        $orderByForm = $builder->getForm();
+
+        $orderByForm->handleRequest($request);
+
         $categoryId = $searchForm->get('category_id')->getData();
         /** @var CategoryRepository $cateRepo */
         $cateRepo = $app['eccube.repository.category'];
         $categoryPath = array();
+        $categorySelected = $categoryId;
         if (is_numeric($categoryId)) {
             /** @var Category $categorySelected */
             $categorySelected = $cateRepo->find($categoryId);
@@ -190,6 +237,8 @@ class ProductController
             'subtitle' => $this->getPageTitle($searchData, $app),
             'pagination' => $pagination,
             'search_form' => $searchForm->createView(),
+            'disp_number_form' => $dispNumberForm->createView(),
+            'order_by_form' => $orderByForm->createView(),
             'forms' => $forms, // cart form
             'category_id' => $categoryId,
             'cate' => $arrCate,
@@ -198,7 +247,8 @@ class ProductController
             'breadcrumb' => '商品一覧',
             'recommend' =>  Tag::getRecommend(),
             'tags' => $Tag,
-            'cate_path' => $categoryPath
+            'cate_path' => $categoryPath,
+            'Category' => $categorySelected,
         ));
     }
 
