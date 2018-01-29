@@ -144,7 +144,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                     </div>
                                     <div id="cart_item_list__quantity" class="item_quantity td">
                                         {{ CartItem.quantity|number_format }}
-                                        <ul id="cart_item_list__quantity_edit">
+                                        <ul id="cart_item_list__quantity_edit" style="font-size: 16px">
                                             <li>
                                                 {% if CartItem.quantity > 1 %}
                                                     <a id="cart_item_list__down" href="{{ url('cart_down', {'productClassId': ProductClass.id}) }}" {{ csrf_token_for_anchor() }} data-method="put" data-confirm="false"><svg class="cb cb-minus"><use xlink:href="#cb-minus" /></svg></a>

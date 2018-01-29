@@ -28,10 +28,15 @@ class ToolBarController
 
         /** @var $Cart \Eccube\Entity\Cart */
         $Cart = $app['eccube.service.cart']->getCartObj();
+        $quantity = 0;
+        foreach ($Cart->getCartItems() as $cartItem) {
+            $quantity += $cartItem->getQuantity();
+        }
 
         return $app->render('Block/tool_bar.twig', array(
             'form' => $form->createView(),
-            'Cart' => $Cart
+            'Cart' => $Cart,
+            'quantity' => $quantity,
         ));
     }
 }

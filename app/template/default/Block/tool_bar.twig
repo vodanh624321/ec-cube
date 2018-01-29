@@ -30,7 +30,7 @@
                 <td class="tdW03">
                     <div class="clearfix toolBox">
                         <p class="shopCart"><a href="{{ url('cart') }}">カート</a></p>
-                        <p class="shopPrice"><a href="{{ url('cart') }}"><span class="txt01"><i>0</i>点</span><span class="txt02">小計<i>{{ Cart.total_price|price }}</i>円</span></a></p>
+                        <p class="shopPrice"><a href="{{ url('cart') }}"><span class="txt01"><i>{{ quantity|default(0) }}</i>点</span><span class="txt02">小計<i>{{ Cart.total_price|price }}</i>円</span></a></p>
                     </div>
                 </td>
                 <td class="tdW04">
