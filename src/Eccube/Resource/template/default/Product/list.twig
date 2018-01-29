@@ -236,7 +236,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                         <li>
                                             <div class="selectWrap">
                                                 <select class="customSelect" id="cate_parent">
-                                                    <option>指定ない</option>
+                                                    <option value=''>指定ない</option>
                                                     {% for Category in cate %}
                                                         <option value="{{ Category.id }}" {% if Category.id in cate_path %}selected="selected"{% endif %}>{{ Category.name }}</option>
                                                     {% endfor %}
@@ -415,7 +415,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     </div>
                     <!-- ▲item_list▲ -->
                 {% else %}
-                    <p class="errormsg text-danger">ご指定のカテゴリは存在しません。</p>
+                    <div class="productLabel" style="margin-bottom: 50px;">
+                        <p class="errormsg text-danger">ご指定のカテゴリは存在しません。</p>
+                    </div>
                 {% endif %}
             </div>
         </div>
