@@ -81,6 +81,7 @@ class FrontControllerProvider implements ControllerProviderInterface
 
         $c->match('/block/tool_bar', '\Eccube\Controller\Block\ToolBarController::index')->bind('block_tool_bar');
         $c->match('/block/header_in', '\Eccube\Controller\Block\HeaderInController::index')->bind('block_header_in');
+        $c->match('/block/top_link', '\Eccube\Controller\Block\TopLinkController::index')->bind('block_top_link');
 
         // 特定商取引 order -> help/traderaw
         $c->match('/help/about', '\Eccube\Controller\HelpController::about')->bind('help_about');
