@@ -33,18 +33,40 @@ use Eccube\Entity\Category;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180130222000 extends AbstractMigration
+class Version20180130322000 extends AbstractMigration
 {
     /**
      * @param Schema $schema
      */
     public function up(Schema $schema)
     {
-        $table = $schema->getTable('dtb_category');
-
-        if (!$table->hasColumn('type')) {
-            $table->addColumn('type', 'smallint', array('NotNull' => false, 'default' => 0));
+        if ($this->connection->getDatabasePlatform()->getName() == "mysql") {
+            $this->addSql("SET FOREIGN_KEY_CHECKS=0;");
+            $this->addSql("SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';");
         }
+        $app = \Eccube\Application::getInstance();
+        /** @var EntityManagerInterface $em */
+        $em = $app["orm.em"];
+
+        $category = $app['eccube.repository.category']->findOneBy(array('name' => '期間限定SALE対象商品'));
+        if (!$category) {
+            $category = new  Category();
+            $category->setType(Category::TYPE_B)
+                ->setName('期間限定SALE対象商品')
+                ->setLevel(1);
+            $app['eccube.repository.category']->save($category);
+        }
+
+        $category2 = $app['eccube.repository.category']->findOneBy(array('name' => '新着商品'));
+        if (!$category2) {
+            $category2 = new  Category();
+            $category2->setType(Category::TYPE_B)
+                ->setName('新着商品')
+                ->setLevel(1);
+            $app['eccube.repository.category']->save($category2);
+        }
+
+        $em->flush();
     }
 
     /**
