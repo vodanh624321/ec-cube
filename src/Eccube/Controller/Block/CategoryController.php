@@ -25,12 +25,13 @@
 namespace Eccube\Controller\Block;
 
 use Eccube\Application;
+use Eccube\Entity\Category;
 
 class CategoryController
 {
     public function index(Application $app)
     {
-        $Categories = $app['eccube.repository.category']->getList();
+        $Categories = $app['eccube.repository.category']->getList(null, false, Category::TYPE_A);
 
         return $app->render('Block/category.twig', array(
             'Categories' => $Categories

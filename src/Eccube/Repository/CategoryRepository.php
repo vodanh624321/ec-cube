@@ -73,7 +73,7 @@ class CategoryRepository extends EntityRepository
      * @param int $type
      * @return \Eccube\Entity\Category[] カテゴリの配列
      */
-    public function getList(Category $Parent = null, $flat = false, $type = Category::TYPE_A)
+    public function getList(Category $Parent = null, $flat = false, $type = null)
     {
         $options = $this->app['config']['doctrine_cache'];
         $lifetime = $options['result_cache']['lifetime'];

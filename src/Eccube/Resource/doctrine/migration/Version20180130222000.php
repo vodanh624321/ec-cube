@@ -28,6 +28,7 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\ORM\EntityManagerInterface;
+use Eccube\Entity\Category;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -52,14 +53,25 @@ class Version20180130222000 extends AbstractMigration
         $app = \Eccube\Application::getInstance();
         /** @var EntityManagerInterface $em */
         $em = $app["orm.em"];
-        // top page
 
-        $blockTopLink = $app['eccube.repository.category']->findOneBy();
-        if (!$blockTopLink) {
-            return;
+        $category = $app['eccube.repository.category']->findOneBy(array('name' => '期間限定SALE対象商品'));
+        if (!$category) {
+            $category = new  Category();
+            $category->setType(Category::TYPE_B)
+                ->setName('期間限定SALE対象商品')
+                ->setLevel(1);
+            $app['eccube.repository.category']->save($category);
         }
-        $blockTopLink->setLogicFlg(1);
-        $em->persist($blockTopLink);
+
+        $category2 = $app['eccube.repository.category']->findOneBy(array('name' => '新着商品'));
+        if (!$category2) {
+            $category2 = new  Category();
+            $category2->setType(Category::TYPE_B)
+                ->setName('新着商品')
+                ->setLevel(1);
+            $app['eccube.repository.category']->save($category2);
+        }
+
         $em->flush();
     }
 

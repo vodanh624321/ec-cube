@@ -25,6 +25,9 @@
 namespace Eccube\Controller;
 
 use Eccube\Application;
+use Eccube\Entity\Category;
+use Eccube\Entity\Master\ProductListMax;
+use Eccube\Repository\ProductRepository;
 
 class TopController extends AbstractController
 {
@@ -36,13 +39,24 @@ class TopController extends AbstractController
 
     public function indexB(Application $app)
     {
-        /** @var \Plugin\LimitedTimeSale\Entity\LimitedTimeSale[] $limitTimeSale */
-        $limitTimeSale = array();
-        if (isset($app['limitedtimesale.repository.limitedtimesale'])) {
-            $limitTimeSale = $app['limitedtimesale.repository.limitedtimesale']->findAll();
+        $Categories = $app['eccube.repository.category']->getList(null, false, Category::TYPE_B);
+
+        $arrProduct = array();
+        /** @var ProductRepository $productRepo */
+        $productRepo = $app['eccube.repository.product'];
+        /** @var ProductListMax $display */
+        $display = $app['eccube.repository.master.product_list_max']->findOneBy(array(), array('rank' => 'ASC'));
+        $max = !empty($display) ? $display->getId() : 50;
+        /** @var Category $category */
+        foreach ($Categories as $category) {
+            $qb = $productRepo->getQueryBuilderBySearchData(array('category_id' => $category));
+            // paginator
+            $pagination = $app['paginator']()->paginate($qb, 1, $max);
+            $arrProduct[$category->getId()]['name'] = $category->getName();
+            $arrProduct[$category->getId()]['product'] = $pagination;
         }
-        $products = $app['eccube.repository.product']->getProductNews();
-        return $app->render('index_b.twig', array('limitTimeSale' => $limitTimeSale, 'products' => $products));
+
+        return $app->render('index_b.twig', array('products' => $arrProduct));
     }
 
     public function indexC(Application $app)
