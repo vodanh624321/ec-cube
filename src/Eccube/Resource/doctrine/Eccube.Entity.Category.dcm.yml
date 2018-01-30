@@ -16,6 +16,12 @@ Eccube\Entity\Category:
             type: text
             nullable: false
             column: category_name
+        type:
+            type: smallint
+            nullable: false
+            unsigned: false
+            options:
+                default: '0'
         level:
             type: integer
             nullable: false

@@ -24,6 +24,7 @@
 
 namespace Eccube\Form\Type\Admin;
 
+use Eccube\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -52,6 +53,16 @@ class CategoryType extends AbstractType
                         'max' => $this->config['stext_len'],
                     )),
                 ),
+            ))
+            ->add('type', 'choice', array(
+                'label' => 'Type',
+                'choices'  => array(
+                    Category::TYPE_A => 'Type A',
+                    Category::TYPE_B => 'Type B',
+                    Category::TYPE_C => 'Type C',
+                ),
+                'expanded' => true,
+                'empty_value' => false,
             ))
         ;
     }

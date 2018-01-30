@@ -33,6 +33,10 @@ use Eccube\Util\EntityUtil;
  */
 class Category extends \Eccube\Entity\AbstractEntity
 {
+    const TYPE_A = 0;
+    const TYPE_B = 1;
+    const TYPE_C = 2;
+
     /**
      * @return string
      */
@@ -166,6 +170,12 @@ class Category extends \Eccube\Entity\AbstractEntity
     private $rank;
 
     /**
+     * @var integer
+     */
+    private $type = Category::TYPE_A;
+
+
+    /**
      * @var \DateTime
      */
     private $create_date;
@@ -228,6 +238,29 @@ class Category extends \Eccube\Entity\AbstractEntity
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set type
+     *
+     * @param  int   $type
+     * @return Category
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }

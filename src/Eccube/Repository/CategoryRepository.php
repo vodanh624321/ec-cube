@@ -70,10 +70,10 @@ class CategoryRepository extends EntityRepository
      *
      * @param \Eccube\Entity\Category|null $Parent 指定の親カテゴリ
      * @param bool $flat trueの場合, 階層化されたカテゴリを一つの配列にまとめる
-     *
+     * @param int $type
      * @return \Eccube\Entity\Category[] カテゴリの配列
      */
-    public function getList(Category $Parent = null, $flat = false)
+    public function getList(Category $Parent = null, $flat = false, $type = Category::TYPE_A)
     {
         $options = $this->app['config']['doctrine_cache'];
         $lifetime = $options['result_cache']['lifetime'];
@@ -95,6 +95,11 @@ class CategoryRepository extends EntityRepository
         } else {
             $qb->where('c1.Parent IS NULL');
         }
+
+        if ($type !== null && is_numeric($type)) {
+            $qb->andWhere('c1.type = :type')->setParameter('type', $type);
+        }
+
         $Categories = $qb->getQuery()
             ->useResultCache(true, $lifetime)
             ->getResult();

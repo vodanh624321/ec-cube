@@ -32,13 +32,19 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180129222000 extends AbstractMigration
+class Version20180130222000 extends AbstractMigration
 {
     /**
      * @param Schema $schema
      */
     public function up(Schema $schema)
     {
+        $table = $schema->getTable('dtb_category');
+
+        if (!$table->hasColumn('type')) {
+            $table->addColumn('type', 'smallint', array('NotNull' => false, 'default' => 0));
+        }
+
         if ($this->connection->getDatabasePlatform()->getName() == "mysql") {
             $this->addSql("SET FOREIGN_KEY_CHECKS=0;");
             $this->addSql("SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';");
@@ -48,7 +54,7 @@ class Version20180129222000 extends AbstractMigration
         $em = $app["orm.em"];
         // top page
 
-        $blockTopLink = $app['eccube.repository.block']->findOneBy(array('file_name' => 'top_link'));
+        $blockTopLink = $app['eccube.repository.category']->findOneBy();
         if (!$blockTopLink) {
             return;
         }
