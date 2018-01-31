@@ -131,38 +131,49 @@ var pageScroll = function(){
 
 
 /* !common --------------------------------------------------- */
-var common = (function(){
-	
-	
-	
-	
+var common = (function() {
 	$('#gNavi .parent').hover(function(){
-		if($(this).has('.pulldownmenu'))
-			$(this).find('.parent_a').addClass('on');
-			$(this).find('.pulldownmenu').stop().slideDown(100);
+		if($(this).has('.pulldownmenu')) {
+            $(this).find('.parent_a').addClass('on');
+            $(this).find('.pulldownmenu').stop().slideDown(100);
+        }
+    }, function(){
+		if($(this).has('.pulldownmenu')) {
+            $(this).find('.parent_a').removeClass('on');
+            $(this).find('.pulldownmenu').stop().slideUp(100);
+        }
+    });
+	$('.pulldownmenu li').hover(function() {
+        // $(this).parent('li').find('.parent_b').each(function (index, value) {
+        //     console.log($(value));
+        //     $(value).removeClass('on');
+        // });
+        if ($(this).has('.pullBox')) {
+            $(this).find('.parent_b').addClass('on');
+            $(this).find('.pullBox').stop().slideDown(100);
+        }
+    }, function() {
+		if($(this).has('.pullBox')) {
+            $(this).find('.parent_b').removeClass('on');
+            $(this).find('.pullBox').stop().slideUp(100);
+        }
+    });
+
+	$('.pullBox > li').hover(function(){
+		if ($(this).has('.pullBox')) {
+            $(this).find('a').addClass('on');
+            $(this).find('a').css('display', 'block');
+            $(this).find('.pullBox').stop().slideDown(100);
+        }
 	},function(){
-		if($(this).has('.pulldownmenu'))
-			$(this).find('.parent_a').removeClass('on');
-			$(this).find('.pulldownmenu').stop().slideUp(100);
+		if($(this).has('.pullBox')) {
+            $(this).find('a').removeClass('on');
+            $(this).find('a').css('display', 'none');
+            $(this).find('.pullBox').stop().slideUp(100);
+        }
 	});
-	$('.pulldownmenu li').hover(function(){
-		if($(this).has('.pullBox'))
-			$(this).find('.parent_b').addClass('on');
-			$(this).find('.pullBox').stop().slideDown(100);
-	},function(){
-		if($(this).has('.pullBox'))
-			$(this).find('.parent_b').removeClass('on');
-			$(this).find('.pullBox').stop().slideUp(100);
-	});
-	$('.pulldownmenu li').hover(function(){
-		if($(this).has('.pullIn'))
-			$(this).find('.parent_b').addClass('on');
-			$(this).find('.pullIn').stop().slideDown(100);
-	},function(){
-		if($(this).has('.pullIn'))
-			$(this).find('.parent_b').removeClass('on');
-			$(this).find('.pullIn').stop().slideUp(100);
-	});
+
+
 	$('.proSearIn02 .proConv').hover(function(){
 		if($(this).has('.proConvBox'))
 			$(this).find('.proConvBox').stop().slideDown(100);
