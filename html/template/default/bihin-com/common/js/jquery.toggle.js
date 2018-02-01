@@ -23,7 +23,7 @@ $(function(){
 	});
 });
 $(function(){
-	$('.navbarPanel .navbarTit.hasChild').click(function(){
+	$('.navbarPanel .navbarTit').click(function(){
 		if($(this).hasClass("on")){
 			$(this).next().stop().slideUp(200);
 			$(this).removeClass("on");
@@ -72,13 +72,18 @@ $(function(){
 });
 
 
-
-
-
-
-
-
-
+$(function(){
+	$('.deliveryAreaIn .tit').click(function(){
+		if($(this).hasClass("on")){
+			$(this).next().stop().slideUp(200);
+			$(this).removeClass("on");
+		}else{
+			$(this).next().stop().slideDown(200);
+			$(this).addClass("on");
+		}
+		
+	});
+});
 
 
 
