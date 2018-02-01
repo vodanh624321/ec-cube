@@ -117,6 +117,32 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     {% endfor %}
                 {% endif %}
             </div>
+            <div class="visibleTS">
+                {% if products is not empty %}
+                {% for line in products %}
+                {% if line.product|length > 0 %}
+                <div class="topProdPanel">
+                    <p class="topProdTit">{{ line.name }}</p>
+                    <div class="topProdInfo">
+                        <div class="topProdBox">
+                            <div class="responsive_sp">
+                                {% for Product in line.product %}
+                                <div>
+                                    <div class="topProdIn biggerlink">
+                                        <p class="topProdImg"><a href="{{ url('product_list', {'id': Product.id}) }}"><img src="{{ app.config.image_save_urlpath }}/{{ Product.main_list_image|no_image_product }}" alt=""></a></p>
+                                        <p class="topProdName">{{ Product.name }}</p>
+                                        <p class="topProdPrice"><span class="price">{{ Product.getPrice02IncTaxMin|price }}</span>(税抜)</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
