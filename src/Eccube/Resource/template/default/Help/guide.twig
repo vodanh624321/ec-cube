@@ -20,20 +20,1336 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #}
 {% extends 'default_frame.twig' %}
+{% set bihin_contents = 'guideInner clearfix guideWrap' %}
 
 {% block main %}
-    <div id="contents" class="main_only">
-        <div id="guide_wrap" class="container-fluid inner no-padding">
-            <div id="main">
-                <h1 class="page-heading">ご利用ガイド</h1>
-                <div id="guide_box__body"  class="container-fluid">
-                    <div id="guide_box__body_inner" class="row">
-                        <div id="guide_box__body_item" class="col-md-10 col-md-offset-1">
+    <div id="guideMain">
+        <div class="guideSection">
+            <p class="guideTit">注文について</p>
+            <div class="guideinfo" id="anchor01">
+                <p class="guideanchortit">既に会員登録されている方</p>
+                <ul class="orderList01 clearfix">
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot bl-hover" style="cursor: pointer; height: 221px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">1</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">カートに入れる</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 105px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist01.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 221px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">2</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">お届け先指定<br>複数指定も可能！</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 105px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist02.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 221px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">3</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">注文内容確認</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 105px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist03.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 221px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">4</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">注文完了</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 105px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist04.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                </ul>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+            <div class="guideinfo" id="anchor02">
+                <p class="guideanchortit">初めてご利用される方</p>
+                <ul class="orderList02 clearfix">
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 211px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">1</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">カートに入れる</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 95px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist01.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 211px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">2</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">お客様情報を入力</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 95px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist05.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 211px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">3</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">お届け先指定<br>複数指定も可能！</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 95px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist02.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 211px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">4</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">ご登録・ご注文<br>内容の確認</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 95px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist03.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="orderListPanel hlg01 clearfix biggerlink bl-hot" style="cursor: pointer; height: 211px;">
+                            <div class="orderListBox clearfix">
+                                <p class="orderListSetp">5</p>
+                                <p class="orderListTit"><span class="hlg02 txt" style="height: 44px;">ご利用登録・<br>ご注文完了</span></p>
+                            </div>
+                            <p class="orderListImg"><span class="hlg03 img" style="height: 95px;"><a href="{{ url('help_guide') }}#" class="bl-bigger"><img src="./タイトル_files/img_orderlist04.png" alt=""></a></span></p>
+                        </div>
+                    </li>
+                </ul>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+        </div>
+
+        <div class="guideSection">
+            <p class="guideTit">お届けについて</p>
+            <div class="guideinfo" id="anchor03">
+                <p class="guideanchortit">お届け日数</p>
+                <div class="guideDelivery">
+                    <p class="tit">午前11時までにご注文いただきますと、商品を当日夕方を目安にお届けいたします。</p>
+                    <ul class="deliveryNote">
+                        <li>※出荷する倉庫が異なる場合、お届け日が別となる商品がございます。「レジ」にてお届け日をご確認ください。</li>
+                        <li>※お届け時間のご指定は承っておりません。</li>
+                        <li>※愛知県の当日配送エリアのお客様におかれましては、家具の商品に限り、翌日配送エリアとしてのお取り扱いとなります。</li>
+                        <li>※医薬品・医療機器の一部は下記当日配送エリアが変更になる場合があります。詳しくは<a href="{{ url('help_guide') }}#">こちら</a>。</li>
+                    </ul>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">当日配送エリアのお客様</p>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryTit">当日配送エリア</p>
+                        <div class="visiblePC">
+                            <table class="guideTable01 guideComTable">
+                                <tbody><tr>
+                                    <th colspan="2" class="tableTh01">当日配送エリア</th>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">宮城県</th>
+                                    <td>仙台市　多賀城市　塩竃市</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">宮城県</th>
+                                    <td>仙台市　多賀城市　塩竃市</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">神奈川県</th>
+                                    <td>横浜市　川崎市</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">愛知県</th>
+                                    <td>
+                                        <p class="txt01">名古屋市　東海市　一宮市　稲沢市　岩倉市　犬山市　春日井市　小牧市</p>
+                                        <p class="txt01">瀬戸市　清須市　西春日井郡豊山町　尾張旭市</p>
+                                        <p class="txt01">北名古屋市　半田市　豊明市　大府市　知多市　知多郡東浦町</p>
+                                        <p class="txt01">知多郡阿久比町　愛西市　津島市　弥富市　日進市　海部郡飛島村</p>
+                                        <p class="txt01">あま市　海部郡大治町</p>
+                                        <p class="txt01">海部郡蟹江町　長久手市　愛知郡東郷町　みよし市</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">大阪府</th>
+                                    <td>
+                                        <p class="txt01">大阪市　吹田市　茨木市　摂津市　高槻市　箕面市　豊中市</p>
+                                        <p class="txt01">東大阪市　八尾市　門真市　大東市　寝屋川市　堺市　泉大津市</p>
+                                        <p class="txt01">高石市　松原市　守口市　交野市　池田市　貝塚市　大阪狭山市</p>
+                                        <p class="txt01">岸和田市　枚方市　和泉市　四條畷市　泉北郡忠岡町</p>
+                                        <p class="txt01">富田林市　河内長野市　柏原市　羽曳野市　藤井寺市</p>
+                                        <p class="txt01">南河内郡千早赤阪村　南河内郡河南町　南河内郡太子町</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">兵庫県</th>
+                                    <td>神戸市　芦屋市　西宮市　尼崎市　明石市　伊丹市　宝塚市</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">京都府</th>
+                                    <td>京都市（上京区、中京区、下京区、西京区、南区、東山区、山科区、伏見区）</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">福岡県</th>
+                                    <td>全域（宗像市大島を除く）</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">山口県</th>
+                                    <td>下関市（旧豊浦郡を除く）</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableW01 tableTh02">佐賀県</th>
+                                    <td>
+                                        <p class="txt01">佐賀市（旧佐賀郡・神埼郡（三瀬村）を除く）</p>
+                                        <p class="txt01">鳥栖市　三養基郡上峰町　三養基郡基山町　三養基郡みやき町</p>
+                                    </td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <div class="visibleTS">
+                            <div class="deliveryAreaIn">
+                                <p class="tit">宮城県</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">仙台市</span><span class="txt">多賀城市</span><span class="txt">塩竃市</span></p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">東京都</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">東京23区</span><span class="txt">武蔵野市</span><span class="txt">三鷹市</span><span class="txt">調布市</span><span class="txt">狛江市</span><span class="txt">西東京市</span></p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">神奈川県</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">横浜市</span><span class="txt">川崎市</span></p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">愛知県</p>
+                                <div class="deliverybox">
+                                    <p>
+                                        <span class="txt">名古屋市</span>
+                                        <span class="txt">東海市</span>
+                                        <span class="txt">一宮市</span>
+                                        <span class="txt">稲沢市</span>
+                                        <span class="txt">岩倉市</span>
+                                        <span class="txt">犬山市</span>
+                                        <span class="txt">春日井市</span>
+                                        <span class="txt">小牧市</span>
+                                        <span class="txt">瀬戸市</span>
+                                        <span class="txt">清須市</span>
+                                        <span class="txt">西春日井郡豊山町</span>
+                                        <span class="txt">尾張旭市</span>
+                                        <span class="txt">北名古屋市</span>
+                                        <span class="txt">半田市</span>
+                                        <span class="txt">豊明市</span>
+                                        <span class="txt">大府市</span>
+                                        <span class="txt">知多市</span>
+                                        <span class="txt">知多郡東浦町</span>
+                                        <span class="txt">知多郡阿久比町</span>
+                                        <span class="txt">愛西市</span>
+                                        <span class="txt">津島市</span>
+                                        <span class="txt">弥富市</span>
+                                        <span class="txt">日進市</span>
+                                        <span class="txt">海部郡飛島村</span>
+                                        <span class="txt">あま市</span>
+                                        <span class="txt">海部郡大治町</span>
+                                        <span class="txt">海部郡蟹江町</span>
+                                        <span class="txt">長久手市</span>
+                                        <span class="txt">愛知郡東郷町</span>
+                                        <span class="txt">みよし市</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">大阪府</p>
+                                <div class="deliverybox">
+                                    <p>
+                                        <span class="txt">大阪市</span>
+                                        <span class="txt">吹田市</span>
+                                        <span class="txt">茨木市</span>
+                                        <span class="txt">摂津市</span>
+                                        <span class="txt">高槻市</span>
+                                        <span class="txt">箕面市</span>
+                                        <span class="txt">豊中市</span>
+                                        <span class="txt">東大阪市</span>
+                                        <span class="txt">八尾市</span>
+                                        <span class="txt">門真市</span>
+                                        <span class="txt">大東市</span>
+                                        <span class="txt">寝屋川市</span>
+                                        <span class="txt">堺市</span>
+                                        <span class="txt">泉大津市</span>
+                                        <span class="txt">高石市</span>
+                                        <span class="txt">松原市</span>
+                                        <span class="txt">守口市</span>
+                                        <span class="txt">交野市</span>
+                                        <span class="txt">池田市</span>
+                                        <span class="txt">貝塚市</span>
+                                        <span class="txt">大阪狭山市</span>
+                                        <span class="txt">岸和田市</span>
+                                        <span class="txt">枚方市</span>
+                                        <span class="txt">和泉市</span>
+                                        <span class="txt">四條畷市</span>
+                                        <span class="txt">泉北郡忠岡町</span>
+                                        <span class="txt">富田林市</span>
+                                        <span class="txt">河内長野市</span>
+                                        <span class="txt">柏原市</span>
+                                        <span class="txt">羽曳野市</span>
+                                        <span class="txt">藤井寺市</span>
+                                        <span class="txt">南河内郡千早赤阪村</span>
+                                        <span class="txt">南河内郡河南町</span>
+                                        <span class="txt">南河内郡太子町</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">兵庫県</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">神戸市</span><span class="txt">芦屋市</span><span class="txt">西宮市</span><span class="txt">尼崎市</span><span class="txt">明石市</span><span class="txt">伊丹市</span><span class="txt">宝塚市</span></p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">京都府</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">京都市（上京区、中京区、下京区、西京区、南区、東山区、山科区、伏見区）</span></p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">福岡県</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">全域（宗像市大島を除く）</span></p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">山口県</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">下関市（旧豊浦郡を除く）</span></p>
+                                </div>
+                            </div>
+                            <div class="deliveryAreaIn">
+                                <p class="tit">佐賀県</p>
+                                <div class="deliverybox">
+                                    <p><span class="txt">佐賀市（旧佐賀郡・神埼郡（三瀬村）を除く）</span><span class="txt">鳥栖市</span><span class="txt">三養基郡上峰町</span><span class="txt">三養基郡基山町</span><span class="txt">三養基郡みやき町</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="deliveryNote">
+                            <li>※市町村合併により配送エリアが変更になる場合がございます。</li>
+                        </ul>
+                    </div>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryTit">ご注文からお届けまで（配送日指定がない場合）</p>
+                        <p class="deliveryDate">土・日・祝の配送をご希望の場合はあらかじめお届け日をご指定ください。<br>ご指定が無い場合、お届けが翌平日となりますのでご注意ください。<span class="txt">※お届け時間のご指定は承っておりません。</span></p>
+                        <div class="visiblePC">
+                            <table class="guideTable01 guideComTable">
+                                <tbody><tr>
+                                    <th rowspan="2" class="tableTh03 tableW02">ご注文日</th>
+                                    <th rowspan="2" class="tableTh03 tableW02">ご注文受付時間</th>
+                                    <th colspan="4" class="tableTh03">お届けまでの日数</th>
+                                </tr>
+                                <tr>
+                                    <th class="tableTh03 tableW03">0日（当日）</th>
+                                    <th class="tableTh03 tableW03">1日（翌日）</th>
+                                    <th class="tableTh03 tableW03">2日</th>
+                                    <th class="tableTh03 tableW03">3日</th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">月曜～木曜<br>（祝日は除きます）</th>
+                                    <th class="">午前11時までのご注文</th>
+                                    <td class="tableBg01">夕方お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg01">夕方お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">金曜<br>（祝日は除きます）</th>
+                                    <td>午前11時までのご注文</td>
+                                    <td class="tableBg01">夕方お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">土曜<br>（祝日は除きます）</th>
+                                    <td>午前11時までのご注文	</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg01">夕方お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableTh02 tablefcred">日曜・祝日</th>
+                                    <td>終日</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg01">夕方お届け※1</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <div class="visibleTS">
+                            <table class="guideTable_sp guideComTable">
+                                <tbody><tr>
+                                    <th colspan="2">月曜～木曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td>午前11時までのご注文</td>
+                                    <td class="tableTd01">夕方お届け</td>
+                                </tr>
+                                <tr>
+                                    <td>午後6時までのご注文</td>
+                                    <td class="tableTd01">翌日お届け</td>
+                                </tr>
+                                <tr>
+                                    <td>午後6時以降のご注文</td>
+                                    <td class="tableTd01">翌日夕方お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">金曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td>午前11時までのご注文</td>
+                                    <td class="tableTd01">夕方お届け</td>
+                                </tr>
+                                <tr>
+                                    <td>午後6時までのご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td>午後6時以降のご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">土曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td>午前11時までのご注文</td>
+                                    <td class="tableTd01">2日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td>午後6時までのご注文</td>
+                                    <td class="tableTd01">2日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td>午後6時以降のご注文</td>
+                                    <td class="tableTd01">2日後夕方お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="tablefcred">日曜・祝日</th>
+                                </tr>
+                                <tr>
+                                    <td>終日</td>
+                                    <td class="tableTd01">翌日夕方お届け※1</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <ul class="deliveryNote">
+                            <li>※1 祝日にあたる場合は翌営業日のお届けとなります。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">翌日配送エリアのお客様</p>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryNextDay">当日配送エリア、翌々日配送エリアを除く日本全国の方が対象です。 ※<br>午後6時までにご注文いただきますと、商品を翌日にお届けいたします。</p>
+                        <ul class="deliveryNote">
+                            <li>※沖縄県、離島およびその他一部の山間部エリアを除く。</li>
+                            <li>※一部の山間部エリア、北海道の道央（石狩地方、後志地方、胆振地方を除く）・道北・道東は翌々日配送エリアです。</li>
+                            <li>※お届け時間のご指定は承っておりません。</li>
+                            <li>※医薬品・医療機器の一部は下記当日配送エリアが変更になる場合があります。詳しくは<a href="{{ url('help_guide') }}#">こちら</a>。</li>
+                        </ul>
+                    </div>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryTit">ご注文からお届けまで（配送日指定がない場合）</p>
+                        <p class="deliveryDate">土・日・祝の配送をご希望の場合はあらかじめお届け日をご指定ください。<br>ご指定が無い場合、お届けが翌平日となりますのでご注意ください。<span class="txt">※お届け時間のご指定は承っておりません。</span></p>
+                        <div class="visiblePC">
+                            <table class="guideTable01 guideComTable">
+                                <tbody><tr>
+                                    <th rowspan="2" class="tableTh03 tableW02">ご注文日</th>
+                                    <th rowspan="2" class="tableTh03 tableW02">ご注文受付時間</th>
+                                    <th colspan="3" class="tableTh03">お届けまでの日数</th>
+                                </tr>
+                                <tr>
+                                    <th class="tableTh03 tableW04">1日（翌日）</th>
+                                    <th class="tableTh03 tableW04">2日</th>
+                                    <th class="tableTh03 tableW04">3日</th>
+                                </tr><tr>
+                                    <th rowspan="2" class="tableTh02">月曜～木曜<br>（祝日は除きます）</th>
+                                    <th>午後6時までのご注文</th>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け※1</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="tableTh02">金曜<br>（祝日は除きます）</th>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="tableTh02">土曜<br>（祝日は除きます）</th>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableTh02 tablefcred">日曜・祝日</th>
+                                    <th>終日</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け※2</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <div class="visibleTS">
+                            <table class="guideTable_sp guideComTable">
+                                <tbody><tr>
+                                    <th colspan="2">月曜～木曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01">翌日お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01 tableW05">2日後お届け<sub>※1</sub></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">金曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01 tableW05">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01 tableW05">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">土曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01 tableW05">2日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01 tableW05">3日後お届け<sub>※1</sub></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="tablefcred">日曜・祝日</th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">終日</td>
+                                    <td class="tableTd01">2日後お届け<sub>※1</sub></td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <ul class="deliveryNote">
+                            <li>※1 木曜の午後６時以降のご注文は月曜日のお届けとなります。</li>
+                            <li>※2 祝日にあたる場合は翌営業日のお届けとなります。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">翌々日配送エリアのお客様</p>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryNextDay">一部の山間部エリア、北海道の道央（石狩地方、後志地方、胆振地方を除く）・道北・道東<br>午後6時までにご注文いただきますと、商品を翌々日にお届けいたします。</p>
+                        <ul class="deliveryNote">
+                            <li>※ご注文の曜日によっては、お届け日が3日後以降になる場合があります。</li>
+                            <li>※お届け時間のご指定は承っておりません。</li>
+                            <li>※医薬品・医療機器の一部は下記当日配送エリアが変更になる場合があります。詳しくは<a href="{{ url('help_guide') }}#">こちら</a>。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">沖縄県（沖縄本島）のお客様</p>
+                    <div class="deliveryAreaBox">
+                        <div class="visiblePC">
+                            <table class="guideTable01 guideComTable">
+                                <tbody><tr>
+                                    <th rowspan="2" class="tableTh03 tableW02">ご注文日</th>
+                                    <th rowspan="2" class="tableTh03 tableW02">ご注文受付時間</th>
+                                    <th colspan="5" class="tableTh03">お届けまでの日数</th>
+                                </tr>
+                                <tr>
+                                    <th class="tableTh03 tableW06">1日(翌日)</th>
+                                    <th class="tableTh03 tableW06">2日(翌々日)</th>
+                                    <th class="tableTh03 tableW06">3日</th>
+                                    <th class="tableTh03 tableW06">4日</th>
+                                    <th class="tableTh03 tableW06">5日</th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">月曜日<br>（祝日は除きます）</th>
+                                    <th>午前11時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">火曜<br>（祝日は除きます）</th>
+                                    <th>午前11時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">水曜<br>（祝日は除きます）</th>
+                                    <th>午前11時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">木曜<br>（祝日は除きます）</th>
+                                    <th>午前11時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">金曜<br>（祝日は除きます）</th>
+                                    <th>午前11時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="tableTh02">土曜<br>（祝日は除きます）</th>
+                                    <th>午前11時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時までのご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th>午後6時以降のご注文</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                </tr>
+                                <tr>
+                                    <th class="tableTh02 tablefcred">日曜・祝日</th>
+                                    <th>終日</th>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="tableBg02">お届け</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <div class="visibleTS">
+                            <table class="guideTable_sp guideComTable">
+                                <tbody><tr>
+                                    <th colspan="2">月曜日<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午前11時までのご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">火曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午前11時までのご注文</td>
+                                    <td class="tableTd01">2日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">水曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午前11時までのご注文</td>
+                                    <td class="tableTd01">2日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01">5日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01">5日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">木曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午前11時までのご注文</td>
+                                    <td class="tableTd01">4日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01">4日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01">4日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">金曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午前11時までのご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01">3日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">土曜<span class="txt">（祝日は除きます）</span></th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午前11時までのご注文</td>
+                                    <td class="tableTd01">2日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時までのご注文</td>
+                                    <td class="tableTd01">5日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">午後6時以降のご注文</td>
+                                    <td class="tableTd01">5日後お届け</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="tablefcred">日曜・祝日</th>
+                                </tr>
+                                <tr>
+                                    <td class="tableW05">終日</td>
+                                    <td class="tableTd01">4日後お届け</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                        <ul class="deliveryNote">
+                            <li>※船便でのお届けとなるため、天候および船会社の状況によってお届けが遅れる場合があります。<br>また、商品によってもお届けが上記より1～2日遅れる場合があります。ご了承ください。</li>
+                            <li>※ご注文日当日およびご注文日からお届け日までの間に祝日が含まれる場合は、翌平日のお届けとなります。</li>
+                            <li>※沖縄県への配達は、お届け日を指定することができません。</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+        </div>
+
+        <div class="guideSection">
+            <div class="guideinfo" id="anchor04">
+                <p class="guideanchortit">お届け日の指定について</p>
+                <div class="deliveryAreaBox">
+                    <p class="txt01">「土・日・祝日に届けて欲しい」「明日じゃなくて4日後に届けて欲しい」など、ご希望のお客様は「配送日指定サービス（無料）」をご利用ください。</p>
+                    <p class="txt01">ご注文日を含む14日以内のご希望のお届け日（土・日・祝日を含む）を選択してください。ご指定の日にお届けいたします。</p>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+        </div>
+
+        <div class="guideSection">
+            <div class="guideinfo" id="anchor05">
+                <p class="guideanchortit">配送料金について</p>
+                <div class="deliveryAreaBox">
+                    <p class="txt02">1,000円以上（税込）なら配送料無料！</p>
+                    <p class="txt01">1回のご注文金額合計が1,000円（税込）未満の場合（クーポンご利用含む）、<br class="visiblePC">配送料として別途324円（税込）をご負担いただきます。</p>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+        </div>
+
+        <div class="guideSection">
+            <div class="guideinfo" id="anchor06">
+                <p class="guideanchortit">配送先を複数指定</p>
+                <div class="deliveryAreaBox">
+                    <p class="txt01">1回のご注文で何件でも複数のお届け先をご指定いただける複数配送注文が可能です。まとめてご注文いただくことで「ご注文の手間が省けるなどのメリットがございます。</p>
+                    <p class="txt01">「複数配送」注文をご希望される場合、ご利用の前にマイページの「お届け先リストの確認・変更」ページより、あらかじめお届け予定のあるすべての配送先のご登録をお済ませください。よりスムーズにご注文いただけます。</p>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">複数配送ご利用ガイド</p>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryNextDay">お届け先リストの追加・修正・削除について</p>
+                        <p class="txt01">【ご注文前】<br>マイページでお届け先情報を編集いただけます。<br>会員ログイン後、マイページの「お届き先リストの確認・変更」画面にて、ご注文にご指定いただくお届け先住所の追加・変更・削除を行っていただけます。事前に配送先のご登録をお済ませいただくと、ご注文時にお届け先の登録を行う必要がなく、よりスムーズにご注文いただけます。</p>
+                        <p class="txt01">【ご注文時】<br>「複数のお届け先の指定」画面でお届け先を追加・変更いただけます。</p>
+                    </div>
+                </div>
+                <div class="guideMethod">
+                    <p class="deliveryNextDay">複数お届け先のご注文方法</p>
+                    <dl class="guideMethodList clearfix">
+                        <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                        <dd>
+                            <p>通常商品を複数のお届け先に送りたい場合は、「ご注文手続きに進む」の下に表示される「複数お届け先に送る」のリンクを押します。</p>
+                        </dd>
+                    </dl>
+                    <dl class="guideMethodList clearfix">
+                        <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                        <dd>
+                            <p class="tit">アドレス帳からお届け先を選択する場合</p>
+                            <p>「＋お届け先を追加する」を押し、アドレス帳の中からお届け先を選択します。</p>
+                        </dd>
+                    </dl>
+                    <dl class="guideMethodList clearfix">
+                        <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                        <dd>
+                            <p class="tit">お届け先を新たに追加する場合</p>
+                            <p class="txt">「＋お届け先を追加する」を押し、「＋お届け先を新規に追加」から新規お届け先の設定をします。</p>
+                            <p class="txt">以上の設定を終えてから、「お届け商品の設定」を押します。</p>
+                        </dd>
+                    </dl>
+                    <dl class="guideMethodList clearfix">
+                        <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                        <dd>
+                            <p class="tit">お届け先ごとに「お届け商品」を選びます。</p>
+                            <p>カートに入れた商品をプルダウンリストからお選びください。<br>「この商品を選択する」を押すと、お届け商品が確定します。</p>
+                        </dd>
+                    </dl>
+                    <dl class="guideMethodList clearfix">
+                        <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                        <dd>
+                            <p class="tit">お届け商品の「数量」「お届け日時」を設定します。</p>
+                            <p class="txt">①数量の設定<br>お届け商品の数量を変更する場合は、数を入力して「数量変更」を押します。<br>お届け商品から削除する場合は「削除」を押します。</p>
+                            <p class="txt">②お届け日時の設定<br>お届け日時を指定する場合は、ご希望の「お届け日」と「お届け時間」を選択します。</p>
+                        </dd>
+                    </dl>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+        </div>
+
+        <div class="guideSection">
+            <p class="guideTit">お支払いについて</p>
+            <div class="guideinfo" id="anchor07">
+                <p class="guideanchortit">お支払い方法について</p>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">口座振込み</p>
+                    <div class="deliveryAreaBox">
+                        <p class="txt03">請求書に記載の指定口座へお振込みください。お振込先の口座はお客様のお問い合わせ番号ごとに異なります。<br><span class="tablefcred">必ず請求書記載の振込口座をご確認ください。</span></p>
+                        <ul class="deliveryNote">
+                            <li>※振込手数料はお客様のご負担となります。</li>
+                            <li>※10万円以上の現金でのお振込みの場合、身分証明書等の提示が必要となります。詳しくは金融機関にお問い合わせください。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">ゆうちょ銀行・郵便局・コンビニエンスストア払込取扱票（手数料無料）</p>
+                    <div class="deliveryAreaBox">
+                        <p class="txt03 tablefcred">請求書に同封されている｢払込取扱票｣にて、ゆうちょ銀行、郵便局または指定のコンビニエンスストアでお支払いください。</p>
+                        <ul class="deliveryNote">
+                            <li>※金額を訂正した「払込取扱票」でのお支払いはできません。</li>
+                            <li>※お支払い金額が30万円以上の場合、コンビニエンスストアではお支払いができませんので、ゆうちょ銀行・郵便局でのお支払いとなります。</li>
+                            <li>※ゆうちょ銀行・郵便局で１０万円以上の現金でのお支払いの場合、身分証明書などの提示が必要となる場合があります。<br>詳しくは金融機関窓口にお問い合わせください。</li>
+                        </ul>
+                    </div>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryNextDay">ご利用いただけるコンビニエンスストア</p>
+                        <p class="deliveryLogo"><img src="./タイトル_files/img_guidelogo.png" alt=""></p>
+                        <ul class="deliveryNote">
+                            <li>※金額を訂正した「払込取扱票」でのお支払いはできません。</li>
+                            <li>※お支払い金額が30万円以上の場合、コンビニエンスストアではお支払いができませんので、ゆうちょ銀行・郵便局でのお支払いとなります。</li>
+                            <li>※ゆうちょ銀行・郵便局で10万円以上の現金でのお支払いの場合、身分証明書などの提示が必要となる場合があります。詳しくは金融機関窓口にお問い合わせください。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">自動引落とし（手数料無料）</p>
+                    <div class="deliveryAreaBox">
+                        <p class="txt03 tablefcred">ご指定の口座よりお引落としさせていただきます。<br>（銀行口座および、ゆうちょ銀行口座のいずれもご指定いただけます。）</p>
+                        <ul class="deliveryNote">
+                            <li>※自動引落としについては収納代行会社ＳＭＢＣファイナンスサービス株式会社に業務委託しております。</li>
+                            <li>※自動引落としでお支払いいただく場合には、事前に「口座振替依頼書」でのお手続きが必要です。</li>
+                            <li>※13ヵ月以上自動引落としの実績がない場合、金融機関によっては自動引落としができなくなる可能性がございます。<br>その際は再度自動引落としのお手続きが必要となります。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">クレジットカード（手数料無料）</p>
+                    <div class="deliveryAreaBox">
+                        <p class="deliveryNextDay">日本国内で発行されたすべてのクレジットカードがご利用いただけます。</p>
+                        <ul class="deliveryNote">
+                            <li>※下記マークが印刷されていれば、NICOSカード、セゾンカード、DCカード、UCカード、三井住友VISAカード、OMCカードなどのクレジット　カードも利用いただけます。</li>
+                        </ul>
+                        <div class="deliverycard">
+                            <p class="tit">ご利用いただけるカードブランド</p>
+                            <p class="card"><img src="./タイトル_files/img_guidecard.png" alt=""></p>
+                            <ul class="deliveryNote">
+                                <li>※デビットカード、プリペイドカードはご利用いただけません。</li>
+                                <li>※海外カードも同様にご利用いただけません。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+
+            <div class="guideinfo" id="anchor08">
+                <p class="guideanchortit">ご請求締切日について</p>
+                <div class="deliveryAreaBox">
+                    <p>ご登録時に「10日締め」または「月末締め」をお選びいただきます。</p>
+                    <div class="visiblePC">
+                        <table class="deadlineTable">
+                            <tbody><tr>
+                                <th>ご請求締日</th>
+                                <th class="tableBoder">ご請求書お届け日</th>
+                                <th class="tableBoder">自動引落としでお支払い</th>
+                                <th class="tableBoder">自動引落とし以外でお支払い</th>
+                            </tr>
+                            <tr>
+                                <td><span class="tablefcred">10日</span>締め</td>
+                                <td class="tableBoder"><span class="tablefcred">当月15日</span>頃</td>
+                                <td class="tableBoder"><span class="tablefcred">当月25日</span>まで</td>
+                                <td class="tableBoder"><span class="tablefcred">当月27日</span>お引落とし</td>
+                            </tr>
+                            <tr>
+                                <td><span class="tablefcblue">月末</span>締め</td>
+                                <td class="tableBoder"><span class="tablefcblue">翌月5日</span>頃</td>
+                                <td class="tableBoder"><span class="tablefcblue">翌月15日</span>まで</td>
+                                <td class="tableBoder"><span class="tablefcblue">翌月27日</span>お引落とし</td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                    <div class="visibleTS">
+                        <table class="deadlineTable_sp">
+                            <tbody><tr>
+                                <th colspan="2" class="tableBg03"><span class="tablefcred">10日</span>締め</th>
+                            </tr>
+                            <tr>
+                                <td>ご請求書お届け日</td>
+                                <td><span class="tablefcred">当月15日</span>頃</td>
+                            </tr>
+                            <tr>
+                                <td>自動引落としでお支払い</td>
+                                <td><span class="tablefcred">当月25日</span>まで</td>
+                            </tr>
+                            <tr>
+                                <td>自動引落とし以外でお支払い</td>
+                                <td><span class="tablefcred">当月27日</span>お引落とし</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="tableBg04"><span class="tablefcblue">月末</span>締め</th>
+                            </tr>
+                            <tr>
+                                <td>ご請求書お届け日</td>
+                                <td><span class="tablefcblue">翌月5日</span>頃</td>
+                            </tr>
+                            <tr>
+                                <td>自動引落としでお支払い</td>
+                                <td><span class="tablefcblue">翌月15日</span>まで</td>
+                            </tr>
+                            <tr>
+                                <td>自動引落とし以外でお支払い</td>
+                                <td><span class="tablefcblue">翌月27日</span>お引落とし</td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+
+            <div class="guideinfo" id="anchor09">
+                <p class="guideanchortit">ご請求書について</p>
+                <div class="deliveryAreaBox">
+                    <p>ご指定いただいたご請求締切日とお支払い方法にて、毎月1回ご登録住所にお届けします。</p>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">請求書を紛失された場合</p>
+                    <div class="deliveryAreaBox clearfix">
+                        <p class="lostTxt visiblePC">過去２か月分の請求書につきましては、再発行が可能です。<br>右のお問い合わせフォームよりご依頼ください。</p>
+                        <p class="lostTxt visibleTS">過去２か月分の請求書につきましては、再発行が可能です。お問い合わせフォームよりご依頼ください</p>
+                        <p class="lostBtn"><a href="{{ url('help_guide') }}#">お問い合わせ</a></p>
+                    </div>
+                </div>
+
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">ご請求締切日の変更反映のタイミング</p>
+                    <div class="deliveryAreaBox">
+                        <p>ご請求締切日の変更は、一旦ご変更前の締切日にてご請求させていただいた後に反映されます。</p>
+                    </div>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+
+            <div class="guideinfo" id="anchor10">
+                <p class="guideanchortit">お支払い方法の変更について</p>
+                <div class="deliveryAreaBox">
+                    <p class="guideChange">現在のお支払い方法の確認やお支払い方法の変更は、<a href="{{ url('help_guide') }}#">お支払い方法の確認・変更ページ</a>でお手続きいただけます。</p>
+                </div>
+
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">自動引落としのお手続きについて</p>
+                    <div class="deliveryAreaBox">
+                        <div class="guideProgram">
+                            <p class="tit">自動引落としでお支払いいただくには、事前に「口座振替依頼書」でのお手続きが必要です。</p>
+                            <p>お支払い方法の変更画面より、「口座振替依頼書」のご依頼をいただくと、約１週間後にご登録住所へお届けいたします。<br>お送りした「口座振替依頼書」に必要事項をご記入、ご捺印の上、ご返送をお願い致します。<br>ご登録住所以外へ送付をご希望の場合は、お客様サービスデスクまでご連絡ください。</p>
+                        </div>
+                        <ul class="deliveryNote">
+                            <li>※口座振替のお手続きに関する業務は、「ヤマトシステム開発株式会社」に業務委託しております。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">お支払い方法が変更になるタイミング</p>
+                    <div class="deliveryAreaBox">
+                        <p class="txt01">お支払方法の変更については変更開始日のご指定はできません。変更のタイミングについては以下をご確認ください。</p>
+                        <p class="txt01"><strong>口座振込み、ゆうちょ銀行・郵便局・コンビニエンスストア払込取扱票へ変更の場合</strong><br>Webサイトでのご変更手続きがご請求締切日当日までの場合、当月分のご請求より変更となります。</p>
+                        <p class="txt01"><strong>自動引落としへ変更の場合</strong><br>自動引落としでお支払いいただくには、事前に「口座振替依頼書」でのお手続きが必要です。 お客様からご返送いただいた「口座振替依頼書」に書類不備がなければ、１～２ヶ月後のご請求分より、自動引落としでのお支払いに変更となります。</p>
+                    </div>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+        </div>
 
 
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
 
+        <div class="guideSection">
+            <p class="guideTit">返品・交換について</p>
+            <div class="guideinfo" id="anchor11">
+                <p class="guideanchortit">お客様のご都合による返品の場合<span class="tit">商品イメージが違う ／ 違う商品を注文してしまった ／ 注文数を間違えた場合等</span></p>
+                <div class="deliveryAreaBox">
+                    <p class="txt01">以下の「返品をお受けできない商品」を除き、返品をお受けいたします。返品方法に従って、Webサイトにてお申し込みください。<br><span class="tablefcred guideFb">なお、申し訳ございませんが、他の商品への交換はお受けしておりません。</span><br>返品手続きをしていただいた後、あらためてご希望の商品をご注文ください。交換商品のお届けと返品の引取りは別便となります。</p>
+                    <p class="txt01"><span class="tablefcred tit">返品の際の梱包について</span><br>返品の際は商品をお届けした時の梱包状態（付属品やラベル・タグ・袋・外装箱などの包装を含めます。）に戻してください。</p>
+                    <p class="txt04 tablefcred">感染のおそれのある廃棄物および産業廃棄物につきましては、お客様において適正に処理いただくことが産業廃棄物処理法上義務づけられております。返品はお受けできませんので、あらかじめご了承ください。</p>
+                </div>
+                <div class="deliveryArea">
+                    <p class="deliveryAreaTit">一部返品をお受けできない商品</p>
+                    <div class="deliveryAreaBox">
+                        <div class="guideReturnsBox">
+                            <p class="guideReturnsTit">状態により返品がお受けできない商品</p>
+                            <ul class="guideReturnsList clearfix">
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 220px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 105px;"><img src="./タイトル_files/img_guidereturnslist01.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">一度ご使用を開始した商品</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 220px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 105px;"><img src="./タイトル_files/img_guidereturnslist02.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">お客様の事情により、<br class="visiblePC">キズ・汚れなどが生じた商品</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 220px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 105px;"><img src="./タイトル_files/img_guidereturnslist03.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">ご購入日（納品書に記載されている出荷日）から366日以上経過した商品</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="guideReturnsBox">
+                            <p class="guideReturnsTit">未使用でも返品がお受けできない商品</p>
+                            <ul class="guideReturnsList clearfix">
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 312px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 103px;"><img src="./タイトル_files/img_guidereturnslist04.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">特性により返品をお受けできない商品</p>
+                                        <ul class="deliveryNote">
+                                            <li>・書籍・ソフトウエアライセンス</li>
+                                            <li>・滅菌期限・使用期限を超過した商品</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 312px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 103px;"><img src="./タイトル_files/img_guidereturnslist05.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">特別価格などて販売した商品</p>
+                                        <ul class="deliveryNote">
+                                            <li>・特別企画商品</li>
+                                            <li>・セール品</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 312px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 103px;"><img src="./タイトル_files/img_guidereturnslist06.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">お客様からのご注文にしたがって、お取り寄せする商品</p>
+                                        <ul class="deliveryNote">
+                                            <li>・取り寄せ品</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 340px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 131px;"><img src="./タイトル_files/img_guidereturnslist07.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">お客様からのご注文にしたがって、製造・加工して販売する商品</p>
+                                        <ul class="deliveryNote">
+                                            <li>・専用オーダー商品</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 340px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 131px;"><img src="./タイトル_files/img_guidereturnslist08.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">パッケージ（外装）開封により返品をお受けできない商品</p>
+                                        <ul class="deliveryNote">
+                                            <li>・衛生用品<br>（ガーゼ・マスクなど）</li>
+                                            <li>・電化製品</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="guideReturnsIn hlg03" style="height: 340px;">
+                                        <p class="guideReturnsImg"><span class="hlg02 img" style="height: 131px;"><img src="./タイトル_files/img_guidereturnslist09.png" alt=""></span></p>
+                                        <p class="hlg01 txt" style="height: 115px;">大型電化製品について受領印をいただいた商品</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="guideReturnsBox">
+                            <p class="returnsTit">下記の場合は、「使用開始」した商品とさせていただきます。</p>
+                            <ul class="deliveryNote ReturnsNote">
+                                <li>・電化製品のうち、通電されたもの</li>
+                                <li>・洗たくをされたもの</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="guideBack visibleTS"><a href="{{ url('help_guide') }}#bihin_wrapper" class="scroll">ご利用ガイド目次に戻る</a></p>
+            </div>
+
+            <div class="guideinfo" id="anchor12">
+                <p class="guideanchortit">返品のお申込方法</p>
+                <div class="deliveryAreaBox">
+                    <p class="returnsMethodTit returnsMethodSetp01">返品のお申込</p>
+                    <p class="application"><img src="./タイトル_files/ico_web.png" alt="">Webからお申込の場合</p>
+                    <p class="returnstxt01">『ご利用履歴・再注文』画面から「<a href="{{ url('help_guide') }}#">返品お申込</a>」画面へお進みください。</p>
+                    <ul class="deliveryNote">
+                        <li>※インターネットからのお申し込みは、商品到着後からお手続きいただけます。</li>
+                    </ul>
+                    <div class="returnsBox01">
+                        <dl class="guideMethodList clearfix">
+                            <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                            <dd>
+                                <p>「返品する」ボタンをクリック</p>
+                            </dd>
+                        </dl>
+                        <dl class="guideMethodList clearfix">
+                            <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                            <dd>
+                                <p>返品する商品にチェックを入れて<br>【返品お申込画面へ】ボタンをクリック</p>
+                            </dd>
+                        </dl>
+                        <dl class="guideMethodList clearfix">
+                            <dt><img src="./タイトル_files/img_guidemethod.png" alt=""></dt>
+                            <dd>
+                                <p>返品お申込画面が表示されます。<br>必要事項を入力し送信してください。<br>受付完了の確認メールが届きます。</p>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="deliveryAreaBox">
+                    <p class="application"><a href="tel:03-3526-5870"><img src="./タイトル_files/ico_tel.png" alt="">お電話でお申込の場合</a></p>
+                    <div class="deliveryTel clearfix">
+                        <p class="tel01 visiblePC"><a href="tel:03-3526-5870">03-3526-5870</a></p>
+                        <p class="tel01 visibleTS"><a href="tel:03-3526-5870"><img src="./タイトル_files/ico_phone.png" alt="">03-3526-5870</a></p>
+                        <p class="tel02 visiblePC"><span class="date">受付時間</span>8：00～20：00　月曜～土曜日(祝日を除く)</p>
+                        <p class="tel02 visibleTS">受付時間（月曜日～土曜日）:10:00～18:00<span class="date">土曜、日曜、祝祭日、夏期休業、年末年始はお休みさせていただきます。</span></p>
+                    </div>
+                </div>
+                <div class="deliveryAreaBox">
+                    <p class="returnsMethodTit returnsMethodSetp02">返品受付書画面（返品受付の完了画面）を印刷してください。</p>
+                    <p class="txt01">受付完了後届く返品受付書画面（返品受付の完了画面）を印刷してください。<br>プリンタをお持ちでない場合は、完了画面に表示される<span class="tablefcred guideFb">”ARC”から始まる返品受付番号をメモ用紙などに記入の上、同梱ください。</span><br>万が一、完了画面を閉じてしまった場合、画面の印刷ができなくなります。<br>その際は<span class="tablefcred guideFb">”ARC”から始まる返品受付番号をご利用履歴の画面でご確認いただき、メモ用紙などに記入の上、同梱ください。</span></p>
+                    <p class="txt01">確認のため、返品受付内容を連絡先E-mailアドレスにもお送りします。</p>
+                </div>
+                <div class="deliveryAreaBox">
+                    <p class="returnsMethodTit returnsMethodSetp03">返品受付商品を同梱し、ドライバーにお渡しください。</p>
+                    <p class="txt01">返品受付商品に[2]で印刷済みの用紙を同梱し、ドライバーにお渡しください。</p>
+                    <ul class="deliveryNote ReturnsNote">
+                        <li>※<span class="tablefcred guideFb">「返品受付書」もしくは「返品受付番号記載のメモ」がない場合は返品をお受けできない場合がございます</span>ので、必ず同梱してください。</li>
+                        <li>※<span class="tablefcred guideFb">返品受付書が同梱されていない場合、返品された商品が「返品受付書」記載と異なる場合、返品された商品が商品お届け時の梱包の異なる場合などは、返品がお受けできません。</span>お送りいただいた商品を着払いで返送させていただく場合もございますのでご注意ください。</li>
+                    </ul>
+                </div>
+                <div class="deliveryAreaBox">
+                    <p class="returnsMethodTit returnsMethodSetp04">返品商品のお引き取り</p>
+                    <p class="txt01">引取り便（無料）がお伺いいたしますので、返品商品をお渡しください。<br>土、日、祝日を除く平日にご利用いただけます。<span class="guideFb">お時間の指定は承っておりません。</span></p>
+                    <ul class="deliveryNote ReturnsNote guidept01">
+                        <li>※お申込み後、返品方法の変更はお受けしておりません。</li>
+                        <li>※<span class="tablefcred guideFb">大型商品の場合、返品商品の小口数が多い場合などはお引取りまでお時間をいただく場合がございます。</span></li>
+                        <li>※<span class="tablefcred guideFb">沖縄本島以外の離島および一部の山間部エリアは、返品センターへご返送していただく場合があります。</span></li>
+                    </ul>
+                </div>
+                <div class="deliveryAreaBox">
+                    <p class="returnsMethodTit returnsMethodSetp05">返金について</p>
+                    <p class="txt01"><span class="guideFb">【口座振込み、ゆうちょ銀行・郵便局・コンビニエンスストアでのお支払い、自動引落としで購入された場合】</span><br>返品商品が弊社返品センターへ到着したことを確認した後に返品商品のマイナス処理を行います。<br>確認した日時が、お客様へのご請求締切日を超えていた場合は、いったん商品代金をお支払いいただきます。<br>その後、返品商品の到着を確認した月のご請求金額より返品商品代金を差し引かせていただきます。ただし、返品がお客様のご請求締切日に近い場合は、次月の請求金額より相殺させていただく場合もございます。</p>
+                    <p class="txt01"><span class="guideFb">【クレジットカード決済で購入された場合】</span><br>返品した商品代金の返金手続きは、返品商品の到着を確認してからとなるため通常1～2週間ほどかかります。</p>
+                    <ul class="deliveryNote ReturnsNote">
+                        <li>※実際にクレジットカード会社から返金されるタイミングや、クレジットカード利用明細書に内容が記載されるタイミングなどについては、クレジットカード会社に直接お問い合わせください。</li>
+                    </ul>
                 </div>
             </div>
         </div>

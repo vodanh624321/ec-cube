@@ -40,7 +40,8 @@ class HelpController extends AbstractController
 
     public function guide(Application $app)
     {
-        return $app->render('Help/guide.twig');
+        $breadcrumb = '初めての方へ';
+        return $app->render('Help/guide.twig', array('breadcrumb' => $breadcrumb));
     }
 
     public function about(Application $app)
