@@ -141,6 +141,10 @@ Eccube\Entity\Customer:
             unsigned: false
             options:
                 default: '0'
+        page:
+            type: string
+            length: 20
+            nullable: true
     manyToOne:
         Status:
             targetEntity: Eccube\Entity\Master\CustomerStatus

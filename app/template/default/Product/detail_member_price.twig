@@ -10,17 +10,18 @@
 
 <!--★会員価格★-->
 {% if MemberPrice %}
-    {% if MemberPrice.member_price_incMin == MemberPrice.member_price_incMax %}
-        <td><span class="price01">
+    <td>
+        <p>会員価格</p>
+        {% if MemberPrice.member_price_incMin == MemberPrice.member_price_incMax %}
+            <span class="price01">
             {{ MemberPrice.member_price_incMin|price }}
             </span>
             <span class="txt">（税抜き）</span>
-        </td>
-    {% else %}
-        <td><span class="price01">
+        {% else %}
+            <span class="price01">
             {{ MemberPrice.member_price_incMin|price }} ～ {{ MemberPrice.member_price_incMax|price }}
             </span>
             <span class="txt">（税抜き）</span>
-        </td>
-    {% endif %}
+        {% endif %}
+    </td>
 {% endif %}

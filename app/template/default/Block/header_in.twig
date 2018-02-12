@@ -28,15 +28,15 @@
 							<ul class="customList">
 								<li>
 									<p class="customTit">Type A</p>
-									<p class="customImg"><a href="{{ url('homepage') }}" {% if active == 'index-a' %}class="active">{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_a.png" alt=""></a></p>
+									<p class="customImg"><a href="{{ url('homepage', {'is': 1}) }}" {% if active == 'index-a' %}class="active"{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_a.png" alt=""></a></p>
 								</li>
 								<li>
 									<p class="customTit">Type B</p>
-									<p class="customImg"><a href="{{ url('homepage_b') }}" {% if active == 'index-b' %}class="active">{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_b.png" alt=""></a></p>
+									<p class="customImg"><a href="{{ url('homepage_b', {'is': 1}) }}" {% if active == 'index-b' %}class="active"{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_b.png" alt=""></a></p>
 								</li>
 								<li>
 									<p class="customTit">Type C</p>
-									<p class="customImg"><a href="{{ url('homepage_c') }}" {% if active == 'index-c' %}class="active">{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_c.png" alt=""></a></p>
+									<p class="customImg"><a href="{{ url('homepage_c', {'is': 1}) }}" {% if active == 'index-c' %}class="active"{% endif %}><img src="{{ app.config.front_urlpath }}/bihin-com/common/img/img_type_c.png" alt=""></a></p>
 								</li>
 							</ul>
 						</div>

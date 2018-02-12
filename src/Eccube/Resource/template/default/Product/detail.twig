@@ -145,7 +145,7 @@ $(function(){
                     <div id="mouseoverbox">
                         <ul>
                             {% if Product.ProductImage|length > 0 %}
-                                <li><a href="#1" data-target="#popup01"><img src="{{ app.config.image_save_urlpath }}/{{ Product.ProductImage[0]|no_image_product }}"/></a></li>
+                                <li><a href="#1" data-target="#popup01"><img width="100%" src="{{ app.config.image_save_urlpath }}/{{ Product.ProductImage[0]|no_image_product }}"/></a></li>
                             {% else %}
                                 <li><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a></li>
                             {% endif %}
@@ -193,7 +193,6 @@ $(function(){
                 </p>
                 <div class="proPriceBox">
                     <table class="proPriceTable">
-                        <p>会員価格</p>
                         <!--member_price-->
                         {#<td><span class="price01">￥1,639</span><span class="txt">（税抜き）</span></td>#}
                         {#<td>通常価格<span class="price02"> ￥1,800</span><span class="txt">（税抜き）</span></td>#}
@@ -256,7 +255,11 @@ $(function(){
                         </ul>
                     </div>
                 {% endif %}
-                <p class="proDetailStock">在庫：<span class="txt">{% if Product.stock_find %}あり{% else %}なし{% endif %}</span></p>
+                    {% if Product.stock_find %}
+                <p class="proDetailStock">
+                    在庫：<span class="txt">あり</span>
+                </p>
+                    {% endif %}
                 <div class="proDetailBuy">
                     <table class="detailBuy">
                         {% if Product.stock_find %}
@@ -276,10 +279,17 @@ $(function(){
                                     <option>10</option>
                                 </select>
                             </th>
-                            <td><input type="submit" id="add-cart" class="buyCard01 prevention-mask" value=""></td>
+                            <td>
+                                <input type="submit" id="add-cart" class="buyCard01 prevention-mask" value="">
+                            </td>
                         </tr>
                         {% else %}
-                            <tr><th></th><td><input type="button" class="buyCard01" disabled></td></tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <a href="{{ url('contact') }}"><button type="button" style="width: 100%; height: 60px" class="btn btn-warning">お見積はこちら</button></a>
+                                </td>
+                            </tr>
                         {% endif %}
                     </table>
                     {% if BaseInfo.option_favorite_product == 1 %}

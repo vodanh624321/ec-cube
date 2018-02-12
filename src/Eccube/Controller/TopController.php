@@ -26,19 +26,60 @@ namespace Eccube\Controller;
 
 use Eccube\Application;
 use Eccube\Entity\Category;
+use Eccube\Entity\Customer;
 use Eccube\Entity\Master\ProductListMax;
 use Eccube\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class TopController extends AbstractController
 {
 
-    public function index(Application $app)
+    public function index(Application $app, Request $request)
     {
+        if ($request->get('is')) {
+            $Customer = $app->user();
+            if ($Customer instanceof Customer) {
+                $Customer->setPage(null);
+                $app['orm.em']->persist($Customer);
+                $app['orm.em']->flush();
+            }
+        }
+
+        $index = $this->getDefaultIndexPage($app);
+        switch ($index) {
+            case Customer::INDEX_B:
+                return $app->redirect($app->url('homepage_b'));
+                break;
+            case Customer::INDEX_C:
+                return $app->redirect($app->url('homepage_c'));
+                break;
+        }
+
         return $app->render('index.twig');
     }
 
-    public function indexB(Application $app)
+    public function indexB(Application $app, Request $request)
     {
+        if ($request->get('is')) {
+            $Customer = $app->user();
+            if ($Customer instanceof Customer) {
+                $Customer->setPage(Customer::INDEX_B);
+                $app['orm.em']->persist($Customer);
+                $app['orm.em']->flush();
+            }
+        }
+
+        $index = $this->getDefaultIndexPage($app);
+        switch ($index) {
+            case Customer::INDEX_B:
+                break;
+            case Customer::INDEX_C:
+                return $app->redirect($app->url('homepage_c'));
+                break;
+            default:
+                return $app->redirect($app->url('homepage'));
+                break;
+        }
         $Categories = $app['eccube.repository.category']->getList(null, false, Category::TYPE_B);
 
         $arrProduct = array();
@@ -59,8 +100,43 @@ class TopController extends AbstractController
         return $app->render('index_b.twig', array('products' => $arrProduct));
     }
 
-    public function indexC(Application $app)
+    public function indexC(Application $app, Request $request)
     {
+        if ($request->get('is')) {
+            $Customer = $app->user();
+            if ($Customer instanceof Customer) {
+                $Customer->setPage(Customer::INDEX_C);
+                $app['orm.em']->persist($Customer);
+                $app['orm.em']->flush();
+            }
+        }
+
+        $index = $this->getDefaultIndexPage($app);
+        switch ($index) {
+            case Customer::INDEX_B:
+                return $app->redirect($app->url('homepage_b'));
+                break;
+            case Customer::INDEX_C:
+                break;
+            default:
+                return $app->redirect($app->url('homepage'));
+                break;
+        }
+
         return $app->render('index_c.twig');
+    }
+
+    /**
+     * @param Application $app
+     * @return mixed|null
+     */
+    protected function getDefaultIndexPage(Application $app)
+    {
+        $Customer = $app->user();
+        if ($Customer instanceof Customer) {
+            return $Customer->getPage();
+        }
+
+        return null;
     }
 }
