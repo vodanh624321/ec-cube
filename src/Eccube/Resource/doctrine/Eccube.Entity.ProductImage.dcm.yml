@@ -22,6 +22,10 @@ Eccube\Entity\ProductImage:
         create_date:
             type: datetime
             nullable: false
+        comment:
+            type: string
+            length: 255
+            nullable: true
     manyToOne:
         Product:
             targetEntity: Eccube\Entity\Product

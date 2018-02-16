@@ -48,6 +48,24 @@ class ProductImage extends \Eccube\Entity\AbstractEntity
      */
     private $Creator;
 
+    /** @var String */
+    private $comment;
+
+    /**
+     * @return String
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param String $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
 
     /**
      * Get id

@@ -27,13 +27,18 @@ namespace Eccube\Controller\Admin\Product;
 use Eccube\Application;
 use Eccube\Common\Constant;
 use Eccube\Controller\AbstractController;
+use Eccube\Entity\BaseInfo;
+use Eccube\Entity\Category;
 use Eccube\Entity\Master\CsvType;
+use Eccube\Entity\ProductImage;
 use Eccube\Entity\ProductTag;
+use Eccube\Entity\TaxRule;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Eccube\Service\CsvExportService;
 use Eccube\Util\FormUtil;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -283,6 +288,7 @@ class ProductController extends AbstractController
             }
         }
 
+        /** @var FormBuilder $builder */
         $builder = $app['form.factory']
             ->createBuilder('admin_product', $Product);
 
@@ -290,7 +296,6 @@ class ProductController extends AbstractController
         if ($has_class) {
             $builder->remove('class');
         }
-
         $event = new EventArgs(
             array(
                 'builder' => $builder,
@@ -309,11 +314,16 @@ class ProductController extends AbstractController
 
         // ファイルの登録
         $images = array();
+        $comments = array();
         $ProductImages = $Product->getProductImage();
+        /** @var ProductImage $ProductImage */
         foreach ($ProductImages as $ProductImage) {
             $images[] = $ProductImage->getFileName();
+            $comments[] = $ProductImage->getComment();
         }
         $form['images']->setData($images);
+        $form['comments']->setData($comments);
+
 
         $categories = array();
         $ProductCategories = $Product->getProductCategories();
@@ -340,6 +350,7 @@ class ProductController extends AbstractController
                     $ProductClass = $form['class']->getData();
 
                     // 個別消費税
+                    /** @var BaseInfo $BaseInfo */
                     $BaseInfo = $app['eccube.repository.base_info']->get();
                     if ($BaseInfo->getOptionProductTaxRule() == Constant::ENABLED) {
                         if ($ProductClass->getTaxRate() !== null) {
@@ -350,6 +361,7 @@ class ProductController extends AbstractController
 
                                 $ProductClass->getTaxRule()->setTaxRate($ProductClass->getTaxRate());
                             } else {
+                                /** @var TaxRule $taxrule */
                                 $taxrule = $app['eccube.repository.tax_rule']->newTaxRule();
                                 $taxrule->setTaxRate($ProductClass->getTaxRate());
                                 $taxrule->setApplyDate(new \DateTime());
@@ -386,6 +398,7 @@ class ProductController extends AbstractController
                 $app['orm.em']->flush();
 
                 $count = 1;
+                /** @var Category[] $Categories */
                 $Categories = $form->get('Category')->getData();
                 $categoriesIdList = array();
                 foreach ($Categories as $Category) {
@@ -411,12 +424,32 @@ class ProductController extends AbstractController
 
                 // 画像の登録
                 $add_images = $form->get('add_images')->getData();
-                foreach ($add_images as $add_image) {
+                $comments = $form->get('comments')->getData();
+                $addComments = $form->get('add_comments')->getData();
+                // update old value
+                /** @var ProductImage[] $oldImage */
+                $oldImage = $Product->getProductImage();
+                /**
+                 * @var int $key
+                 * @var string $value
+                 */
+                foreach ($comments as $key => $value) {
+                    if (isset($oldImage[$key])) {
+                        $oldImage[$key]->setComment($value);
+                        $app['orm.em']->persist($oldImage[$key]);
+                    }
+                }
+
+                foreach ($add_images as $key => $add_image) {
                     $ProductImage = new \Eccube\Entity\ProductImage();
                     $ProductImage
                         ->setFileName($add_image)
                         ->setProduct($Product)
                         ->setRank(1);
+                    if (isset($addComments[$key])) {
+                        $ProductImage->setComment($addComments[$key]);
+                        unset($addComments[$key]);
+                    }
                     $Product->addProductImage($ProductImage);
                     $app['orm.em']->persist($ProductImage);
 
@@ -445,6 +478,7 @@ class ProductController extends AbstractController
                         $fs->remove($app['config']['image_save_realdir'].'/'.$delete_image);
                     }
                 }
+
                 $app['orm.em']->persist($Product);
                 $app['orm.em']->flush();
 

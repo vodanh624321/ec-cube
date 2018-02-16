@@ -140,6 +140,20 @@ class ProductType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
             ))
+            ->add('comments', 'collection', array(
+                'type' => 'hidden',
+                'prototype' => true,
+                'mapped' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ))
+            ->add('add_comments', 'collection', array(
+                'type' => 'hidden',
+                'prototype' => true,
+                'mapped' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ))
             ->add('add_images', 'collection', array(
                 'type' => 'hidden',
                 'prototype' => true,

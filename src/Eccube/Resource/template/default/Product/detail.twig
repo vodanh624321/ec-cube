@@ -133,6 +133,14 @@ $(function(){
         .popBg .popContBox a img {
             width: 510px;
         }
+
+        .display-txt .txt {
+            visibility:hidden;
+        }
+
+        .display-txt:hover .txt {
+            visibility:visible;
+        }
     </style>
 {% endblock %}
 
@@ -155,10 +163,12 @@ $(function(){
                         <ul class="mouseroverList">
                             {% if Product.ProductImage|length > 0 %}
                                 {% for ProductImage in Product.ProductImage %}
-                                    <li><a href="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" {% if loop.index == 1 %}class="on"{% endif %} data-target="#popup0{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></a><span class="txt">BLACK</span></li>
+                                    <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" {% if loop.index == 1 %}class="on"{% endif %} data-target="#popup0{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></a>
+                                        <span class="txt">{{ ProductImage.comment }}</span></li>
                                 {% endfor %}
                             {% else %}
-                                <li><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a><span class="txt">BLACK</span></li>
+                                <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a>
+                                    <span class="txt">{{ ProductImage.comment }}</span></li>
                             {% endif %}
                         </ul>
                     </div>

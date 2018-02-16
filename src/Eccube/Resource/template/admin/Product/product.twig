@@ -75,17 +75,27 @@ $(function() {
             + '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cb-close"></use>'
             + '</svg>'
             + '</a>'
-            + '</li>';
+        + '<input type="text" width="100%" style="width: 100%;" value="__value__" name="__comment_name__"/>'
+
+        + '</li>';
     var proto_add = '{{ form_widget(form.add_images.vars.prototype) }}';
+    var proto_comment = '{{ form_widget(form.comments.vars.prototype) }}';
+    var proto_add_comment = '{{ form_widget(form.add_comments.vars.prototype) }}';
     var proto_del = '{{ form_widget(form.delete_images.vars.prototype) }}';
-    {% for image in form.images %}
-    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_save_urlpath }}/{{ image.vars.value }}'));
+    {% for key, image in form.images %}
+    var comment_name = $(proto_comment.replace(/__name__/g, '{{ key }}')).attr('name');
+    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_save_urlpath }}/{{ image.vars.value }}')
+        .replace(/__value__/g, '{{ form.comments[key].vars.value|default('') }}')
+        .replace(/__comment_name__/g, comment_name));
     var $widget = $('{{ form_widget(image) }}');
     $widget.val('{{ image.vars.value }}');
     $("#thumb").append($img.append($widget));
     {% endfor %}
-    {% for add_image in form.add_images %}
-    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_temp_urlpath }}/{{ add_image.vars.value }}'));
+    {% for key, add_image in form.add_images %}
+    var $img = $(proto_img.replace(/__path__/g, '{{ app.config.image_temp_urlpath }}/{{ add_image.vars.value }}')
+        .replace(/__value__/g, '')
+        .replace(/__comment_name__/g, $(proto_add_comment.replace(/__name__/g, '{{ key }}')).attr('name'))
+    );
     var $widget = $('{{ form_widget(add_image) }}');
     $widget.val('{{ add_image.vars.value }}');
     $("#thumb").append($img.append($widget));
@@ -135,9 +145,16 @@ $(function() {
             $('#progress').hide();
             $.each(data.result.files, function (index, file) {
                 var path = '{{ app.config.image_temp_urlpath }}/' + file;
-                var $img = $(proto_img.replace(/__path__/g, path));
+                var $img = $(proto_img.replace(/__path__/g, path)
+                    .replace(/__value__/g, '')
+                    .replace(/__comment_name__/g, $(proto_add_comment.replace(/__name__/g, count_add)).attr('name'))
+                );
                 var $new_img = $(proto_add.replace(/__name__/g, count_add));
                 $new_img.val(file);
+
+                // var $new_comment = $(proto_comment.replace(/__name__/g, count_add));
+                // $new_comment.val(file);
+
                 $child = $img.append($new_img);
                 $('#thumb').append($child);
                 count_add++;
