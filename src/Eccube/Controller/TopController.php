@@ -43,16 +43,16 @@ class TopController extends AbstractController
                 $app['orm.em']->persist($Customer);
                 $app['orm.em']->flush();
             }
-        }
-
-        $index = $this->getDefaultIndexPage($app);
-        switch ($index) {
-            case Customer::INDEX_B:
-                return $app->redirect($app->url('homepage_b'));
-                break;
-            case Customer::INDEX_C:
-                return $app->redirect($app->url('homepage_c'));
-                break;
+        } else {
+            $index = $this->getDefaultIndexPage($app);
+            switch ($index) {
+                case Customer::INDEX_B:
+                    return $app->redirect($app->url('homepage_b'));
+                    break;
+                case Customer::INDEX_C:
+                    return $app->redirect($app->url('homepage_c'));
+                    break;
+            }
         }
 
         return $app->render('index.twig');
@@ -67,19 +67,20 @@ class TopController extends AbstractController
                 $app['orm.em']->persist($Customer);
                 $app['orm.em']->flush();
             }
+        } else {
+            $index = $this->getDefaultIndexPage($app);
+            switch ($index) {
+                case Customer::INDEX_B:
+                    break;
+                case Customer::INDEX_C:
+                    return $app->redirect($app->url('homepage_c'));
+                    break;
+                default:
+                    return $app->redirect($app->url('homepage'));
+                    break;
+            }
         }
 
-        $index = $this->getDefaultIndexPage($app);
-        switch ($index) {
-            case Customer::INDEX_B:
-                break;
-            case Customer::INDEX_C:
-                return $app->redirect($app->url('homepage_c'));
-                break;
-            default:
-                return $app->redirect($app->url('homepage'));
-                break;
-        }
         $Categories = $app['eccube.repository.category']->getList(null, false, Category::TYPE_B);
 
         $arrProduct = array();
@@ -109,18 +110,18 @@ class TopController extends AbstractController
                 $app['orm.em']->persist($Customer);
                 $app['orm.em']->flush();
             }
-        }
-
-        $index = $this->getDefaultIndexPage($app);
-        switch ($index) {
-            case Customer::INDEX_B:
-                return $app->redirect($app->url('homepage_b'));
-                break;
-            case Customer::INDEX_C:
-                break;
-            default:
-                return $app->redirect($app->url('homepage'));
-                break;
+        } else {
+            $index = $this->getDefaultIndexPage($app);
+            switch ($index) {
+                case Customer::INDEX_B:
+                    return $app->redirect($app->url('homepage_b'));
+                    break;
+                case Customer::INDEX_C:
+                    break;
+                default:
+                    return $app->redirect($app->url('homepage'));
+                    break;
+            }
         }
 
         return $app->render('index_c.twig');
