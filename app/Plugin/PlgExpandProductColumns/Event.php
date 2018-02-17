@@ -209,10 +209,6 @@ EOD;
         $response = $event->getResponse();
         $id = $request->attributes->get('id');
 
-        $html = $response->getContent();
-        $crawler = new Crawler($html);
-
-
         $form = $app['form.factory']
             ->createBuilder('admin_product')
             ->getForm();
@@ -269,19 +265,13 @@ EOD;
             )
         );
         
-        $oldElement = $crawler
-            ->filter('.accordion')
-            ->last();
+        $search = '<div id="detail_box__footer" class="row hidden-xs hidden-sm">';
 
-        if ($oldElement->count() > 0) {
-            $oldHtml = $oldElement->html();
-            $newHtml = $oldHtml . $twig;
-
-            $html = $response->getContent();
-
-            $html = str_replace($oldHtml, $newHtml, $html);
-
-            $response->setContent(htmlspecialchars_decode($html));
+        $html = $response->getContent();
+        if (strpos($search, $html) !== null) {
+            $newHtml = $twig . $search;
+            $html = str_replace($search, $newHtml, $html);
+            $response->setContent(($html));
             $event->setResponse($response);
         }
     }

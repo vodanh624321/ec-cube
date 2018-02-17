@@ -1,0 +1,54 @@
+{#
+ This file is part of EC-CUBE
+
+ Copyright(c) 2000-2015 LOCKON CO.,LTD. All Rights Reserved.
+ http://www.lockon.co.jp/
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+#}
+
+<div class="box accordion form-horizontal">
+    <div class="box-header toggle">
+        {#<h3 class="box-title">{{ form_label(form.admin_plg_expand_product_columns) }}<svg class="cb cb-angle-down icon_down"> <use xlink:href="#cb-angle-down" /></svg></h3>#}
+        <h3 class="box-title">拡張項目<svg class="cb cb-angle-down icon_down"> <use xlink:href="#cb-angle-down" /></svg></h3>
+    </div>
+    <div class="box-body accpanel">
+        {% for value_index, columns in form.admin_plg_expand_product_columns_value %}
+            {% for key, column in columns %}
+                {% if column.vars.type is defined and column.vars.type == 'file' %}
+                    <div id="detail_box__image_{{ column.vars.id }}" class="form-group">
+                        <label class="col-sm-2 control-label" for="admin_product_product_image">
+                            {{ column.vars.label }}<br>
+                            <span class="small">620px以上推奨</span>
+                        </label>
+                        <div id="detail_files_box_{{ column.vars.id }}" class="col-sm-9 col-lg-10">
+                            <div class="photo_files" id="drag-drop-area_{{ column.vars.id }}">
+                                <svg id="icon_no_image_{{ column.vars.id }}" class="cb cb-photo no-image" style="fill: #d0d0d0;font-size: 60px;"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cb-photo"></use></svg>
+                                <ul id="thumb_{{ column.vars.id }}" class="clearfix ex_thumb" data-key="{{ column.vars.id }}" data-value-index="{{ value_index }}" data-value-key="{{ key }}"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group marB30">
+                        <div id="detail_box__file_upload_{{ column.vars.id }}" class="col-sm-offset-2 col-sm-9 col-lg-10 ">
+
+                            <div id="progress_{{ column.vars.id }}" class="progress progress-striped active" style="display:none;">
+                                <div class="progress-bar progress-bar-info"></div>
+                            </div>
+
+                            {{ form_widget(column, { attr : { accept : 'image/*', style : 'display:none;', class : 'ex_file_upload' } }) }}
+                            <a id="file_upload_{{ column.vars.id }}" class="with-icon">
+                                <svg class="cb cb-plus"> <use xlink:href="#cb-plus" /></svg>ファイルをアップロード
+                            </a>
+
+                        </div>
+                    </div>
+
+                {% else %}
+                    {{ form_row(column) }}
+                    {{ form_errors(column) }}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
