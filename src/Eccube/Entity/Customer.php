@@ -35,9 +35,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  */
 class Customer extends \Eccube\Entity\AbstractEntity implements UserInterface
 {
-    const INDEX_B = 'index-b';
-    const INDEX_C = 'index-c';
-
     /**
      * @var integer
      */
@@ -1241,23 +1238,5 @@ class Customer extends \Eccube\Entity\AbstractEntity implements UserInterface
         $this->CustomerAddresses[] = $customerAddresses;
 
         return $this;
-    }
-
-    private $page;
-
-    /**
-     * @return mixed
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @param mixed $page
-     */
-    public function setPage($page)
-    {
-        $this->page = $page;
     }
 }

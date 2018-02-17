@@ -29,50 +29,44 @@ use Eccube\Entity\Category;
 use Eccube\Entity\Customer;
 use Eccube\Entity\Master\ProductListMax;
 use Eccube\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 
 class TopController extends AbstractController
 {
+    const COOKIE_KEY = 'top_save';
+    const INDEX_B = 'index-b';
+    const INDEX_C = 'index-c';
 
     public function index(Application $app, Request $request)
     {
         if ($request->get('is')) {
-            $Customer = $app->user();
-            if ($Customer instanceof Customer) {
-                $Customer->setPage(null);
-                $app['orm.em']->persist($Customer);
-                $app['orm.em']->flush();
-            }
+            $cookie = 'index';
         } else {
-            $index = $this->getDefaultIndexPage($app);
-            switch ($index) {
-                case Customer::INDEX_B:
+            $cookie = $this->getDefaultIndexPage($request);
+            switch ($cookie) {
+                case self::INDEX_B:
                     return $app->redirect($app->url('homepage_b'));
                     break;
-                case Customer::INDEX_C:
+                case self::INDEX_C:
                     return $app->redirect($app->url('homepage_c'));
                     break;
             }
         }
 
-        return $app->render('index.twig');
+        return $this->render($app,'index.twig', array(), $cookie);
     }
 
     public function indexB(Application $app, Request $request)
     {
         if ($request->get('is')) {
-            $Customer = $app->user();
-            if ($Customer instanceof Customer) {
-                $Customer->setPage(Customer::INDEX_B);
-                $app['orm.em']->persist($Customer);
-                $app['orm.em']->flush();
-            }
+            $cookie = 'index-b';
         } else {
-            $index = $this->getDefaultIndexPage($app);
-            switch ($index) {
-                case Customer::INDEX_B:
+            $cookie = $this->getDefaultIndexPage($request);
+            switch ($cookie) {
+                case self::INDEX_B || null:
                     break;
-                case Customer::INDEX_C:
+                case self::INDEX_C:
                     return $app->redirect($app->url('homepage_c'));
                     break;
                 default:
@@ -98,25 +92,20 @@ class TopController extends AbstractController
             $arrProduct[$category->getId()]['product'] = $pagination;
         }
 
-        return $app->render('index_b.twig', array('products' => $arrProduct));
+        return $this->render($app, 'index_b.twig', array('products' => $arrProduct), $cookie);
     }
 
     public function indexC(Application $app, Request $request)
     {
         if ($request->get('is')) {
-            $Customer = $app->user();
-            if ($Customer instanceof Customer) {
-                $Customer->setPage(Customer::INDEX_C);
-                $app['orm.em']->persist($Customer);
-                $app['orm.em']->flush();
-            }
+            $cookie = 'index-c';
         } else {
-            $index = $this->getDefaultIndexPage($app);
-            switch ($index) {
-                case Customer::INDEX_B:
+            $cookie = $this->getDefaultIndexPage($request);
+            switch ($cookie) {
+                case self::INDEX_B:
                     return $app->redirect($app->url('homepage_b'));
                     break;
-                case Customer::INDEX_C:
+                case self::INDEX_C || null:
                     break;
                 default:
                     return $app->redirect($app->url('homepage'));
@@ -124,20 +113,39 @@ class TopController extends AbstractController
             }
         }
 
-        return $app->render('index_c.twig');
+        return $this->render($app, 'index_c.twig', array(), $cookie);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed|null
+     */
+    protected function getDefaultIndexPage(Request $request)
+    {
+        $cookie = $request->cookies->get(self::COOKIE_KEY);
+
+//        dump($request->cookies);
+//        dump($cookie);
+
+        return $cookie;
     }
 
     /**
      * @param Application $app
-     * @return mixed|null
+     * @param string $template
+     * @param array $option
+     * @param $cookie
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function getDefaultIndexPage(Application $app)
+    protected function render(Application $app, $template = 'index.twig', $option = array(), $cookie = null)
     {
-        $Customer = $app->user();
-        if ($Customer instanceof Customer) {
-            return $Customer->getPage();
-        }
+        $time = time() + 60*60*24*30;
+        $urlpath = $app['config']['root_urlpath'];
 
-        return null;
+        $response = $app->render($template, $option);
+        if ($cookie) {
+            $response->headers->setCookie(new Cookie(self::COOKIE_KEY, $cookie, $time, $urlpath));
+        }
+        return $response;
     }
 }
