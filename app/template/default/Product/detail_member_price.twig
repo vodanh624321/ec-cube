@@ -11,7 +11,8 @@
 <!--★会員価格★-->
 {% if MemberPrice %}
     <td>
-        <p>会員価格</p>
+    <p>会員価格</p>
+    {% if MemberPrice.stock_find %}
         {% if MemberPrice.member_price_incMin == MemberPrice.member_price_incMax %}
             <span class="price01">
             {{ MemberPrice.member_price_incMin|price }}
@@ -23,5 +24,10 @@
             </span>
             <span class="txt">（税抜き）</span>
         {% endif %}
+    {% else %}
+        <span class="price01">
+            ASK
+        </span>
+    {% endif %}
     </td>
 {% endif %}
