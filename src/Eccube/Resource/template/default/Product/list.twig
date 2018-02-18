@@ -32,6 +32,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
         $(function(){
             var cate_child = $.parseJSON('{{ cate_child|json_encode|raw }}');
             var cate_grandson = $.parseJSON('{{ cate_grandson|json_encode|raw }}');
+            var cate_grandson_4 = $.parseJSON('{{ cate_grandson_4|json_encode|raw }}');
+            var cate_grandson_5 = $.parseJSON('{{ cate_grandson_5|json_encode|raw }}');
             var cate_path = $.parseJSON('{{ cate_path|json_encode|raw }}');
 
             $('#cate_parent').change(function () {
@@ -88,10 +90,66 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             });
 
             $('#cate_grandson').change(function () {
+                // Reset grandson
+                $("#cate_grandson_4 option:eq(0)").attr('selected', 'selected');
+                var $cateGrandson_4 = $("#cate_grandson_4");
+                $cateGrandson_4.parent(".selectWrap").find(".customSelectInner").text('指定ない');
+                $cateGrandson_4.html("<option value=''>指定ない</option>");
+
+                var cid = $(this).val();
+                // Set to search form
+                $("#form1 #category_id").val(cid);
+                // Set child
+                if (cate_grandson_4[cid] != "undefined") {
+                    $(cate_grandson_4[cid]).each(function (key, value) {
+                        var html = '<option value="' + value.id + '">' + value.name + '</option>';
+                        if ($.inArray(value.id, cate_path) != -1) {
+                            html = '<option value="' + value.id + '" selected="selected">' + value.name + '</option>';
+                            $cateGrandson_4.append(html);
+                            $cateGrandson_4.val(value.id).trigger('change');
+                        } else {
+                            $cateGrandson_4.append(html);
+                        }
+                    });
+                }
+            });
+
+            {% if app.config.category_nest_level >= 4 %}
+            $('#cate_grandson_4').change(function () {
+                // Reset grandson
+                $("#cate_grandson_5 option:eq(0)").attr('selected', 'selected');
+                var $cateGrandson_5 = $("#cate_grandson_5");
+                $cateGrandson_5.parent(".selectWrap").find(".customSelectInner").text('指定ない');
+                $cateGrandson_5.html("<option value=''>指定ない</option>");
+
+                var cid = $(this).val();
+                // Set to search form
+                $("#form1 #category_id").val(cid);
+                // Set child
+                if (cate_grandson_5[cid] != "undefined") {
+                    $(cate_grandson_5[cid]).each(function (key, value) {
+                        var html = '<option value="' + value.id + '">' + value.name + '</option>';
+                        if ($.inArray(value.id, cate_path) != -1) {
+                            html = '<option value="' + value.id + '" selected="selected">' + value.name + '</option>';
+                            $cateGrandson_5.append(html);
+                            $cateGrandson_5.val(value.id).trigger('change');
+                        } else {
+                            $cateGrandson_5.append(html);
+                        }
+                    });
+                }
+            });
+            {% endif %}
+
+            {% if app.config.category_nest_level >= 5 %}
+
+            $('#cate_grandson_5').change(function () {
                 var cid = $(this).val();
                 // Set to search form
                 $("#form1 #category_id").val(cid);
             });
+            {% endif %}
+
             // init data
             var cate_id = '{{ category_id }}';
             if (cate_id) {
@@ -258,6 +316,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                             </div>
                                         </li>
                                     </ul>
+                                    {% if app.config.category_nest_level >= 4 %}
+                                    <ul class="categoryList clearfix">
+                                        <li>
+                                            <div class="selectWrap">
+                                                <select class="customSelect" id="cate_grandson_4">
+                                                    <option>指定ない</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        {% if app.config.category_nest_level >= 5 %}
+                                        <li>
+                                            <div class="selectWrap">
+                                                <select class="customSelect" id="cate_grandson_5">
+                                                    <option>指定ない</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                    {% endif %}
                                 </td>
                             </tr>
                             <tr>

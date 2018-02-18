@@ -216,6 +216,8 @@ class ProductController
         $arrCateC = array();
         $arrCateG = array();
         $arrCate = array();
+        $arrCateG4 = array();
+        $arrCateG5 = array();
         foreach ($categories as $cate) {
             $arrCate[$cate->getId()] = $cate->toArray();
             if ($cate->getChildren()->count() > 0) {
@@ -224,8 +226,20 @@ class ProductController
                 foreach ($childs as $child) {
                     $arrCateC[$cate->getId()][] = $child->toArray();
                     if ($child->getChildren()->count() > 0) {
+                        /** @var Category $grandson */
                         foreach ($child->getChildren() as $grandson) {
                             $arrCateG[$child->getId()][] = $grandson->toArray();
+                            if ($grandson->getChildren()->count() > 0) {
+                                /** @var Category $gchild */
+                                foreach ($grandson->getChildren() as $gchild) {
+                                    $arrCateG4[$grandson->getId()][] = $gchild->toArray();
+                                    if ($gchild->getChildren()->count() > 0) {
+                                        foreach ($gchild->getChildren() as $ggchild) {
+                                            $arrCateG5[$gchild->getId()][] = $ggchild->toArray();
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -244,6 +258,8 @@ class ProductController
             'cate' => $arrCate,
             'cate_child' => $arrCateC,
             'cate_grandson' => $arrCateG,
+            'cate_grandson_4' => $arrCateG4,
+            'cate_grandson_5' => $arrCateG5,
             'breadcrumb' => '商品一覧',
             'recommend' =>  Tag::getRecommend(),
             'tags' => $Tag,
