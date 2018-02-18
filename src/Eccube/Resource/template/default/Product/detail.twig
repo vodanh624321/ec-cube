@@ -91,23 +91,30 @@ $(function(){
         var src1 = $(this).attr('href');
         $('.mouseover a').removeClass('on');
         $(this).addClass('on');
-        $('#mouseoverbox img').attr('src',src1);
+        var comment_image = $(this).parent().find("p").text();
+        $('#mouseoverbox img').attr('src',src1).parents("li").find("p").text(comment_image);
     });
     $('.popMouse a').mouseenter(function(){
         var src1 = $(this).attr('data-target');
         $('.popMouse a').removeClass('on');
         $(this).addClass('on');
+        var comment_image = $(this).parent().find("p").text();
+        $(".popContBox").find('#comment-out').text(comment_image);
         $('.popContBox img').attr('src',src1);
     });
     $(window).on('load resize',function(){
         $('.mouseroverList li a').click(function(e){
             e.preventDefault();
             var target=$(this).data('target');
+            var comment_image = $(this).parent().find("p").text();
+            $(target).find('#comment-out').text(comment_image);
             $(target).fadeIn(200);
         });
         $('#mouseoverbox li a').click(function(e){
             e.preventDefault();
             var target=$(this).data('target');
+            var comment_image = $(this).parent().find("p").text();
+            $(target).find('#comment-out').text(comment_image);
             $(target).fadeIn(200);
         });
         $('.popClose a').click(function(){
@@ -119,6 +126,16 @@ $(function(){
             if(e.target!=clickTarget&&$(e.target).closest(".popupblockin").length==0){
                 $(this).fadeOut(200);
             }
+        });
+
+        $('.contact').click(function (e) {
+            e.preventDefault();
+            var action = $(this).attr('href');
+            var name = '{{ Product.name }}';
+            var form = $('<form></form>').attr('action', action).attr('method', 'post');
+            form.append('<textarea type="hidden" name="contact[contents]" >['+name+']</textarea>');
+            $('body').append(form);
+            form.submit();
         });
     });
 });
@@ -133,13 +150,8 @@ $(function(){
         .popBg .popContBox a img {
             width: 510px;
         }
-
-        .display-txt .txt {
-            visibility:hidden;
-        }
-
-        .display-txt:hover .txt {
-            visibility:visible;
+        .comment {
+            display: none;
         }
     </style>
 {% endblock %}
@@ -153,7 +165,9 @@ $(function(){
                     <div id="mouseoverbox">
                         <ul>
                             {% if Product.ProductImage|length > 0 %}
-                                <li><a href="#1" data-target="#popup01"><img width="100%" src="{{ app.config.image_save_urlpath }}/{{ Product.ProductImage[0]|no_image_product }}"/></a></li>
+                                <li><a href="#1" data-target="#popup01"><img width="100%" src="{{ app.config.image_save_urlpath }}/{{ Product.ProductImage[0]|no_image_product }}"/></a>
+                                <p class="comment">{{ Product.ProductImage[0].comment }}</p>
+                                </li>
                             {% else %}
                                 <li><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a></li>
                             {% endif %}
@@ -164,11 +178,12 @@ $(function(){
                             {% if Product.ProductImage|length > 0 %}
                                 {% for ProductImage in Product.ProductImage %}
                                     <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" {% if loop.index == 1 %}class="on"{% endif %} data-target="#popup0{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></a>
-                                        <span class="txt">{{ ProductImage.comment }}</span></li>
+                                        <p class="comment">{{ ProductImage.comment }}</p>
+                                    </li>
                                 {% endfor %}
                             {% else %}
                                 <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a>
-                                    <span class="txt">{{ ProductImage.comment }}</span></li>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -204,29 +219,29 @@ $(function(){
                 <div class="proPriceBox">
                     <table class="proPriceTable">
                         <!--member_price-->
-                        {#<td><span class="price01">￥1,639</span><span class="txt">（税抜き）</span></td>#}
-                        {#<td>通常価格<span class="price02"> ￥1,800</span><span class="txt">（税抜き）</span></td>#}
+                        {% if Product.stock_find %}
                         {% if Product.hasProductClass -%}
-                            {% if Product.getPrice02IncTaxMin == Product.getPrice02IncTaxMax %}
-                                <td>通常価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }}</span><span class="txt">（税抜き）</span></td>
+                            {% if Product.getPrice02Min == Product.getPrice02Max %}
+                                <td>通常価格 <span class="price02">{{ Product.getPrice02Min|price }}</span></td>
                             {% else %}
-                                <td>通常価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }} ～ {{  Product.getPrice02IncTaxMax|price }}</span><span class="txt">（税抜き）</span></td>
+                                <td>通常価格 <span class="price02">{{ Product.getPrice02Min|price }} ～ {{  Product.getPrice02Max|price }}</span></td>
                             {% endif %}
                         {% else -%}
-                            <td>通常価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }}</span><span class="txt">（税抜き）</span></td>
+                            <td>通常価格 <span class="price02">{{ Product.getPrice02Min|price }}</span></td>
                         {% endif -%}
 
                         {% if MemberPrice is not defined %}
                         {% if Product.getPrice01Min %}
                         {% if Product.hasProductClass -%}
-                            {% if Product.getPrice01IncTaxMin == Product.getPrice01IncTaxMax %}
-                                <td>市場価格 <span class="price02">{{ Product.getPrice01IncTaxMin|price }}</span><span class="txt">（税抜き）</span></td>
+                            {% if Product.getPrice01Min == Product.getPrice01Max %}
+                                <td>市場価格 <span class="price02">{{ Product.getPrice01Min|price }}</span></td>
                             {% else %}
-                                <td>市場価格 <span class="price02">{{ Product.getPrice01IncTaxMin|price }} ～ {{  Product.getPrice01IncTaxMax|price }}</span><span class="txt">（税抜き）</span></td>
+                                <td>市場価格 <span class="price02">{{ Product.getPrice01Min|price }} ～ {{  Product.getPrice01Max|price }}</span></td>
                             {% endif %}
                         {% else -%}
-                            <td>市場価格 <span class="price02">{{ Product.getPrice01IncTaxMin|price }}</span><span class="txt">（税抜き）</span></td>
+                            <td>市場価格 <span class="price02">{{ Product.getPrice01Min|price }}</span></td>
                         {% endif -%}
+                        {% endif %}
                         {% endif %}
                         {% endif %}
                     </table>
@@ -311,7 +326,7 @@ $(function(){
                             <tr>
                                 <th></th>
                                 <td>
-                                    <a href="{{ url('contact') }}"><button type="button" style="width: 100%; height: 60px" class="btn btn-warning">お見積はこちら</button></a>
+                                    <a href="{{ url('contact') }}" class="contact"><button type="button" style="width: 100%; height: 60px" class="btn btn-warning">お見積はこちら</button></a>
                                 </td>
                             </tr>
                         {% endif %}
@@ -323,7 +338,7 @@ $(function(){
                                 <p class="detailColle"><a disabled="disabled" onclick="return event.preventDefault();"><span class="txt">お気に入りに追加済みです</span></a></p>
                             {% endif %}
                     {% endif %}
-                    <p class="detailCont"><a href="{{ url('contact') }}">この商品へのお問い合わせ</a></p>
+                    <p class="detailCont"><a href="{{ url('contact') }}" class="contact">この商品へのお問い合わせ</a></p>
                 </div>
                 </form>
 
@@ -359,7 +374,9 @@ $(function(){
                         <div class="popcont clearfix">
                             <div class="popContBox">
                                 <ul>
-                                    <li><a href="#1"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" alt=""></a></li>
+                                    <li><a href="#1"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" alt=""></a>
+                                        <p id="comment-out"></p>
+                                    </li>
                                 </ul>
                                 <p class="popClose"><a href="javascript:void(0)" data-target="#popup0{{ loop.index }}">閉じる</a></p>
                             </div>
@@ -369,6 +386,7 @@ $(function(){
                                     <li><a href="javascript:void(0)" {% if loop.index == 1 %}class="on"{% endif %} data-target="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}">
                                             <img src="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}" alt="">
                                         </a>
+                                        <p class="comment">{{ ProductImageS.comment }}</p>
                                     </li>
                                     {% endfor %}
                                 </ul>

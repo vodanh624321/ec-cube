@@ -19,7 +19,7 @@
                     <p class="hlg01 tit"><a href="{{ url('product_detail', {id : RelatedProduct.ChildProduct.id}) }}">{{ RelatedProduct.ChildProduct.name }}</a></p>
                 </div>
                 <p>型番：{{ RelatedProduct.ChildProduct.getCodeMin }}</p>
-                <p class="price"><span class="txt">{{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|price }}〜</span>（税抜き）</p>
+                <p class="price"><span class="txt">{{ RelatedProduct.ChildProduct.getPrice02Min|price }}〜</span></p>
             </div>
         </li>
         {% endfor %}
@@ -36,7 +36,7 @@
                     <p><img src="{{ app.config.image_save_urlpath }}/{{ RelatedProduct.ChildProduct.main_list_image|no_image_product }}" alt=""></p>
                     <p class="hlg01 tit"><a href="{{ url('product_detail', {id : RelatedProduct.ChildProduct.id}) }}">{{ RelatedProduct.ChildProduct.name }}</a></p>
                     <p>型番：{{ RelatedProduct.ChildProduct.getCodeMin }}</p>
-                    <p class="price"><span class="txt">{{ RelatedProduct.ChildProduct.getPrice02IncTaxMin|price }}〜</span>（税抜き）</p>
+                    <p class="price"><span class="txt">{{ RelatedProduct.ChildProduct.getPrice02Min|price }}〜</span></p>
                 </div>
             </li>
             {% endfor %}

@@ -55,7 +55,7 @@
                                     <p class="hlg01 tit"><a href="{{ url('product_detail', {'id': checkedItem.id}) }}">{{checkedItem.name}}</a></p>
                                 </div>
                                 <p>型番：{{ checkedItem.getCodeMin }}</p>
-                                <p class="price"><span class="txt">{{ checkedItem.getPrice02IncTaxMin|price }}〜</span>（税抜き）</p>
+                                <p class="price"><span class="txt">{{ checkedItem.getPrice02Min|price }}〜</span></p>
                             </div>
                         </li>
                     {% endfor %}

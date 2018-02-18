@@ -8,21 +8,20 @@
 * file that was distributed with this source code.
 #}
 
+{% if is_granted('ROLE_USER') %}
 <!--★会員価格★-->
 {% if MemberPrice %}
     <td>
     <p>会員価格</p>
     {% if MemberPrice.stock_find %}
-        {% if MemberPrice.member_price_incMin == MemberPrice.member_price_incMax %}
+        {% if MemberPrice.member_price_Min == MemberPrice.member_price_Max %}
             <span class="price01">
-            {{ MemberPrice.member_price_incMin|price }}
+            {{ MemberPrice.member_price_Min|price }}
             </span>
-            <span class="txt">（税抜き）</span>
         {% else %}
             <span class="price01">
-            {{ MemberPrice.member_price_incMin|price }} ～ {{ MemberPrice.member_price_incMax|price }}
+            {{ MemberPrice.member_price_Min|price }} ～ {{ MemberPrice.member_price_Max|price }}
             </span>
-            <span class="txt">（税抜き）</span>
         {% endif %}
     {% else %}
         <span class="price01">
@@ -30,4 +29,5 @@
         </span>
     {% endif %}
     </td>
+{% endif %}
 {% endif %}
