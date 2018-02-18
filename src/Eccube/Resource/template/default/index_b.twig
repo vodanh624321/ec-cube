@@ -89,7 +89,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                                     <div class="topProdIn">
                                                         <p class="topProdImg"><img src="{{ app.config.image_save_urlpath }}/{{ Product.main_list_image|no_image_product }}" alt=""></p>
                                                         <p class="topProdName">{{ Product.name }}</p>
-                                                        <p class="topProdPrice"><span class="price">{{ ProductClass[0].getPrice02IncTax|price }}</span>(税抜)</p>
+                                                        <p class="topProdPrice"><span class="price">{{ ProductClass[0].getPrice02|price }}</span></p>
                                                         <div class="topProdQuan">
                                                             <span class="quan">数量</span>
                                                             <select id="quantity" name="quantity" required="required" >
@@ -131,7 +131,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                     <div class="topProdIn biggerlink">
                                         <p class="topProdImg"><a href="{{ url('product_list', {'id': Product.id}) }}"><img src="{{ app.config.image_save_urlpath }}/{{ Product.main_list_image|no_image_product }}" alt=""></a></p>
                                         <p class="topProdName">{{ Product.name }}</p>
-                                        <p class="topProdPrice"><span class="price">{{ Product.getPrice02IncTaxMin|price }}</span>(税抜)</p>
+                                        <p class="topProdPrice"><span class="price">{{ Product.getPrice02Min|price }}</span></p>
                                     </div>
                                 </div>
                                 {% endfor %}

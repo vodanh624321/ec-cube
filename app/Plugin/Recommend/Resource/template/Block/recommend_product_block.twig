@@ -6,27 +6,42 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
 #}
-{% block javascript %}
-    <script type="text/javascript">
-        $(function(){
-            $('.topShop_pc').bxSlider({
-                mode: 'horizontal',
-                speed: 800,
-                pause: 5000,
-                auto:true,
-                controls:true,
-                pager:false,
-                minSlides: 4,
-                maxSlides: 4,
-                moveSlides: 1,
-                slideWidth: 175,
-                slideMargin:30
-            });
-        });
-    </script>
-{% endblock %}
+{% if recommend_products is defined and recommend_products is not empty %}
 
-{% if recommend_products is defined %}
+    {% block javascript %}
+        <script type="text/javascript">
+            $(function(){
+                $('.topShop_pc').bxSlider({
+                    mode: 'horizontal',
+                    speed: 800,
+                    pause: 5000,
+                    auto:true,
+                    controls:true,
+                    pager:false,
+                    minSlides: 4,
+                    maxSlides: 4,
+                    moveSlides: 1,
+                    slideWidth: 175,
+                    slideMargin:30
+                });
+
+                $('.topShop_sp').bxSlider({
+                    mode: 'horizontal',
+                    speed: 800,
+                    pause: 5000,
+                    auto:true,
+                    controls:true,
+                    pager:false,
+                    minSlides: 4,
+                    maxSlides: 4,
+                    moveSlides: 1,
+                    slideWidth: 175,
+                    slideMargin:30
+                });
+            });
+        </script>
+    {% endblock %}
+
     <!-- ▼item_list▼ -->
     <p class="topTit">閲覧履歴からのおすすめ商品</p>
     <div class="topIn">
@@ -37,15 +52,31 @@
                         <li>
                             <div class="biggerlink topShopBox">
                                 <p class="topShopImg"><img src="{{ app.config.image_save_urlpath }}/{{ RecommendProduct.Product.mainFileName|no_image_product }}" alt=""></p>
-                                <p class="topShopTit"><a href="{{ url('product_detail', {'id': RecommendProduct.Product.id}) }}">蛍光ポスター</a></p>
+                                <p class="topShopTit"><a href="{{ url('product_detail', {'id': RecommendProduct.Product.id}) }}">{{ RecommendProduct.Product.name }}</a></p>
                                 <p class="topShopNote">型番：{{ RecommendProduct.Product.code_min }}</p>
                                 <p class="topShopPrice">
-                                    <span class="price">{{ RecommendProduct.Product.getPrice02IncTaxMin|price }}～</span>（税抜き）
+                                    <span class="price">{{ RecommendProduct.Product.getPrice02Min|price }}～</span>
                                 </p>
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
+            </div>
+            <div class="visibleTS">
+                <div class="pageScroll">
+                    <ul class="topShop_sp">
+                        {% for RecommendProduct in recommend_products %}
+                            <li>
+                                <div class="biggerlink topShopBox">
+                                    <p class="topShopImg"><img src="{{ app.config.image_save_urlpath }}/{{ RecommendProduct.Product.mainFileName|no_image_product }}" alt=""></p>
+                                    <p class="topShopTit"><a href="{{ url('product_detail', {'id': RecommendProduct.Product.id}) }}">{{ RecommendProduct.Product.name }}</a></p>
+                                    <p class="topShopNote">型番：{{ RecommendProduct.Product.code_min }}</p>
+                                    <p class="topShopPrice"><span class="price">{{ RecommendProduct.Product.getPrice02Min|price }}〜</span></p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

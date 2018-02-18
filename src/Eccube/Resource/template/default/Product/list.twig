@@ -459,7 +459,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                             <p class="productNote01 visiblePC">型番：{{ Product.getCodeMin }}</p>
                                             <p class="productPrice01">
                                                 <span class="txt01 visibleTS">販売価格：</span>
-                                                <span class="txt02">{{ Product.getPrice02IncTaxMin|price }}〜</span>（税抜き）
+                                                <span class="txt02">{{ Product.getPrice02Min|price }}〜</span>
                                             </p>
                                         </div>
                                     </li>
@@ -476,7 +476,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                                 <dd>
                                                     <p class="productName02"><a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a></p>
                                                     <p class="productNote02 visiblePC">型番：{{ Product.getCodeMin }}</p>
-                                                    <p class="productPrice02">販売価格：<span class="txt">{{ Product.getPrice02IncTaxMin|price }}〜</span>（税抜き）</p>
+                                                    <p class="productPrice02">販売価格：<span class="txt">{{ Product.getPrice02Min|price }}〜</span></p>
                                                     <p class="productDesc">{{ Product.description_list|raw|nl2br }}</p>
                                                 </dd>
                                             </dl>

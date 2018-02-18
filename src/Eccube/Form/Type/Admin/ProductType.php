@@ -123,6 +123,15 @@ class ProductType extends AbstractType
                 'label' => 'ショップ用メモ帳',
                 'required' => false,
             ))
+            ->add('unit', 'text', array(
+                'label' => '販売単位',
+                'required' => false,
+                'constraints' => array(
+                    new Assert\Length(array(
+                        'max' => 255,
+                    )),
+                ),
+            ))
 
             // タグ
             ->add('tags', 'collection', array(

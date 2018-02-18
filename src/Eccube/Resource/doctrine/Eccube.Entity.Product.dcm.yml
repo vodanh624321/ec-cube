@@ -48,6 +48,10 @@ Eccube\Entity\Product:
         update_date:
             type: datetime
             nullable: false
+        unit:
+            type: string
+            nullable: true
+            length: 255
     manyToOne:
         Creator:
             targetEntity: Eccube\Entity\Member

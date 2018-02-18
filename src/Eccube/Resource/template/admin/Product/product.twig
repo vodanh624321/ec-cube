@@ -384,6 +384,21 @@ function fnClass(action) {
                         </div>
                     </div>
 
+                    <div id="unit" class="box accordion form-horizontal">
+                        <div id="unit__body_toggle" class="box-header toggle">
+                            <h3 class="box-title">拡張項目<svg class="cb cb-angle-down icon_down"> <use xlink:href="#cb-angle-down" /></svg></h3>
+                        </div><!-- /.box-header -->
+                        <div id="unit__body" class="box-body accpanel">
+                            <div class="form-group">
+                            {{ form_label(form.unit) }}
+                            <div class="col-xs-10 col-sm-10">
+                            {{ form_widget(form.unit) }}
+                            {{ form_errors(form.unit) }}
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="detail_box__footer" class="row hidden-xs hidden-sm">
                         <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 text-center btn_area">
                             <p><a href="{{ url('admin_product_page', { page_no : app.session.get('eccube.admin.product.search.page_no')|default('1') } ) }}?resume=1">検索画面に戻る</a></p>

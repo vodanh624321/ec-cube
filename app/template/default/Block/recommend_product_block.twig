@@ -55,7 +55,7 @@
                                 <p class="topShopTit"><a href="{{ url('product_detail', {'id': RecommendProduct.Product.id}) }}">{{ RecommendProduct.Product.name }}</a></p>
                                 <p class="topShopNote">型番：{{ RecommendProduct.Product.code_min }}</p>
                                 <p class="topShopPrice">
-                                    <span class="price">{{ RecommendProduct.Product.getPrice02IncTaxMin|price }}～</span>（税抜き）
+                                    <span class="price">{{ RecommendProduct.Product.getPrice02Min|price }}～</span>
                                 </p>
                             </div>
                         </li>
@@ -71,7 +71,7 @@
                                 <p class="topShopImg"><img src="{{ app.config.image_save_urlpath }}/{{ RecommendProduct.Product.mainFileName|no_image_product }}" alt=""></p>
                                 <p class="topShopTit"><a href="{{ url('product_detail', {'id': RecommendProduct.Product.id}) }}">{{ RecommendProduct.Product.name }}</a></p>
                                 <p class="topShopNote">型番：{{ RecommendProduct.Product.code_min }}</p>
-                                <p class="topShopPrice"><span class="price">{{ RecommendProduct.Product.getPrice02IncTaxMin|price }}〜</span>（税抜き）</p>
+                                <p class="topShopPrice"><span class="price">{{ RecommendProduct.Product.getPrice02Min|price }}〜</span></p>
                             </div>
                         </li>
                         {% endfor %}

@@ -1020,5 +1020,21 @@ class Product extends \Eccube\Entity\AbstractEntity
         return $this->ProductTag;
     }
 
+    private $unit;
 
+    /**
+     * @return mixed
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
+     * @param mixed $unit
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+    }
 }
