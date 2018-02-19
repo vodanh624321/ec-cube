@@ -1,13 +1,15 @@
 <div id="headerIn" class="clearfix">
 	<h1 id="headerLogo"><a href="{{ url('index') }}">
-        <img src="{{ app.config.front_urlpath }}/bihin-com/common/img/logo.png" alt=""></a>
-    </h1>
-	{% if is_granted('ROLE_USER') == false %}
-		<ul class="hdLog visibleTS">
+			<img src="{{ app.config.front_urlpath }}/bihin-com/common/img/logo.png" alt=""></a>
+	</h1>
+	<ul class="hdLog visibleTS">
+        {% if is_granted('ROLE_USER') %}
+			<li><a href="{{ url('logout') }}" class="loginBtn01">ログアウト</a></li>
+        {% else %}
 			<li><a href="{{ url('entry') }}" class="loginBtn01">会員登録</a></li>
 			<li><a href="{{ url('mypage_login') }}" class="loginBtn02">ログイン</a></li>
-		</ul>
-	{% endif %}
+        {% endif %}
+	</ul>
 
 	<div class="hdMain">
 		<div class="visiblePC">
@@ -18,13 +20,13 @@
 						<div class="customIn">
                             {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
                             {% set currentPage = currentPath|split('/')|last %}
-							{% if currentPage == url('homepage_b')|split('/')|last %}
-								{% set active = 'index-b' %}
-							{% elseif currentPage == url('homepage_c')|split('/')|last %}
+                            {% if currentPage == url('homepage_b')|split('/')|last %}
+                                {% set active = 'index-b' %}
+                            {% elseif currentPage == url('homepage_c')|split('/')|last %}
                                 {% set active = 'index-c' %}
-							{% else %}
+                            {% else %}
                                 {% set active = 'index-a' %}
-							{% endif %}
+                            {% endif %}
 							<ul class="customList">
 								<li>
 									<p class="customTit">Type A</p>
@@ -43,8 +45,12 @@
 					</div>
 				</div>
 				<ul class="hdMemberLink">
-					<li><a href="{{ url('mypage_login') }}">ログイン</a></li>
-					<li><a href="{{ url('entry') }}">新規会員登録</a></li>
+                    {% if is_granted('ROLE_USER') %}
+						<li><a href="{{ url('logout') }}" class="loginBtn01">ログアウト</a></li>
+                    {% else %}
+						<li><a href="{{ url('mypage_login') }}">ログイン</a></li>
+						<li><a href="{{ url('entry') }}">新規会員登録</a></li>
+                    {% endif %}
 					<li><a href="{{ url('mypage') }}">マイページ</a></li>
 					<li><a href="{{ url('mypage') }}">会員サービス</a></li>
 					<li><a href="{{ url('contact') }}">ヘルプ・お問い合わせ</a></li>
@@ -54,13 +60,13 @@
 			<div class="hdPick">
 				<dl class="pickLink clearfix">
 					<dt>今週のピックアップ</dt>
-					{% if keywords is defined and keywords is not empty %}
-					<dd class="ftBox">
-                        {% for keyword in keywords %}
-							<span class="txt"><a href="{{ path('product_list') }}?category_id=&name={{ keyword }}">{{ keyword }}</a></span>
-                        {% endfor %}
-					</dd>
-					{% endif %}
+                    {% if keywords is defined and keywords is not empty %}
+						<dd class="ftBox">
+                            {% for keyword in keywords %}
+								<span class="txt"><a href="{{ path('product_list') }}?category_id=&name={{ keyword }}">{{ keyword }}</a></span>
+                            {% endfor %}
+						</dd>
+                    {% endif %}
 				</dl>
 			</div>
 		</div>

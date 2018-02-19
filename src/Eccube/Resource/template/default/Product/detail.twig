@@ -248,7 +248,9 @@ $(function(){
                         {% endif %}
                         {% endif %}
                     </table>
+                    {% if Product.unit %}
                     <p>販売単位：{{ Product.unit }}</p>
+                    {% endif %}
                     {#{% if __EX_PRODUCT is defined and __EX_PRODUCT is not null %}#}
                     {#{% for extend in __EX_PRODUCT %}#}
                         {#{% if extend.value %}#}

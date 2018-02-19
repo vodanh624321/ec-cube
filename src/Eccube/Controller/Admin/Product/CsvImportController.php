@@ -181,6 +181,13 @@ class CsvImportController
                             $Product->setFreeArea(null);
                         }
 
+                        if (Str::isNotBlank($row['販売単位'])) {
+                            $Product->setUnit(Str::trimAll($row['販売単位']));
+                        } else {
+                            $Product->setUnit(null);
+                        }
+
+
                         if ($row['商品削除フラグ'] == '') {
                             $Product->setDelFlg(Constant::DISABLED);
                         } else {
@@ -1150,6 +1157,7 @@ class CsvImportController
             '販売価格' => 'price02',
             '送料' => 'delivery_fee',
             '商品規格削除フラグ' => 'product_class_del_flg',
+            '販売単位' => 'unit',
         );
     }
 

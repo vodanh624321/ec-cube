@@ -10,9 +10,7 @@
                 <div class="pageScroll">
                     <ul class="proDetailList02 clearfix">
                         {% set lpc = 1 %}
-
                         {% if show_type == 'normal' %}
-
                             {% for reldat in hsd_related_product %}
                                 {% if max_count >= lpc %}
                                     <li>
@@ -23,7 +21,13 @@
                                             </div>
                                             <p>型番：{{reldat.min_code}}</p>
                                             {% if show_price == 'show_price' %}
-                                                <p class="price"><span class="txt">{{ reldat.min_price|number_format(0, '.', ',') }}〜</span></p>
+                                                <p class="price">
+                                                    {% if reldat.stock_find %}
+                                                        <span class="txt">{{ reldat.min_price|number_format(0, '.', ',') }}〜</span>
+                                                    {% else %}
+                                                        <span class="txt">ASK</span>
+                                                    {% endif %}
+                                                </p>
                                             {% endif %}
                                         </div>
                                     </li>

@@ -1,0 +1,149 @@
+{% extends 'default_frame.twig' %}
+
+{% block title %}「この商品をみた人はこんな商品もみています」設定画面{% endblock %}
+{% block sub_title %}{% endblock %}
+
+{% form_theme form 'Form/bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form class="form-horizontal" method="post" action="{{ url('plugin_HSDRelatedProduct_config') }}">
+
+                <div class="form-group {% if form.max_num.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">表示数 <span class="text-danger">*</span><br />(初期設定は4)</label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.max_num) }}
+                        {{ form_errors(form.max_num) }}
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.max_row_num.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">データ保存の最大数 <span class="text-danger">*</span><br />(初期設定は1000)</label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.max_row_num) }}
+                        {{ form_errors(form.max_row_num) }}
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.title.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">タイトル <span class="text-danger">*</span>(全角64文字まで)<br />(初期設定は「この商品をみた人はこんな商品もみています」)</label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.title) }}
+                        {{ form_errors(form.title) }}
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.show_price.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">価格の表示/非表示 <span class="text-danger">*</span><br />(初期設定は「価格を表示する」)</label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.show_price) }}
+                        {{ form_errors(form.show_price) }}
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.show_type.title.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">表示タイプ <span class="text-danger">*</span></label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.show_type) }}
+                        {{ form_errors(form.show_type) }}
+                        <p>注：Bihinのウェブサイトには、「スライダーなし」タイプのみが適用されます。</p>
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.pagination.title.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">ページネーション <span class="text-danger">*</span></label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.pagination) }}
+                        {{ form_errors(form.pagination) }}
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.navbuttons.title.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">ナビゲーションボタン <span class="text-danger">*</span></label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.navbuttons) }}
+                        {{ form_errors(form.navbuttons) }}
+                    </div>
+                </div>
+
+                <div class="form-group {% if form.showloop.title.vars.errors|length %} has-error {% endif %}">
+                    <label class="col-sm-4 control-label">表示の自動ループ <span class="text-danger">*</span></label>
+                    <div class="col-sm-6">
+                        {{ form_widget(form.showloop) }}
+                        {{ form_errors(form.showloop) }}
+                    </div>
+                </div>
+
+                <div style="margin-top: 70px;"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">登録</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 70px;"></div>
+
+                <div class="wall">
+                    <h3>各項目の説明</h3>
+                        <ul>
+                            <li>【表示数】</li>
+                            <li>
+                                <p>
+                                    関連商品を表示する個数を指定します。
+                                </p>
+                            </li>
+                            <li>【データ保存の最大数】</li>
+                            <li>
+                                <p>
+                                    関連商品を決める際に集計するデータ数です。<br />
+                                    「表示した商品→次にみた商品」に関するデータが保存されます。<br />
+                                    データをリフレッシュしたい場合は、この値を一旦小さく（例えば1000→10など）設定して、<br />
+                                    「この商品をみた人はこんな商品もみています」を設置したページを数回表示すると<br />
+                                    データが削除されますので、再びもとの値（例えば10→1000など）に戻します。
+                                </p>
+                            </li>
+                            <li>【タイトル】</li>
+                            <li>
+                                <p>
+                                    「この商品をみた人はこんな商品もみています」を設置したページに表示されるタイトルです。<br />
+                                </p>
+                            </li>
+                            <li>【価格を表示/非表示】</li>
+                            <li>
+                                <p>
+                                    「この商品をみた人はこんな商品もみています」を設置したページに価格を表示するか/しないかを選択します。<br />
+                                </p>
+                            </li>
+                            <li>【表示タイプ】</li>
+                            <li>
+                                <p>
+                                    商品を表示するタイプです。<br />
+                                </p>
+                            </li>
+                            <li>【ページネーション】</li>
+                            <li>
+                                <p>
+                                    ページネーションの有無です。この設定はスライダーがありの場合に有効です。<br />
+                                </p>
+                            </li>
+                            <li>【ナビゲーションボタン】</li>
+                            <li>
+                                <p>
+                                    ナビゲーションボタンの有無です。この設定はスライダーがありの場合に有効です。<br />
+                                </p>
+                            </li>
+                            <li>【表示の自動ループ】</li>
+                            <li>
+                                <p>
+                                    「あり」の場合、商品を自動でループ表示します。この設定はスライダーがありの場合に有効です。<br />
+                                </p>
+                            </li>
+                        </ul>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock main %}
