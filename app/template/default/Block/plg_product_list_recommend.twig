@@ -18,7 +18,13 @@
                         <div class="prodSideBox biggerlink">
                             <p class="img"><img src="{{ app.config.image_save_urlpath }}/{{ Product.mainFileName|no_image_product }}" alt=""></p>
                             <p class="tit"><a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a></p>
-                            <p class="price"><span class="txt">{{ Product.getPrice02Min|price }}～</span></p>
+                            <p class="price"><span class="txt">
+                                    {% if Product.stock_find %}
+                                        {{ Product.getPrice02Min|price }}～
+                                    {% else %}
+                                        ASK
+                                    {% endif %}
+                                </span></p>
                         </div>
                     </li>
                 {% endfor %}

@@ -456,10 +456,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                                 <p class="productImg"><img src="{{ app.config.image_save_urlpath }}/{{ Product.main_list_image|no_image_product }}" alt=""></p>
                                                 <p class="hlg01 productName01"><a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a></p>
                                             </div>
+                                            {% if Product.getCodeMin %}
                                             <p class="productNote01 visiblePC">型番：{{ Product.getCodeMin }}</p>
+                                            {% endif %}
                                             <p class="productPrice01">
+                                                {% if Product.stock_find %}
                                                 <span class="txt01 visibleTS">販売価格：</span>
                                                 <span class="txt02">{{ Product.getPrice02Min|price }}〜</span>
+                                                {% else %}
+                                                    <span class="txt02">ASK</span>
+                                                {% endif %}
                                             </p>
                                         </div>
                                     </li>
@@ -475,8 +481,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                                 <dt><a href="{{ url('product_detail', {'id': Product.id}) }}"><img src="{{ app.config.image_save_urlpath }}/{{ Product.main_list_image|no_image_product }}" alt=""></a></dt>
                                                 <dd>
                                                     <p class="productName02"><a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a></p>
+                                                    {% if Product.getCodeMin %}
                                                     <p class="productNote02 visiblePC">型番：{{ Product.getCodeMin }}</p>
-                                                    <p class="productPrice02">販売価格：<span class="txt">{{ Product.getPrice02Min|price }}〜</span></p>
+                                                    {% endif %}
+                                                    <p class="productPrice02">
+                                                        {% if Product.stock_find %}
+                                                        販売価格：<span class="txt">{{ Product.getPrice02Min|price }}〜</span>
+                                                        {% else %}
+                                                            <span class="txt">ASK</span>
+                                                        {% endif %}
+                                                    </p>
                                                     <p class="productDesc">{{ Product.description_list|raw|nl2br }}</p>
                                                 </dd>
                                             </dl>
