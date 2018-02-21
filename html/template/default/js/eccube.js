@@ -465,11 +465,13 @@
 
         // 商品一覧時
         if (eccube.hasOwnProperty('productsClassCategories')) {
-            classcat2 = eccube.productsClassCategories[product_id][classcat_id1]['#' + classcat_id2];
+            classcat2 = eccube.productsClassCategories[product_id][classcat_id1]["#" + classcat_id2];
         }
         // 詳細表示時
         else {
-            classcat2 = eccube.classCategories[classcat_id1]['#' + classcat_id2];
+            if (classcat_id1) {
+                classcat2 = eccube.classCategories[classcat_id1]["#" + classcat_id2];
+            }
         }
 
         // 商品コード
@@ -523,8 +525,8 @@
         }
 
         // ポイント
-        var $point_default = $form.find('[id^=point_default]');
-        var $point_dynamic = $form.find('[id^=point_dynamic]');
+        var $point_default = $($form).find('[id^=point_default]');
+        var $point_dynamic = $($form).find('[id^=point_dynamic]');
         if (classcat2 && typeof classcat2.point !== 'undefined' && String(classcat2.point).length >= 1) {
 
             $point_dynamic.text(classcat2.point).show();
@@ -535,7 +537,7 @@
         }
 
         // 商品規格
-        var $product_class_id_dynamic = $form.find('[id^=product_class_id]');
+        var $product_class_id_dynamic = $($form).find('[id^=product_class_id]');
         if (classcat2 && typeof classcat2.product_class_id !== 'undefined' && String(classcat2.product_class_id).length >= 1) {
             $product_class_id_dynamic.val(classcat2.product_class_id);
         } else {
