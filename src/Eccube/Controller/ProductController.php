@@ -246,6 +246,9 @@ class ProductController
             }
         }
         $Tag = $app['eccube.repository.master.tag']->findBy(array(), array('rank' => 'ASC'));
+        $recommend[4] = $app['eccube.repository.master.tag']->find(4);
+        $recommend[5] = $app['eccube.repository.master.tag']->find(5);
+        $recommend[6] = $app['eccube.repository.master.tag']->find(6);
 
         return $app->render('Product/list.twig', array(
             'subtitle' => $this->getPageTitle($searchData, $app),
@@ -261,7 +264,7 @@ class ProductController
             'cate_grandson_4' => $arrCateG4,
             'cate_grandson_5' => $arrCateG5,
             'breadcrumb' => '商品一覧',
-            'recommend' =>  Tag::getRecommend(),
+            'recommend' => $recommend,
             'tags' => $Tag,
             'cate_path' => $categoryPath,
             'Category' => $categorySelected,
