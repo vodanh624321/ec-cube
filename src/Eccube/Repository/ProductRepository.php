@@ -26,7 +26,6 @@ namespace Eccube\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\QueryBuilder;
 use Eccube\Application;
 use Eccube\Service\TaxRuleService;
 use Eccube\Util\Str;
@@ -122,15 +121,13 @@ class ProductRepository extends EntityRepository
         // name
         if (isset($searchData['name']) && Str::isNotBlank($searchData['name'])) {
             $keywords = preg_split('/[\s　]+/u', $searchData['name'], -1, PREG_SPLIT_NO_EMPTY);
-            $qb->innerJoin('p.ProductClasses', 'pc');
 
             foreach ($keywords as $index => $keyword) {
                 $key = sprintf('keyword%s', $index);
                 $qb
-                    ->andWhere(sprintf('(NORMALIZE(pc.code) LIKE NORMALIZE(:%s) OR NORMALIZE(p.name) LIKE NORMALIZE(:%s) OR NORMALIZE(p.search_word) LIKE NORMALIZE(:%s))', $key, $key, $key))
+                    ->andWhere(sprintf('NORMALIZE(p.name) LIKE NORMALIZE(:%s) OR NORMALIZE(p.search_word) LIKE NORMALIZE(:%s)', $key, $key))
                     ->setParameter($key, '%' . $keyword . '%');
             }
-            $qb->groupBy('p');
         }
 
         // Order By
@@ -139,8 +136,7 @@ class ProductRepository extends EntityRepository
         if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == $config['product_order_price_lower']) {
             //@see http://doctrine-orm.readthedocs.org/en/latest/reference/dql-doctrine-query-language.html
             $qb->addSelect('MIN(pc.price02) as HIDDEN price02_min');
-
-            $qb = $this->isJoinWith($qb);
+            $qb->innerJoin('p.ProductClasses', 'pc');
             $qb->groupBy('p');
             // postgres9.0以下は, groupBy('p.id')が利用できない
             // mysqlおよびpostgresql9.1以上であればgroupBy('p.id')にすることで性能向上が期待できる.
@@ -151,7 +147,7 @@ class ProductRepository extends EntityRepository
             // 価格高い順
         } else if (!empty($searchData['orderby']) && $searchData['orderby']->getId() == $config['product_order_price_higher']) {
             $qb->addSelect('MAX(pc.price02) as HIDDEN price02_max');
-            $qb = $this->isJoinWith($qb);
+            $qb->innerJoin('p.ProductClasses', 'pc');
             $qb->groupBy('p');
             $qb->orderBy('price02_max', 'DESC');
             $qb->addOrderBy('p.id', 'DESC');
@@ -160,7 +156,7 @@ class ProductRepository extends EntityRepository
             // 在庫切れ商品非表示の設定が有効時対応
             // @see https://github.com/EC-CUBE/ec-cube/issues/1998
             if ($this->app['orm.em']->getFilters()->isEnabled('nostock_hidden') == true) {
-                $qb = $this->isJoinWith($qb);
+                $qb->innerJoin('p.ProductClasses', 'pc');
             }
             $qb->orderBy('p.create_date', 'DESC');
             $qb->addOrderBy('p.id', 'DESC');
@@ -170,7 +166,8 @@ class ProductRepository extends EntityRepository
                     ->leftJoin('p.ProductCategories', 'pct')
                     ->leftJoin('pct.Category', 'c');
             }
-            $qb->addOrderBy('p.id', 'DESC');
+            $qb
+                ->addOrderBy('p.id', 'DESC');
         }
         if (isset($searchData['tag_id']) && !empty($searchData['tag_id'])) {
             $searchData['recommend_id'][] = $searchData['tag_id'];
@@ -227,7 +224,20 @@ class ProductRepository extends EntityRepository
                 return $qb;
             }
 
-            $qb = $this->isJoinWith($qb);
+            $isReadyJoinPC = false;
+            if ($qb->getDQLPart('join') && isset($qb->getDQLPart('join')['p'])) {
+                /** @var \Doctrine\ORM\Query\Expr\Join $part */
+                foreach ($qb->getDQLPart('join')['p'] as $part) {
+                    if ($part->getJoin() == 'p.ProductClasses') {
+                        $isReadyJoinPC = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!$isReadyJoinPC) {
+                $qb->innerJoin('p.ProductClasses', 'pc');
+            }
             /** @var TaxRuleRepository $taxRuleRepository */
             $taxRuleRepository = $this->app['eccube.repository.tax_rule'];
             /* @var $TaxRule \Eccube\Entity\TaxRule */
@@ -423,31 +433,5 @@ class ProductRepository extends EntityRepository
         }
 
         return $product;
-    }
-
-    /**
-     * @param QueryBuilder $qb
-     * @param string $with
-     * @param string $alias
-     * @return QueryBuilder
-     */
-    protected function isJoinWith($qb, $with = 'p.ProductClasses', $alias = 'pc')
-    {
-        $isReadyJoinPC = false;
-        if ($qb->getDQLPart('join') && isset($qb->getDQLPart('join')['p'])) {
-            /** @var \Doctrine\ORM\Query\Expr\Join $part */
-            foreach ($qb->getDQLPart('join')['p'] as $part) {
-                if ($part->getJoin() == $with) {
-                    $isReadyJoinPC = true;
-                    break;
-                }
-            }
-        }
-
-        if (!$isReadyJoinPC) {
-            $qb->innerJoin($with, $alias);
-        }
-
-        return $qb;
     }
 }
