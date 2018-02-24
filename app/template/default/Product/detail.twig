@@ -27,109 +27,102 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 {% endblock %}
 
 {% block javascript %}
-<script type="text/javascript">
-    eccube.classCategories = {{ Product.class_categories|json_encode|raw }};
+    <script type="text/javascript">
+        eccube.classCategories = {{ Product.class_categories|json_encode|raw }};
 
-    // 規格2に選択肢を割り当てる。
-    function fnSetClassCategories(form, classcat_id2_selected) {
-        var $form = $(form);
-        var product_id = $form.find('input[name=product_id]').val();
-        var $sele1 = $form.find('select[name=classcategory_id1]');
-        var $sele2 = $form.find('select[name=classcategory_id2]');
-        eccube.setClassCategories($form, product_id, $sele1, $sele2, classcat_id2_selected);
-    }
-
-    {% if form.classcategory_id2 is defined %}
-    fnSetClassCategories(
-            document.form1, {{ form.classcategory_id2.vars.value|json_encode|raw }}
-    );
-    {% elseif form.classcategory_id1 is defined %}
-          eccube.checkStock(document.form1, {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);
-    {% endif %}
-
-$(function(){
-    $('#favorite').click(function(e) {
-        e.preventDefault();
-        $('#mode').val('add_favorite');
-        $('#form1').submit();
-    });
-
-    $('#add-cart').click(function() {
-        $('#mode').val('add_cart');
-    });
-
-    // bfcache無効化
-    // $(window).bind('pageshow', function(event) {
-    //     if (event.originalEvent.persisted) {
-    //         location.reload(true);
-    //     }
-    // });
-
-    $('.detailLink01').click(function(e){
-        e.preventDefault();
-        if($(this).hasClass('on')){
-            $(this).removeClass('on');
-            $(this).find('a').text('すべての詳細情報を見る');
-            $(this).prev().removeClass('on');
-        }else{
-            $(this).addClass('on');
-            $(this).find('a').text('すべての詳細情報を閉じる');
-            $(this).prev().addClass('on');
+        // 規格2に選択肢を割り当てる。
+        function fnSetClassCategories(form, classcat_id2_selected) {
+            var $form = $(form);
+            var product_id = $form.find('input[name=product_id]').val();
+            var $sele1 = $form.find('select[name=classcategory_id1]');
+            var $sele2 = $form.find('select[name=classcategory_id2]');
+            eccube.setClassCategories($form, product_id, $sele1, $sele2, classcat_id2_selected);
         }
-    });
 
-    $('.detailSlider').bxSlider({
-        mode: 'horizontal',
-        speed: 2000,
-        pause: 5000,
-        auto:true,
-        controls:false,
-        pager:true,
-        slideMargin:10  //每个单元间距
-    });
-    $('.mouseover a').mouseenter(function(){
-        var src1 = $(this).attr('href');
-        $('.mouseover a').removeClass('on');
-        $(this).addClass('on');
-        var comment_image = $(this).parent().find("p").text();
-        $('#mouseoverbox img').attr('src',src1).parents("li").find("p").text(comment_image);
-    });
-    $('.popMouse a').mouseenter(function(){
-        var src1 = $(this).attr('data-target');
-        $('.popMouse a').removeClass('on');
-        $(this).addClass('on');
-        var comment_image = $(this).parent().find("p").text();
-        $(".popContBox").find('#comment-out').text(comment_image);
-        $('.popContBox img').attr('src',src1);
-    });
-    $(window).on('load resize',function(){
-        $('.mouseroverList li a').click(function(e){
-            e.preventDefault();
-            var target=$(this).data('target');
-            var comment_image = $(this).parent().find("p").text();
-            $(target).find('#comment-out').text(comment_image);
-            $(target).fadeIn(200);
+        {% if form.classcategory_id2 is defined %}
+        fnSetClassCategories(
+            document.form1, {{ form.classcategory_id2.vars.value|json_encode|raw }}
+        );
+        {% elseif form.classcategory_id1 is defined %}
+        eccube.checkStock(document.form1, {{ Product.id }}, {{ form.classcategory_id1.vars.value|json_encode|raw }}, null);
+        {% endif %}
+
+        $(function(){
+            $('#favorite').click(function(e) {
+                e.preventDefault();
+                $('#mode').val('add_favorite');
+                $('#form1').submit();
+            });
+
+            $('#add-cart').click(function() {
+                $('#mode').val('add_cart');
+            });
+
+            $('.detailLink01').click(function(e){
+                e.preventDefault();
+                if($(this).hasClass('on')){
+                    $(this).removeClass('on');
+                    $(this).find('a').text('すべての詳細情報を見る');
+                    $(this).prev().removeClass('on');
+                }else{
+                    $(this).addClass('on');
+                    $(this).find('a').text('すべての詳細情報を閉じる');
+                    $(this).prev().addClass('on');
+                }
+            });
+
+            $('.detailSlider').bxSlider({
+                mode: 'horizontal',
+                speed: 2000,
+                pause: 5000,
+                auto:true,
+                controls:false,
+                pager:true,
+                slideMargin:10  //每个单元间距
+            });
+            $('.mouseover a').mouseenter(function(){
+                var src1 = $(this).attr('href');
+                $('.mouseover a').removeClass('on');
+                $(this).addClass('on');
+                var comment_image = $(this).parent().find("p").text();
+                $('#mouseoverbox img').attr('src',src1).parents("li").find("p").text(comment_image);
+            });
+            $('.popMouse a').mouseenter(function(){
+                var src1 = $(this).attr('data-target');
+                $('.popMouse a').removeClass('on');
+                $(this).addClass('on');
+                var comment_image = $(this).parent().find("p").text();
+                $(".popContBox").find('#comment-out').text(comment_image);
+                $('.popContBox img').attr('src',src1);
+            });
+            $(window).on('load resize',function(){
+                $('.mouseroverList li a').click(function(e){
+                    e.preventDefault();
+                    var target=$(this).data('target');
+                    var comment_image = $(this).parent().find("p").text();
+                    $(target).find('#comment-out').text(comment_image);
+                    $(target).fadeIn(200);
+                });
+                $('#mouseoverbox li a').click(function(e){
+                    e.preventDefault();
+                    var target=$(this).data('target');
+                    var comment_image = $(this).parent().find("p").text();
+                    $(target).find('#comment-out').text(comment_image);
+                    $(target).fadeIn(200);
+                });
+                $('.popClose a').click(function(){
+                    var target=$(this).data('target');
+                    $(target).fadeOut(200);
+                });
+                $('.popBg').click(function(e){
+                    var clickTarget=$(this).find('.popupblockin');
+                    if(e.target!=clickTarget&&$(e.target).closest(".popupblockin").length==0){
+                        $(this).fadeOut(200);
+                    }
+                });
+            });
         });
-        $('#mouseoverbox li a').click(function(e){
-            e.preventDefault();
-            var target=$(this).data('target');
-            var comment_image = $(this).parent().find("p").text();
-            $(target).find('#comment-out').text(comment_image);
-            $(target).fadeIn(200);
-        });
-        $('.popClose a').click(function(){
-            var target=$(this).data('target');
-            $(target).fadeOut(200);
-        });
-        $('.popBg').click(function(e){
-            var clickTarget=$(this).find('.popupblockin');
-            if(e.target!=clickTarget&&$(e.target).closest(".popupblockin").length==0){
-                $(this).fadeOut(200);
-            }
-        });
-    });
-});
-</script>
+    </script>
 {% endblock %}
 
 {% block stylesheet %}
@@ -150,252 +143,252 @@ $(function(){
 {% endblock %}
 
 {% block main %}
-<div class="proDetailMain" style="padding-bottom: 5px">
-    <div class="inner">
-        <div class="proDetailWrap clearfix">
-            <div class="proDetaBox01">
-                <div class="proDetailSlider visiblePC">
-                    <div id="mouseoverbox">
-                        <ul>
-                            {% if Product.ProductImage|length > 0 %}
-                                <li><a href="#1" data-target="#popup01"><img width="100%" src="{{ app.config.image_save_urlpath }}/{{ Product.ProductImage[0]|no_image_product }}"/></a>
-                                <p class="comment">{{ Product.ProductImage[0].comment }}</p>
-                                </li>
-                            {% else %}
-                                <li><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a></li>
-                            {% endif %}
-                        </ul>
+    <div class="proDetailMain" style="padding-bottom: 5px">
+        <div class="inner">
+            <div class="proDetailWrap clearfix">
+                <div class="proDetaBox01">
+                    <div class="proDetailSlider visiblePC">
+                        <div id="mouseoverbox">
+                            <ul>
+                                {% if Product.ProductImage|length > 0 %}
+                                    <li><a href="#1" data-target="#popup01"><img width="100%" src="{{ app.config.image_save_urlpath }}/{{ Product.ProductImage[0]|no_image_product }}"/></a>
+                                        <p class="comment">{{ Product.ProductImage[0].comment }}</p>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="mouseover clearfix">
+                            <ul class="mouseroverList">
+                                {% if Product.ProductImage|length > 0 %}
+                                    {% for ProductImage in Product.ProductImage %}
+                                        <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" {% if loop.index == 1 %}class="on"{% endif %} data-target="#popup0{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></a>
+                                            <p class="comment">{{ ProductImage.comment }}</p>
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
                     </div>
-                    <div class="mouseover clearfix">
-                        <ul class="mouseroverList">
+                    {% if Product.freearea %}
+                        <div class="detailNorm visiblePC">
+                            <div class="detailNormTxt">
+                                {{ include(template_from_string(Product.freearea|nl2br)) }}
+                            </div>
+                            <p class="detailLink01"><a href="#">すべての詳細情報を見る</a></p>
+                        </div>
+                    {% endif %}
+
+                    <p class="proDetailTit visibleTS">{{ Product.name }}</p>
+                    <div class="detailIn visibleTS">
+                        <ul class="detailSlider">
                             {% if Product.ProductImage|length > 0 %}
                                 {% for ProductImage in Product.ProductImage %}
-                                    <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" {% if loop.index == 1 %}class="on"{% endif %} data-target="#popup0{{ loop.index }}"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></a>
-                                        <p class="comment">{{ ProductImage.comment }}</p>
-                                    </li>
+                                    <li><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></li>
                                 {% endfor %}
                             {% else %}
-                                <li class="display-txt"><a href="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></a>
-                                </li>
+                                <li><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></li>
                             {% endif %}
                         </ul>
                     </div>
                 </div>
-                {% if Product.freearea %}
-                <div class="detailNorm visiblePC">
+                <div class="proDetaBox02">
+                    <p class="proDetailTit visiblePC">{{ Product.name }}</p>
+                    <p class="proDetailTxt01">{{ Product.description_detail|raw|nl2br }}</p>
+
+                    {% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}</span>
+                    {% if product_jan|length > 0 %}<span class="txt01">JANコード：{{ product_jan.first.jan }}
+                        {% if product_jan.first.jan != product_jan.last.jan %} ～ {{ product_jan.last.jan }}{% endif %}{% endif %}</span>
+                    </p>
+                    <div class="proPriceBox">
+                        <table class="proPriceTable">
+                            <!--member_price-->
+                            {% if Product.stock_find %}
+                                {% if Product.hasProductClass -%}
+                                    {% if Product.getPrice02Min == Product.getPrice02Max %}
+                                        <td>販売価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }}</span></td>
+                                    {% else %}
+                                        <td>販売価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }} ～ {{  Product.getPrice02IncTaxMax|price }}</span></td>
+                                    {% endif %}
+                                {% else -%}
+                                    <td>販売価格 <span class="price02">{{ Product.getPrice02IncTaxMin|price }}</span></td>
+                                {% endif -%}
+
+                                {% if MemberPrice is not defined %}
+                                    {% if Product.getPrice01Min %}
+                                        {% if Product.hasProductClass -%}
+                                            {% if Product.getPrice01Min == Product.getPrice01Max %}
+                                                <td>通常価格 <span class="price02">{{ Product.getPrice01IncTaxMin|price }}</span></td>
+                                            {% else %}
+                                                <td>通常価格 <span class="price02">{{ Product.getPrice01IncTaxMin|price }} ～ {{  Product.getPrice01IncTaxMax|price }}</span></td>
+                                            {% endif %}
+                                        {% else -%}
+                                            <td>通常価格 <span class="price02">{{ Product.getPrice01IncTaxMin|price }}</span></td>
+                                        {% endif -%}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </table>
+                        {% if Product.unit %}
+                            <p>販売単位：{{ Product.unit }}</p>
+                        {% endif %}
+                        {#{% if __EX_PRODUCT is defined and __EX_PRODUCT is not null %}#}
+                        {#{% for extend in __EX_PRODUCT %}#}
+                        {#{% if extend.value %}#}
+                        {#<p>{{ extend.name }}：{{ extend.value }}</p>#}
+                        {#{% endif %}#}
+                        {#{% endfor %}#}
+                        {#{% endif %}#}
+                        <!--option-->
+                        <!--option_price-->
+                        {#<p>販売単位：1セット（25枚：5枚入×5袋）</p>#}
+                    </div>
+                    <form action="?" method="post" id="form1" name="form1">
+                        {{ form_widget(form.mode) }}
+                        {{ form_widget(form._token) }}
+                        {{ form_widget(form.product_id) }}
+                        {{ form_widget(form.product_class_id) }}
+                        {% if form.classcategory_id1 is defined %}
+                            <div class="proDetailSelec">
+                                <ul id="detail_cart_box__cart_class_category_id" class="proSeleclist clearfix">
+                                    {# 規格1 #}
+                                    <li>
+                                        <div class="protable">
+                                            <p class="tit">{{ form_label(form.classcategory_id1) }}</p>
+                                            <div class="txt">
+                                                <div class="selectWrap">
+                                                    {{ form_widget(form.classcategory_id1, {attr: {'class': 'customSelect'}}) }}
+                                                    {{ form_errors(form.classcategory_id1) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {# 規格2 #}
+                                    {% if form.classcategory_id2 is defined %}
+                                        <li>
+                                            <div class="protable">
+                                                <p class="tit">{{ form_label(form.classcategory_id2) }}</p>
+                                                <div class="txt">
+                                                    <div class="selectWrap">
+                                                        {{ form_widget(form.classcategory_id2, {attr: {'class': 'customSelect'}}) }}
+                                                        {{ form_errors(form.classcategory_id2) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        {% if Product.stock_find %}
+                            <p class="proDetailStock">
+                                {# 在庫：<span class="txt">あり</span> #}
+                            </p>
+                        {% endif %}
+                        <div class="proDetailBuy">
+                            <table class="detailBuy">
+                                {% if Product.stock_find %}
+                                    <tr>
+                                        <th>
+                                            <span class="txt">数量</span>
+                                            <select class="buyQuan" id="quantity" name="quantity" required>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
+                                        </th>
+                                        <td>
+                                            <input type="submit" id="add-cart" class="buyCard01 prevention-mask" value="">
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <th></th>
+                                        <td>
+                                    <a href="{{ url('contact', {'name': Product.name}) }}" class="contact"><button type="button" style="width: 100%; height: 60px" class="btn btn-warning">お見積はこちら</button></a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </table>
+                            {% if BaseInfo.option_favorite_product == 1 %}
+                                {% if is_favorite == false %}
+                                    <p class="detailColle"><a href="#" id="favorite" class="prevention-mask"><span class="txt">お気に入りリストへ追加する</span></a></p>
+                                {% else %}
+                                    <p class="detailColle"><a disabled="disabled" onclick="return event.preventDefault();"><span class="txt">お気に入りに追加済みです</span></a></p>
+                                {% endif %}
+                            {% endif %}
+                    <p class="detailCont"><a href="{{ url('contact', {'name': Product.name}) }}" class="contact">この商品へのお問い合わせ</a></p>
+                        </div>
+                    </form>
+
+                    <div class="detailBox visiblePC">
+                        <!--# related-product-plugin-tag #-->
+                    </div>
+                </div>
+            </div>
+            {% if Product.freearea %}
+                <div class="detailNorm visibleTS">
                     <div class="detailNormTxt">
-                    {{ include(template_from_string(Product.freearea|nl2br)) }}
+                        {{ include(template_from_string(Product.freearea|nl2br)) }}
                     </div>
                     <p class="detailLink01"><a href="#">すべての詳細情報を見る</a></p>
                 </div>
-                {% endif %}
+            {% endif %}
+        </div>
 
-                <p class="proDetailTit visibleTS">{{ Product.name }}</p>
-                <div class="detailIn visibleTS">
-                    <ul class="detailSlider">
-                        {% if Product.ProductImage|length > 0 %}
-                            {% for ProductImage in Product.ProductImage %}
-                                <li><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}"/></li>
-                            {% endfor %}
-                        {% else %}
-                            <li><img src="{{ app.config.image_save_urlpath }}/{{ ''|no_image_product }}"/></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-            <div class="proDetaBox02">
-                <p class="proDetailTit visiblePC">{{ Product.name }}</p>
-                <p class="proDetailTxt01">{{ Product.description_detail|raw|nl2br }}</p>
-
-                        {% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}</span>
-                    {% if product_jan|length > 0 %}<span class="txt01">JANコード：{{ product_jan.first.jan }}
-                        {% if product_jan.first.jan != product_jan.last.jan %} ～ {{ product_jan.last.jan }}{% endif %}{% endif %}</span>
-                </p>
-                <div class="proPriceBox">
-                    <table class="proPriceTable">
-                        <!--member_price-->
-                        {% if Product.stock_find %}
-                        {% if Product.hasProductClass -%}
-                            {% if Product.getPrice02Min == Product.getPrice02Max %}
-                                <td>販売価格 <span class="price02">{{ Product.getPrice02Min|price }}</span></td>
-                            {% else %}
-                                <td>販売価格 <span class="price02">{{ Product.getPrice02Min|price }} ～ {{  Product.getPrice02Max|price }}</span></td>
-                            {% endif %}
-                        {% else -%}
-                            <td>販売価格 <span class="price02">{{ Product.getPrice02Min|price }}</span></td>
-                        {% endif -%}
-
-                        {% if MemberPrice is not defined %}
-                        {% if Product.getPrice01Min %}
-                        {% if Product.hasProductClass -%}
-                            {% if Product.getPrice01Min == Product.getPrice01Max %}
-                                <td>通常価格 <span class="price02">{{ Product.getPrice01Min|price }}</span></td>
-                            {% else %}
-                                <td>通常価格 <span class="price02">{{ Product.getPrice01Min|price }} ～ {{  Product.getPrice01Max|price }}</span></td>
-                            {% endif %}
-                        {% else -%}
-                            <td>通常価格 <span class="price02">{{ Product.getPrice01Min|price }}</span></td>
-                        {% endif -%}
-                        {% endif %}
-                        {% endif %}
-                        {% endif %}
-                    </table>
-                    {% if Product.unit %}
-                    <p>販売単位：{{ Product.unit }}</p>
-                    {% endif %}
-                    {#{% if __EX_PRODUCT is defined and __EX_PRODUCT is not null %}#}
-                    {#{% for extend in __EX_PRODUCT %}#}
-                        {#{% if extend.value %}#}
-                        {#<p>{{ extend.name }}：{{ extend.value }}</p>#}
-                            {#{% endif %}#}
-                    {#{% endfor %}#}
-                    {#{% endif %}#}
-                    <!--option-->
-                    <!--option_price-->
-                    {#<p>販売単位：1セット（25枚：5枚入×5袋）</p>#}
-                </div>
-                <form action="?" method="post" id="form1" name="form1">
-                    {{ form_widget(form.mode) }}
-                    {{ form_widget(form._token) }}
-                    {{ form_widget(form.product_id) }}
-                    {{ form_widget(form.product_class_id) }}
-                {% if form.classcategory_id1 is defined %}
-                    <div class="proDetailSelec">
-                    <ul id="detail_cart_box__cart_class_category_id" class="proSeleclist clearfix">
-                            {# 規格1 #}
-                            <li>
-                                <div class="protable">
-                                    <p class="tit">{{ form_label(form.classcategory_id1) }}</p>
-                                    <div class="txt">
-                                        <div class="selectWrap">
-                                {{ form_widget(form.classcategory_id1, {attr: {'class': 'customSelect'}}) }}
-                                {{ form_errors(form.classcategory_id1) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            {# 規格2 #}
-                            {% if form.classcategory_id2 is defined %}
-                                <li>
-                                    <div class="protable">
-                                        <p class="tit">{{ form_label(form.classcategory_id2) }}</p>
-                                        <div class="txt">
-                                            <div class="selectWrap">
-                                    {{ form_widget(form.classcategory_id2, {attr: {'class': 'customSelect'}}) }}
-                                    {{ form_errors(form.classcategory_id2) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                {% endif %}
-                    {% if Product.stock_find %}
-                <p class="proDetailStock">
-                    在庫：<span class="txt">あり</span>
-                </p>
-                    {% endif %}
-                <div class="proDetailBuy">
-                    <table class="detailBuy">
-                        {% if Product.stock_find %}
-                        <tr>
-                            <th>
-                                <span class="txt">数量</span>
-                                <select class="buyQuan" id="quantity" name="quantity" required>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                </select>
-                            </th>
-                            <td>
-                                <input type="submit" id="add-cart" class="buyCard01 prevention-mask" value="">
-                            </td>
-                        </tr>
-                        {% else %}
-                            <tr>
-                                <th></th>
-                                <td>
-                                    <a href="{{ url('contact', {'name': Product.name}) }}" class="contact"><button type="button" style="width: 100%; height: 60px" class="btn btn-warning">お見積はこちら</button></a>
-                                </td>
-                            </tr>
-                        {% endif %}
-                    </table>
-                    {% if BaseInfo.option_favorite_product == 1 %}
-                        {% if is_favorite == false %}
-                                <p class="detailColle"><a href="#" id="favorite" class="prevention-mask"><span class="txt">お気に入りリストへ追加する</span></a></p>
-                            {% else %}
-                                <p class="detailColle"><a disabled="disabled" onclick="return event.preventDefault();"><span class="txt">お気に入りに追加済みです</span></a></p>
-                            {% endif %}
-                    {% endif %}
-                    <p class="detailCont"><a href="{{ url('contact', {'name': Product.name}) }}" class="contact">この商品へのお問い合わせ</a></p>
-                </div>
-                </form>
-
-                <div class="detailBox visiblePC">
-                    <!--# related-product-plugin-tag #-->
-                </div>
+        <div class="innerNone">
+            <div class="detailBox visibleTS">
+                <!--# related-product-plugin-tag #-->
             </div>
         </div>
-        {% if Product.freearea %}
-            <div class="detailNorm visibleTS">
-                <div class="detailNormTxt">
-                {{ include(template_from_string(Product.freearea|nl2br)) }}
-                </div>
-                <p class="detailLink01"><a href="#">すべての詳細情報を見る</a></p>
-            </div>
-        {% endif %}
     </div>
-
-    <div class="innerNone">
-        <div class="detailBox visibleTS">
-            <!--# related-product-plugin-tag #-->
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block modal %}
     <div class="visiblePC">
         {% if Product.ProductImage|length > 0 %}
-        {% for ProductImage in Product.ProductImage %}
-            <div class="popBg" id="popup0{{ loop.index }}">
-            <div class="popupmain">
-                <div class="popuppanel">
-                    <div class="popupblockin">
-                        <div class="popcont clearfix">
-                            <div class="popContBox">
-                                <ul>
-                                    <li><a href="#1"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" alt=""></a>
-                                        <p id="comment-out"></p>
-                                    </li>
-                                </ul>
-                                <p class="popClose"><a href="javascript:void(0)" data-target="#popup0{{ loop.index }}">閉じる</a></p>
-                            </div>
-                            <div class="popMouse">
-                                <ul>
-                                    {% for ProductImageS in Product.ProductImage %}
-                                    <li><a href="javascript:void(0)" {% if loop.index == 1 %}class="on"{% endif %} data-target="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}">
-                                            <img src="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}" alt="">
-                                        </a>
-                                        <p class="comment">{{ ProductImageS.comment }}</p>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
+            {% for ProductImage in Product.ProductImage %}
+                <div class="popBg" id="popup0{{ loop.index }}">
+                    <div class="popupmain">
+                        <div class="popuppanel">
+                            <div class="popupblockin">
+                                <div class="popcont clearfix">
+                                    <div class="popContBox">
+                                        <ul>
+                                            <li><a href="#1"><img src="{{ app.config.image_save_urlpath }}/{{ ProductImage|no_image_product }}" alt=""></a>
+                                                <p id="comment-out"></p>
+                                            </li>
+                                        </ul>
+                                        <p class="popClose"><a href="javascript:void(0)" data-target="#popup0{{ loop.index }}">閉じる</a></p>
+                                    </div>
+                                    <div class="popMouse">
+                                        <ul>
+                                            {% for ProductImageS in Product.ProductImage %}
+                                                <li><a href="javascript:void(0)" {% if loop.index == 1 %}class="on"{% endif %} data-target="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}">
+                                                        <img src="{{ app.config.image_save_urlpath }}/{{ ProductImageS|no_image_product }}" alt="">
+                                                    </a>
+                                                    <p class="comment">{{ ProductImageS.comment }}</p>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock %}
