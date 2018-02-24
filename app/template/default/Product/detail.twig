@@ -127,16 +127,6 @@ $(function(){
                 $(this).fadeOut(200);
             }
         });
-
-        $('.contact').click(function (e) {
-            e.preventDefault();
-            var action = $(this).attr('href');
-            var name = '{{ Product.name }}';
-            var form = $('<form></form>').attr('action', action).attr('method', 'post');
-            form.append('<textarea type="hidden" name="contact[contents]" >['+name+']</textarea>');
-            $('body').append(form);
-            form.submit();
-        });
     });
 });
 </script>
@@ -333,7 +323,7 @@ $(function(){
                             <tr>
                                 <th></th>
                                 <td>
-                                    <a href="{{ url('contact') }}" class="contact"><button type="button" style="width: 100%; height: 60px" class="btn btn-warning">お見積はこちら</button></a>
+                                    <a href="{{ url('contact', {'name': Product.name}) }}" class="contact"><button type="button" style="width: 100%; height: 60px" class="btn btn-warning">お見積はこちら</button></a>
                                 </td>
                             </tr>
                         {% endif %}
@@ -345,7 +335,7 @@ $(function(){
                                 <p class="detailColle"><a disabled="disabled" onclick="return event.preventDefault();"><span class="txt">お気に入りに追加済みです</span></a></p>
                             {% endif %}
                     {% endif %}
-                    <p class="detailCont"><a href="{{ url('contact') }}" class="contact">この商品へのお問い合わせ</a></p>
+                    <p class="detailCont"><a href="{{ url('contact', {'name': Product.name}) }}" class="contact">この商品へのお問い合わせ</a></p>
                 </div>
                 </form>
 

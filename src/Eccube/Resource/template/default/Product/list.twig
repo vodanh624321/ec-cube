@@ -154,6 +154,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             var cate_id = '{{ category_id }}';
             if (cate_id) {
                 $('#cate_parent').trigger('change');
+                $("#searchform").find("select").val(cate_id).trigger("change");
             }
 
             // 商品表示BOXの高さを揃える

@@ -62,6 +62,10 @@ class ContactController
                 )
             );
         }
+        $var = $request->get('name');
+        if ($var) {
+            $builder->setData(array('contents' => '['. $var .']'));
+        }
 
         // FRONT_CONTACT_INDEX_INITIALIZE
         $event = new EventArgs(
