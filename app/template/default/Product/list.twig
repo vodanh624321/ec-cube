@@ -414,6 +414,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         <div class="proSearBox clearfix">
                             <div class="proSearIn01">
                                 <ul class="proSearList clearfix">
+{#
                                     <li>
                                         <div class="selectWrap">
                                             <select class="customSelect">
@@ -421,6 +422,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                             </select>
                                         </div>
                                     </li>
+#}
                                     <li>
                                         {{ form_widget(search_form.name, {attr: {'class': 'proSearTxt'}}) }}
                                     </li>
@@ -436,7 +438,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                             <li><a href="{{ url('product_list', {'fast_search': 1}) }}">注文履歴から探す</a></li>
                                             <li><a href="{{ url('product_list', {'fast_search': 2}) }}">お気に入り商品から探す</a></li>
                                             <li><a href="{{ url('product_list', {'fast_search': 3}) }}">おすすめ商品から探す</a></li>
+{#
                                             <li><a href="{{ url('product_list', {'fast_search': 4}) }}">お悩みから探す</a></li>
+#}
                                         </ul>
                                     </div>
                                 </div>
@@ -453,7 +457,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                         {% endfor %}
                     </p>
                 </div>
-                <div class="visibleTS">
+                {# <div class="visibleTS">
                     <div class="productCond">
                         <p class="productCondBtn">条件で絞り込む</p>
                         <div class="productCondBox">
@@ -467,7 +471,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                             <p class="productCondRele"><a href="#">全ての絞込みを解除</a></p>
                         </div>
                     </div>
-                </div>
+                </div> #}
                 <div class="visibleTS">
                     <div class="productView clearfix">
                         <p class="productAllTit">商品は全部で<span class="tit">{{ pagination.totalItemCount|number_format }}</span>件あります</p>
@@ -494,8 +498,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                             {% endif %}
                                             <p class="productPrice01">
                                                 {% if Product.stock_find %}
-                                                    <span class="txt01 visibleTS">販売価格：</span>
-                                                    <span class="txt02">{{ Product.getPrice02IncTaxMin|price }}</span>
+
+                                                    <span class="txt02">{{ Product.getPrice02IncTaxMin|price }}（税込）</span>
                                                 {% else %}
                                                     <span class="txt02">ASK</span>
                                                 {% endif %}
@@ -519,7 +523,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                                                     {% endif %}
                                                     <p class="productPrice02">
                                                         {% if Product.stock_find %}
-                                                            販売価格：<span class="txt">{{ Product.getPrice02IncTaxMin|price }}</span>
+                                                            販売価格：<span class="txt">{{ Product.getPrice02IncTaxMin|price }}（税込）</span>
                                                         {% else %}
                                                             <span class="txt">ASK</span>
                                                         {% endif %}
