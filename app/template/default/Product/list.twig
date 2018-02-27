@@ -161,10 +161,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             // $(window).load(function() {
             //     $('.product_item').matchHeight();
             // });
+            var url = location.href;
+
             $('#radio01').click(function() {
                 if($('#product_img').css('display')==='block'){
                     return false;
                 }else{
+                    if (url.search('&list=') == -1) {
+                        window.history.pushState({url: url + '&list=0'}, '', url + '&list=0');
+                    }
+
+                    $('.productInNavi .boxBeta a, .productPageNavi span a').each(function (index, item) {
+                        var urlTmp = $(this).attr('href');
+                        if (urlTmp.search('&list=') == -1) {
+                            $(this).attr('href', urlTmp + '&list=0');
+                        } else {
+                            $(this).attr('href', urlTmp.replace('&list=1', '&list=0'));
+                        }
+                    });
+
                     $('#product_list').css('display','none');
                     $('#product_img').css('display','block');
                 }
@@ -172,7 +187,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             $('#radio02').click(function() {
                 if($('#product_list').css('display')==='block'){
                     return false;
-                }else{
+                } else {
+                    if (url.search('&list=') == -1) {
+                        window.history.pushState({url: url + '&list=1'}, '', url + '&list=1');
+                    }
+
+                    $('.productInNavi .boxBeta a, .productPageNavi span a').each(function (index, item) {
+                        var urlTmp = $(this).attr('href');
+                        if (urlTmp.search('&list=') == -1) {
+                            $(this).attr('href', urlTmp + '&list=1');
+                        } else {
+                            $(this).attr('href', urlTmp.replace('&list=0', '&list=1'));
+                        }
+                    });
+
                     $('#product_img').css('display','none');
                     $('#product_list').css('display','block');
                 }
@@ -196,6 +224,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
                 $('#form1').submit();
             });
+
+            if ('{{ app.request.get('list') }}' == '1') {
+                $('#radio02').trigger('click');
+            }
         });
     </script>
 {% endblock %}

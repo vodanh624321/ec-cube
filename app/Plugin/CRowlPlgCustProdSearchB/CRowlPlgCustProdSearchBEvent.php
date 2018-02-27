@@ -11,6 +11,7 @@
 
 namespace Plugin\CRowlPlgCustProdSearchB;
 
+use Doctrine\ORM\QueryBuilder;
 use Eccube\Application;
 use Eccube\Event\EventArgs;
 use Eccube\Event\TemplateEvent;
@@ -171,11 +172,16 @@ __EOL__;
 
         // twigコードの差し込み
         // 検索対象を設定
+//         $search = <<<__EOL__
+//                 <div class="input_search clearfix">
+//                     {{ form_widget(form.name, {'attr': { 'placeholder' : "キーワードを入力" }} ) }}
+//                     <button type="submit" class="bt_search"><svg class="cb cb-search"><use xlink:href="#cb-search" /></svg></button>
+//                 </div>
+// __EOL__;
         $search = <<<__EOL__
-                <div class="input_search clearfix">
-                    {{ form_widget(form.name, {'attr': { 'placeholder' : "キーワードを入力" }} ) }}
-                    <button type="submit" class="bt_search"><svg class="cb cb-search"><use xlink:href="#cb-search" /></svg></button>
-                </div>
+                            <li class="searchW02">
+                                <input type="submit" value="検索" class="hdSearchBtn">
+                            </li>
 __EOL__;
         // 差し込みコードを作成
         // OR検索(詳細検索オプション)、価格帯指定(詳細検索オプション)、商品タグ(詳細検索オプション)のいずれかが有効
@@ -386,6 +392,7 @@ __EOL__;
             $arr_tag = $_GET['cc_plg_tag'];
         }
 
+        /** @var QueryBuilder $qb */
         $qb = $event->getArgument('qb');
         $searchData = $event->getArgument('searchData');
 
@@ -468,18 +475,14 @@ __EOL__;
                 // 設定に応じて各種条件を付加する
                 // 商品コード
                 if ($search_product_code) {
-                    if ($where_item) {
-                        if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
-                            $where_item .= sprintf(' OR NORMALIZE(pc.code) LIKE NORMALIZE(:%s)', $keyword);
-                        } else {
-                            $where_item .= sprintf(' OR pc.code LIKE :%s', $keyword);
-                        }
+                    if (!$where_item) {
+                        $where_item = $where;
+                    }
+
+                    if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
+                        $where_item .= sprintf(' OR NORMALIZE(pc.code) LIKE NORMALIZE(:%s)', $keyword);
                     } else {
-                        if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
-                            $where_item .= sprintf(' NORMALIZE(pc.code) LIKE NORMALIZE(:%s)', $keyword);
-                        } else {
-                            $where_item .= sprintf(' pc.code LIKE :%s', $keyword);
-                        }
+                        $where_item .= sprintf(' OR pc.code LIKE :%s', $keyword);
                     }
                 }
                 if (!$where_item) {
@@ -631,7 +634,7 @@ __EOL__;
      *
      * プラグインで追加したブロックを表示しているページでは
      * 専用のcssファイルを読み込む
-     * 
+     *
      * @param  FilterResponseEvent  $event
      */
     public function onRenderFrontPage(FilterResponseEvent $event)
