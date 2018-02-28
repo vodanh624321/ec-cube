@@ -473,46 +473,42 @@ __EOL__;
                 }
 
                 // 設定に応じて各種条件を付加する
+                if (!$where_item) {
+                    $where_item = $where;
+                }
                 // 商品コード
                 if ($search_product_code) {
-                    if (!$where_item) {
-                        $where_item = $where;
-                    }
-
                     if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
                         $where_item .= sprintf(' OR NORMALIZE(pc.code) LIKE NORMALIZE(:%s)', $keyword);
                     } else {
                         $where_item .= sprintf(' OR pc.code LIKE :%s', $keyword);
                     }
                 }
-                if (!$where_item) {
-                    $where_item = $where;
-
-                    // 商品説明
-                    if ($search_description_detail) {
-                        if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
-                            $where_item .= sprintf(' OR NORMALIZE(p.description_detail) LIKE :%s', $keyword);
-                        } else {
-                            $where_item .= sprintf(' OR p.description_detail LIKE :%s', $keyword);
-                        }
-                    }
-                    // 一覧コメント
-                    if ($search_description_list) {
-                        if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
-                            $where_item .= sprintf(' OR NORMALIZE(p.description_list) LIKE :%s', $keyword);
-                        } else {
-                            $where_item .= sprintf(' OR p.description_list LIKE :%s', $keyword);
-                        }
-                    }
-                    // フリーエリア
-                    if ($search_free_area) {
-                        if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
-                            $where_item .= sprintf(' OR NORMALIZE(p.free_area) LIKE :%s', $keyword);
-                        } else {
-                            $where_item .= sprintf(' OR p.free_area LIKE :%s', $keyword);
-                        }
+                // 商品説明
+                if ($search_description_detail) {
+                    if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
+                        $where_item .= sprintf(' OR NORMALIZE(p.description_detail) LIKE :%s', $keyword);
+                    } else {
+                        $where_item .= sprintf(' OR p.description_detail LIKE :%s', $keyword);
                     }
                 }
+                // 一覧コメント
+                if ($search_description_list) {
+                    if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
+                        $where_item .= sprintf(' OR NORMALIZE(p.description_list) LIKE :%s', $keyword);
+                    } else {
+                        $where_item .= sprintf(' OR p.description_list LIKE :%s', $keyword);
+                    }
+                }
+                // フリーエリア
+                if ($search_free_area) {
+                    if (version_compare(\Eccube\Common\Constant::VERSION, '3.0.13', '>=')) {
+                        $where_item .= sprintf(' OR NORMALIZE(p.free_area) LIKE :%s', $keyword);
+                    } else {
+                        $where_item .= sprintf(' OR p.free_area LIKE :%s', $keyword);
+                    }
+                }
+
                 if ($is_and_where) {
                     $qb->andWhere($where_item);
                 } elseif (!$tmp_name_where) {
