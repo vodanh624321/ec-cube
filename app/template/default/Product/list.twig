@@ -72,6 +72,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 $cateGrandson.html("<option value=''>指定ない</option>");
 
                 var cid = $(this).val();
+                if (cid == '') {
+                    var pid = $('#cate_parent').val();
+                    $("#form1 #category_id").val(pid);
+                    return false;
+                }
                 // Set to search form
                 $("#form1 #category_id").val(cid);
                 // Set child
@@ -97,6 +102,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 $cateGrandson_4.html("<option value=''>指定ない</option>");
 
                 var cid = $(this).val();
+                if (cid == '') {
+                    var pid = $('#cate_child').val();
+                    $("#form1 #category_id").val(pid);
+                    return false;
+                }
                 // Set to search form
                 $("#form1 #category_id").val(cid);
                 // Set child
@@ -123,6 +133,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 $cateGrandson_5.html("<option value=''>指定ない</option>");
 
                 var cid = $(this).val();
+                if (cid == '') {
+                    var pid = $('#cate_grandson').val();
+                    $("#form1 #category_id").val(pid);
+                    return false;
+                }
                 // Set to search form
                 $("#form1 #category_id").val(cid);
                 // Set child
@@ -145,6 +160,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
             $('#cate_grandson_5').change(function () {
                 var cid = $(this).val();
+                if (cid == '') {
+                    var pid = $('#cate_grandson_4').val();
+                    $("#form1 #category_id").val(pid);
+                    return false;
+                }
                 // Set to search form
                 $("#form1 #category_id").val(cid);
             });
